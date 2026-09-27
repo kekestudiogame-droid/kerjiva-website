@@ -10480,7 +10480,7 @@ async function deleteCompanyProfile(companyId) {
 
 // ================= LOWONGAN SAYA =================
 
-async function showMyJobs() {
+window.showMyJobs = async function () {
   const userData = localStorage.getItem("kerjivaUser");
   const accessToken = localStorage.getItem("kerjivaAccessToken");
   
