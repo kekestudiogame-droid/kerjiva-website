@@ -12199,7 +12199,7 @@ if (document.readyState === "loading") {
   setupAuthButtons();
 
 }
-async function showIncomingApplications() {
+window.showIncomingApplications = async function () {
  const userData = localStorage.getItem("kerjivaUser");
  const accessToken = localStorage.getItem("kerjivaAccessToken");
   if (!userData || !accessToken) {
