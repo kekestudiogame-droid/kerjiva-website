@@ -9508,7 +9508,7 @@ function confirmAcceptApplicant(userId) {
 }
 // ================= PROFIL PERUSAHAAN =================
 
-async function showCompanyProfile() {
+window.showCompanyProfile = async function () {
 const userData = localStorage.getItem("kerjivaUser");
 const accessToken = localStorage.getItem("kerjivaAccessToken");
 
