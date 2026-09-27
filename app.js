@@ -8694,7 +8694,7 @@ function translateMyJobs(page) {
  // ================= DASHBOARD PERUSAHAAN =================
 window.submitJobPost = submitJobPost;
 
-async function showCompanyDashboard() {
+window.showCompanyDashboard = async function () {
   
     const activeRole =
     localStorage.getItem("kerjivaActiveRole");
