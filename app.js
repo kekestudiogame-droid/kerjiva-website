@@ -3494,14 +3494,121 @@ if (menuCompany) {
     );
   };
 }
+
 if (menuHelp) {
   menuHelp.addEventListener("click", () => {
     window.location.href = "bantuan.html";
   });
 }
 
+// ==================================================
+// EFEK LOGOUT KERJIVA
+// ==================================================
+function showLogoutEffect() {
+
+  const overlay = document.createElement("div");
+
+  overlay.id = "kerjivaLogoutEffect";
+
+  overlay.innerHTML = `
+    <div class="kerjiva-logout-box">
+      <div class="kerjiva-logout-logo">
+        <img src="kerjiva.png" alt="Kerjiva">
+      </div>
+
+      <div class="kerjiva-logout-text">
+        Keluar dari akun...
+      </div>
+    </div>
+  `;
+
+  overlay.style.cssText = `
+    position: fixed;
+    inset: 0;
+    z-index: 999999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(255,255,255,0.35);
+    backdrop-filter: blur(2px);
+    opacity: 0;
+    transition: opacity 0.25s ease;
+  `;
+
+  const box = overlay.querySelector(".kerjiva-logout-box");
+
+  box.style.cssText = `
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 14px 18px;
+    border-radius: 14px;
+    background: rgba(255,255,255,0.92);
+    box-shadow: 0 8px 30px rgba(0,0,0,0.10);
+  `;
+
+  const logo = overlay.querySelector(".kerjiva-logout-logo");
+
+  logo.style.cssText = `
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    overflow: hidden;
+    animation: kerjivaLogoutSpin 1s linear infinite;
+  `;
+
+  const img = logo.querySelector("img");
+
+  img.style.cssText = `
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  `;
+
+  const text = overlay.querySelector(".kerjiva-logout-text");
+
+  text.style.cssText = `
+    font-size: 12px;
+    font-weight: 500;
+    opacity: 0.75;
+  `;
+
+  if (!document.getElementById("kerjivaLogoutAnimation")) {
+
+    const style = document.createElement("style");
+
+    style.id = "kerjivaLogoutAnimation";
+
+    style.textContent = `
+      @keyframes kerjivaLogoutSpin {
+        0% {
+          transform: rotate(0deg);
+        }
+
+        100% {
+          transform: rotate(360deg);
+        }
+      }
+    `;
+
+    document.head.appendChild(style);
+  }
+
+  document.body.appendChild(overlay);
+
+  requestAnimationFrame(() => {
+    overlay.style.opacity = "1";
+  });
+
+  return overlay;
+}
+
 if (menuLogout) {
   menuLogout.addEventListener("click", async () => {
+    const logoutEffect = showLogoutEffect();
     try {
 
       // ==================================================
