@@ -3503,17 +3503,43 @@ if (menuHelp) {
 if (menuLogout) {
   menuLogout.addEventListener("click", async () => {
     try {
-      if (typeof supabase !== "undefined" && supabase.auth) {
-        await supabase.auth.signOut();
+
+      // ==================================================
+      // LOGOUT MENU UTAMA
+      // BENAR-BENAR AKHIRI SESSION SUPABASE
+      // ==================================================
+      if (
+        typeof supabaseAuth !== "undefined" &&
+        supabaseAuth.auth
+      ) {
+        const { error } =
+          await supabaseAuth.auth.signOut();
+
+        if (error) {
+          console.error(
+            "Logout Supabase error:",
+            error
+          );
+        }
       }
+
     } catch (error) {
-      console.error("Logout error:", error);
+      console.error(
+        "Logout error:",
+        error
+      );
     }
 
-localStorage.removeItem("kerjivaUser");
-localStorage.removeItem("kerjivaAccessToken");
-localStorage.removeItem("kerjivaActiveRole");
+    // ==================================================
+    // HAPUS SESSION KERJIVA
+    // ==================================================
+    localStorage.removeItem("kerjivaUser");
+    localStorage.removeItem("kerjivaAccessToken");
+    localStorage.removeItem("kerjivaActiveRole");
 
+    // ==================================================
+    // KEMBALI KE HALAMAN UTAMA
+    // ==================================================
     window.location.reload();
   });
 }
