@@ -272,11 +272,11 @@ content="Login Kerjiva — Masuk ke akun pencari kerja atau perusahaan."
   </main>
 
 <script>
+document.addEventListener("DOMContentLoaded", () => {
 
   // ==================================================
   // KONFIGURASI SUPABASE KERJIVA
   // ==================================================
-
   const SUPABASE_URL =
     "https://ksqrimmecpriyepsuclc.supabase.co/rest/v1/";
 
@@ -613,3 +613,6 @@ content="Login Kerjiva — Masuk ke akun pencari kerja atau perusahaan."
       }
 
     });
+
+
+  });
