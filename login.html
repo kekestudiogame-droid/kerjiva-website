@@ -468,14 +468,12 @@ content="Login Kerjiva — Masuk ke akun pencari kerja atau perusahaan."
       const submitBtn =
         document.getElementById("loginSubmitBtn");
 
+      message.textContent =
+        isLoginEnglish
+          ? "Logging in..."
+          : "Sedang masuk...";
 
-         message.textContent =
-           isLoginEnglish
-           ? "Logging in..."
-           : "Sedang masuk...";
-
-         submitBtn.disabled = true;
-
+      submitBtn.disabled = true;
 
       try {
 
@@ -505,31 +503,32 @@ content="Login Kerjiva — Masuk ke akun pencari kerja atau perusahaan."
             }
           );
 
-
         const data =
           await response.json();
 
-
         if (!response.ok) {
 
-        throw new Error(
-           data?.error_description ||
-           data?.msg ||
-        (
-          isLoginEnglish
-          ? "Invalid email or password."
-          : "Email atau password salah."
-          )
-        );
+          throw new Error(
+            data?.error_description ||
+            data?.msg ||
+            (
+              isLoginEnglish
+                ? "Invalid email or password."
+                : "Email atau password salah."
+            )
+          );
 
         }
 
+        if (!data?.user?.id) {
 
-        // ==================================================
-        // VALIDASI ROLE AKUN
-        // ==================================================
+          throw new Error(
+            isLoginEnglish
+              ? "User account could not be verified."
+              : "Akun pengguna tidak dapat diverifikasi."
+          );
 
-       
+        }
 
         // ==================================================
         // SIMPAN SESSION KERJIVA
@@ -545,11 +544,14 @@ content="Login Kerjiva — Masuk ke akun pencari kerja atau perusahaan."
           JSON.stringify(data.user)
         );
 
+        // ==================================================
+        // ROLE AKTIF SESUAI PILIHAN LOGIN
+        // ==================================================
+
         localStorage.setItem(
           "kerjivaActiveRole",
           loginPageRole
         );
-
 
         // ==================================================
         // SINKRONKAN SESSION KE SUPABASE AUTH
@@ -569,7 +571,6 @@ content="Login Kerjiva — Masuk ke akun pencari kerja atau perusahaan."
                 data.refresh_token
             });
 
-
           if (sessionError) {
 
             console.error(
@@ -581,15 +582,18 @@ content="Login Kerjiva — Masuk ke akun pencari kerja atau perusahaan."
 
         }
 
-
         // ==================================================
         // LOGIN BERHASIL
         // ==================================================
 
-      message.textContent =
+        message.textContent =
           isLoginEnglish
-          ? "Login successful. Redirecting..."
-          : "Login berhasil. Mengalihkan...";
+            ? "Login successful."
+            : "Login berhasil.";
+
+        // ==================================================
+        // MASUK KE SISTEM KERJIVA YANG SUDAH ADA
+        // ==================================================
 
         setTimeout(() => {
 
@@ -598,7 +602,6 @@ content="Login Kerjiva — Masuk ke akun pencari kerja atau perusahaan."
 
         }, 500);
 
-
       } catch (error) {
 
         console.error(
@@ -606,22 +609,16 @@ content="Login Kerjiva — Masuk ke akun pencari kerja atau perusahaan."
           error
         );
 
-      message.textContent =
+        message.textContent =
           error.message ||
-        (
-          isLoginEnglish
-          ? "Login failed. Please try again."
-          : "Login gagal. Silakan coba lagi."
-        );
+          (
+            isLoginEnglish
+              ? "Login failed. Please try again."
+              : "Login gagal. Silakan coba lagi."
+          );
 
         submitBtn.disabled = false;
 
       }
 
     });
-
-</script>
-
-</body>
-</html>
-
