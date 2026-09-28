@@ -2709,6 +2709,13 @@ function showCompanyRegistrationAfterLogin() {
 
       isRegister = true;
       isCompany = true;
+      
+      const accountType =
+       document.querySelector("#accountType");
+
+     if (accountType) {
+        accountType.style.display = "none";
+        }
 
       if (companyFields) {
         companyFields.style.display = "block";
