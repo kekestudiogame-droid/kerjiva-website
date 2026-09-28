@@ -16,11 +16,18 @@ const supabaseAuth =
     }
   );
 
+// ==================================================
+// SUPABASE AUTH SESSION
+// ==================================================
 supabaseAuth.auth.onAuthStateChange(
   (event, session) => {
 
     console.log("AUTH EVENT:", event);
 
+    // ==================================================
+    // PASSWORD RECOVERY
+    // JANGAN DIUBAH
+    // ==================================================
     if (event === "PASSWORD_RECOVERY") {
 
       console.log(
@@ -29,6 +36,47 @@ supabaseAuth.auth.onAuthStateChange(
       );
 
       showResetPasswordForm();
+
+      return;
+    }
+
+    // ==================================================
+    // SINKRONKAN SESSION SUPABASE KE LOCALSTORAGE KERJIVA
+    // ==================================================
+    if (
+      session &&
+      session.access_token &&
+      session.user
+    ) {
+
+      localStorage.setItem(
+        "kerjivaAccessToken",
+        session.access_token
+      );
+
+      localStorage.setItem(
+        "kerjivaUser",
+        JSON.stringify(session.user)
+      );
+
+      // Pertahankan role yang sudah dipilih sebelumnya.
+      // Jangan menimpa role jika sudah ada.
+      
+      if (!localStorage.getItem("kerjivaActiveRole")) {
+
+        const accountType =
+          session.user?.user_metadata?.account_type;
+
+        if (
+          accountType === "company" ||
+          accountType === "jobseeker"
+        ) {
+          localStorage.setItem(
+            "kerjivaActiveRole",
+            accountType
+          );
+        }
+      }
 
     }
 
