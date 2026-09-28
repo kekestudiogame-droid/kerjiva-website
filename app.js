@@ -5118,17 +5118,12 @@ if (!isCompany) {
   // PROFIL BELUM ADA
   // ----------------------------------------------
 
-  const language =
-    localStorage.getItem("siteLanguage") || "id";
+ const language =
+  localStorage.getItem("siteLanguage") || "id";
 
-  showNotification(
-    "invalidAccount",
-    language === "en"
-      ? "This account does not have a Job Seeker profile yet."
-      : "Akun ini belum memiliki profil Pencari Kerja."
-  );
+showJobseekerRegistrationAfterLogin();
 
-  return;
+return;
 }
 
 // ==================================================
