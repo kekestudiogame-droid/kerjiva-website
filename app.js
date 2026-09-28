@@ -2775,6 +2775,146 @@ function showCompanyRegistrationAfterLogin() {
   });
 
 }
+function showJobseekerRegistrationAfterLogin() {
+
+  window.kerjivaCompletingJobseekerProfile = true;
+
+  const language =
+    localStorage.getItem("siteLanguage") || "id";
+
+  const isEnglish =
+    language === "en";
+
+  const notification =
+    document.createElement("div");
+
+  notification.id =
+    "kerjivaJobseekerProfileNotification";
+
+  notification.className =
+    "kerjiva-registration-notification";
+
+  notification.innerHTML = `
+
+    <div class="kerjiva-registration-icon">
+      !
+    </div>
+
+    <div class="kerjiva-registration-content">
+
+      <div class="kerjiva-registration-title">
+        ${
+          isEnglish
+            ? "Job Seeker Profile Not Found"
+            : "Profil Pencari Kerja Belum Ada"
+        }
+      </div>
+
+      <div class="kerjiva-registration-message">
+        ${
+          isEnglish
+            ? "This account does not have a Job Seeker profile yet.<br>Please complete the Job Seeker registration form."
+            : "Akun ini belum memiliki profil Pencari Kerja.<br>Silakan lengkapi formulir pendaftaran Pencari Kerja."
+        }
+      </div>
+
+    </div>
+
+    <button
+      type="button"
+      class="kerjiva-registration-ok"
+    >
+      OK
+    </button>
+
+  `;
+
+  document.body.appendChild(notification);
+
+  requestAnimationFrame(() => {
+    notification.classList.add("show");
+  });
+
+  const okButton =
+    notification.querySelector(
+      ".kerjiva-registration-ok"
+    );
+
+  okButton.addEventListener("click", () => {
+
+    notification.classList.remove("show");
+
+    setTimeout(() => {
+
+      notification.remove();
+
+      isRegister = true;
+      isCompany = false;
+
+      const accountType =
+        document.querySelector("#accountType");
+
+      if (accountType) {
+        accountType.style.display = "none";
+      }
+
+      if (companyFields) {
+        companyFields.style.display = "none";
+      }
+
+      if (jobseekerFields) {
+        jobseekerFields.style.display = "block";
+      }
+
+      const confirmPasswordField =
+        document.querySelector("#confirmPasswordField");
+
+      if (confirmPasswordField) {
+        confirmPasswordField.style.display = "block";
+      }
+
+      modalTitle.textContent =
+        isEnglish
+          ? "Register Job Seeker"
+          : "Daftar Pencari Kerja";
+
+      modalText.textContent =
+        isEnglish
+          ? "Create a job seeker profile to find and apply for jobs."
+          : "Lengkapi profil pencari kerja untuk menemukan dan melamar pekerjaan.";
+
+      const submitButton =
+        authForm?.querySelector(
+          'button[type="submit"]'
+        );
+
+      if (submitButton) {
+        submitButton.textContent =
+          isEnglish
+            ? "Sign Up"
+            : "Daftar";
+      }
+
+      if (authForm) {
+        authForm.classList.remove("hidden");
+      }
+
+      const switchAuthContainer =
+        document.querySelector(".switch-auth");
+
+      if (switchAuthContainer) {
+        switchAuthContainer.classList.remove("hidden");
+      }
+
+      if (modal) {
+        modal.classList.remove("hidden");
+      }
+
+    }, 250);
+
+  });
+
+}
 
 async function submitApplication(job){
 const accessToken = localStorage.getItem("kerjivaAccessToken");
