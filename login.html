@@ -185,59 +185,66 @@ content="Login Kerjiva — Masuk ke akun pencari kerja atau perusahaan."
     class="kerjiva-login-logo"
   >
 
-  <h1>Masuk ke Kerjiva</h1>
+  <h1 id="loginPageTitle">Masuk ke Kerjiva</h1>
 
-  <p>
-    Masuk ke akun Anda untuk melanjutkan.
-  </p>
+  <p id="loginPageDescription">
+     Masuk ke akun Anda untuk melanjutkan.
+   </p>
 
   <div class="login-role">
 
-    <button
-      type="button"
-      id="loginJobseekerRole"
-      class="active"
-    >
-      👤 Pencari Kerja
-    </button>
+   <button
+     type="button"
+     id="loginJobseekerRole"
+     class="active"
+   >
+    👤 <span id="loginJobseekerRoleText">Pencari Kerja</span>
+   </button>
 
-    <button
-      type="button"
-      id="loginCompanyRole"
-    >
-      🏢 Perusahaan
-    </button>
+   <button
+     type="button"
+     id="loginCompanyRole"
+   >
+   🏢 <span id="loginCompanyRoleText">Perusahaan</span>
+   </button>
 
   </div>
 
   <form id="loginPageForm">
 
-    <label>
-      Email
+   <label>
+  <span id="loginEmailLabel">Email</span>
 
-      <input
+    <input
+       id="loginPageEmail"
+       type="email"
+       required
+       placeholder="nama@email.com"
+       autocomplete="email"
+      >
+      </label>
+       <input
         id="loginPageEmail"
         type="email"
         required
         placeholder="nama@email.com"
         autocomplete="email"
-      >
-    </label>
-
-    <label>
-      Password
-
-      <div class="password-wrap">
-
-        <input
-          id="loginPagePassword"
-          type="password"
-          required
-          minlength="6"
-          placeholder="Minimal 6 karakter"
-          autocomplete="current-password"
         >
+      </label>
 
+      <label>
+       <span id="loginPasswordLabel">Password</span>
+
+       <div class="password-wrap">
+
+       <input
+         id="loginPagePassword"
+         type="password"
+         required
+        minlength="6"
+        placeholder="Minimal 6 karakter"
+        autocomplete="current-password"
+        >
         <button
           type="button"
           id="toggleLoginPassword"
@@ -263,9 +270,9 @@ content="Login Kerjiva — Masuk ke akun pencari kerja atau perusahaan."
 
   <div class="login-links">
 
-    <a href="index.html">
-      ← Kembali ke Kerjiva
-    </a>
+   <a href="index.html">
+      <span id="loginBackLink">← Kembali ke Kerjiva</span>
+   </a>
 
   </div>
 
@@ -305,6 +312,88 @@ content="Login Kerjiva — Masuk ke akun pencari kerja atau perusahaan."
   // ==================================================
 
   let loginPageRole = "jobseeker";
+  const loginLanguage =
+    localStorage.getItem("siteLanguage") || "id";
+
+ const isLoginEnglish =
+   loginLanguage === "en";
+  
+  if (isLoginEnglish) {
+     document.documentElement.lang = "en";
+    
+      document.getElementById("toggleLoginPassword").setAttribute(
+       "aria-label",
+       "Show password"
+      );
+    
+     document.getElementById("loginEmailLabel").textContent =
+       "Email";
+
+     document.getElementById("loginPasswordLabel").textContent =
+       "Password";
+
+     document.getElementById("loginPageEmail").placeholder =
+       "name@email.com";
+
+     document.getElementById("loginPagePassword").placeholder =
+        "Minimum 6 characters";
+    
+     document.getElementById("loginJobseekerRoleText").textContent =
+         "Job Seeker";
+
+     document.getElementById("loginCompanyRoleText").textContent =
+      "Company";
+    
+      document.getElementById("loginSubmitBtn").textContent =
+       "Log In";
+
+     document.getElementById("loginPageTitle").textContent =
+      "Log In to Kerjiva";
+    
+    document.getElementById("loginBackLink").textContent =
+     "← Back to Kerjiva";
+
+     document.getElementById("loginPageDescription").textContent =
+       "Log in to your account to continue.";
+    
+     } else {
+       document.documentElement.lang = "id";
+    
+      document.getElementById("toggleLoginPassword").setAttribute(
+        "aria-label",
+        "Tampilkan password"
+      );
+    
+      document.getElementById("loginEmailLabel").textContent =
+        "Email";
+
+      document.getElementById("loginPasswordLabel").textContent =
+       "Password";
+
+      document.getElementById("loginPageEmail").placeholder =
+       "nama@email.com";
+
+      document.getElementById("loginPagePassword").placeholder =
+        "Minimal 6 karakter";
+    
+      document.getElementById("loginJobseekerRoleText").textContent =
+         "Pencari Kerja";
+
+      document.getElementById("loginCompanyRoleText").textContent =
+         "Perusahaan";
+    
+      document.getElementById("loginSubmitBtn").textContent =
+         "Masuk";
+
+      document.getElementById("loginPageTitle").textContent =
+          "Masuk ke Kerjiva";
+    
+      document.getElementById("loginBackLink").textContent =
+          "← Kembali ke Kerjiva";
+
+     document.getElementById("loginPageDescription").textContent =
+        "Masuk ke akun Anda untuk melanjutkan.";
+       }
 
   const jobseekerRoleBtn =
     document.getElementById("loginJobseekerRole");
@@ -380,10 +469,12 @@ content="Login Kerjiva — Masuk ke akun pencari kerja atau perusahaan."
         document.getElementById("loginSubmitBtn");
 
 
-      message.textContent =
-        "Sedang masuk...";
+         message.textContent =
+           isLoginEnglish
+           ? "Logging in..."
+           : "Sedang masuk...";
 
-      submitBtn.disabled = true;
+         submitBtn.disabled = true;
 
 
       try {
@@ -421,11 +512,15 @@ content="Login Kerjiva — Masuk ke akun pencari kerja atau perusahaan."
 
         if (!response.ok) {
 
-          throw new Error(
-            data?.error_description ||
-            data?.msg ||
-            "Email atau password salah."
-          );
+        throw new Error(
+           data?.error_description ||
+           data?.msg ||
+        (
+          isLoginEnglish
+          ? "Invalid email or password."
+          : "Email atau password salah."
+          )
+        );
 
         }
 
@@ -445,11 +540,19 @@ content="Login Kerjiva — Masuk ke akun pencari kerja atau perusahaan."
 
           await supabaseAuth.auth.signOut();
 
-          throw new Error(
-            loginPageRole === "company"
-              ? "Akun ini terdaftar sebagai Pencari Kerja."
-              : "Akun ini terdaftar sebagai Perusahaan."
-          );
+         throw new Error(
+           loginPageRole === "company"
+            ? (
+            isLoginEnglish
+          ? "This account is registered as a Job Seeker."
+          : "Akun ini terdaftar sebagai Pencari Kerja."
+         )
+      : (
+        isLoginEnglish
+          ? "This account is registered as a Company."
+          : "Akun ini terdaftar sebagai Perusahaan."
+         )
+       );
 
         }
 
@@ -509,9 +612,10 @@ content="Login Kerjiva — Masuk ke akun pencari kerja atau perusahaan."
         // LOGIN BERHASIL
         // ==================================================
 
-        message.textContent =
-          "Login berhasil. Mengalihkan...";
-
+      message.textContent =
+          isLoginEnglish
+          ? "Login successful. Redirecting..."
+          : "Login berhasil. Mengalihkan...";
 
         setTimeout(() => {
 
@@ -528,9 +632,13 @@ content="Login Kerjiva — Masuk ke akun pencari kerja atau perusahaan."
           error
         );
 
-        message.textContent =
+      message.textContent =
           error.message ||
-          "Login gagal. Silakan coba lagi.";
+        (
+          isLoginEnglish
+          ? "Login failed. Please try again."
+          : "Login gagal. Silakan coba lagi."
+        );
 
         submitBtn.disabled = false;
 
