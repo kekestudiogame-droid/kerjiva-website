@@ -529,33 +529,7 @@ content="Login Kerjiva — Masuk ke akun pencari kerja atau perusahaan."
         // VALIDASI ROLE AKUN
         // ==================================================
 
-        const accountType =
-          data?.user?.user_metadata?.account_type;
-
-
-        if (
-          accountType &&
-          accountType !== loginPageRole
-        ) {
-
-          await supabaseAuth.auth.signOut();
-
-         throw new Error(
-           loginPageRole === "company"
-            ? (
-            isLoginEnglish
-          ? "This account is registered as a Job Seeker."
-          : "Akun ini terdaftar sebagai Pencari Kerja."
-         )
-      : (
-        isLoginEnglish
-          ? "This account is registered as a Company."
-          : "Akun ini terdaftar sebagai Perusahaan."
-         )
-       );
-
-        }
-
+       
 
         // ==================================================
         // SIMPAN SESSION KERJIVA
