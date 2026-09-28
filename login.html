@@ -273,49 +273,272 @@ content="Login Kerjiva — Masuk ke akun pencari kerja atau perusahaan."
 
   </main>
 
-  <script>
+<script>
 
-    let loginPageRole = "jobseeker";
+  // ==================================================
+  // KONFIGURASI SUPABASE KERJIVA
+  // ==================================================
 
-    const jobseekerRoleBtn =
-      document.getElementById("loginJobseekerRole");
+  const SUPABASE_URL =
+    "https://ksqrimmecpriyepsuclc.supabase.co/rest/v1/";
 
-    const companyRoleBtn =
-      document.getElementById("loginCompanyRole");
+  const SUPABASE_KEY =
+    "sb_publishable_xvPQL9oniSRwZoqmSc5W4A_NS9ldWIL";
 
-    jobseekerRoleBtn.addEventListener("click", () => {
+  const supabaseAuth =
+    window.supabase.createClient(
+      SUPABASE_URL.replace("/rest/v1/", ""),
+      SUPABASE_KEY,
+      {
+        auth: {
+          flowType: "implicit",
+          detectSessionInUrl: true,
+          persistSession: true,
+          autoRefreshToken: true
+        }
+      }
+    );
 
-      loginPageRole = "jobseeker";
 
-      jobseekerRoleBtn.classList.add("active");
-      companyRoleBtn.classList.remove("active");
+  // ==================================================
+  // ROLE LOGIN
+  // ==================================================
+
+  let loginPageRole = "jobseeker";
+
+  const jobseekerRoleBtn =
+    document.getElementById("loginJobseekerRole");
+
+  const companyRoleBtn =
+    document.getElementById("loginCompanyRole");
+
+
+  jobseekerRoleBtn.addEventListener("click", () => {
+
+    loginPageRole = "jobseeker";
+
+    jobseekerRoleBtn.classList.add("active");
+    companyRoleBtn.classList.remove("active");
+
+  });
+
+
+  companyRoleBtn.addEventListener("click", () => {
+
+    loginPageRole = "company";
+
+    companyRoleBtn.classList.add("active");
+    jobseekerRoleBtn.classList.remove("active");
+
+  });
+
+
+  // ==================================================
+  // TAMPILKAN / SEMBUNYIKAN PASSWORD
+  // ==================================================
+
+  document
+    .getElementById("toggleLoginPassword")
+    .addEventListener("click", () => {
+
+      const password =
+        document.getElementById("loginPagePassword");
+
+      password.type =
+        password.type === "password"
+          ? "text"
+          : "password";
 
     });
 
-    companyRoleBtn.addEventListener("click", () => {
 
-      loginPageRole = "company";
+  // ==================================================
+  // LOGIN
+  // ==================================================
 
-      companyRoleBtn.classList.add("active");
-      jobseekerRoleBtn.classList.remove("active");
+  document
+    .getElementById("loginPageForm")
+    .addEventListener("submit", async (e) => {
+
+      e.preventDefault();
+
+      const email =
+        document
+          .getElementById("loginPageEmail")
+          .value
+          .trim();
+
+      const password =
+        document
+          .getElementById("loginPagePassword")
+          .value;
+
+      const message =
+        document.getElementById("loginMessage");
+
+      const submitBtn =
+        document.getElementById("loginSubmitBtn");
+
+
+      message.textContent =
+        "Sedang masuk...";
+
+      submitBtn.disabled = true;
+
+
+      try {
+
+        // ==================================================
+        // LOGIN SUPABASE
+        // ==================================================
+
+        const authUrl =
+          SUPABASE_URL.replace("/rest/v1/", "") +
+          "/auth/v1";
+
+        const response =
+          await fetch(
+            `${authUrl}/token?grant_type=password`,
+            {
+              method: "POST",
+
+              headers: {
+                apikey: SUPABASE_KEY,
+                "Content-Type": "application/json"
+              },
+
+              body: JSON.stringify({
+                email,
+                password
+              })
+            }
+          );
+
+
+        const data =
+          await response.json();
+
+
+        if (!response.ok) {
+
+          throw new Error(
+            data?.error_description ||
+            data?.msg ||
+            "Email atau password salah."
+          );
+
+        }
+
+
+        // ==================================================
+        // VALIDASI ROLE AKUN
+        // ==================================================
+
+        const accountType =
+          data?.user?.user_metadata?.account_type;
+
+
+        if (
+          accountType &&
+          accountType !== loginPageRole
+        ) {
+
+          await supabaseAuth.auth.signOut();
+
+          throw new Error(
+            loginPageRole === "company"
+              ? "Akun ini terdaftar sebagai Pencari Kerja."
+              : "Akun ini terdaftar sebagai Perusahaan."
+          );
+
+        }
+
+
+        // ==================================================
+        // SIMPAN SESSION KERJIVA
+        // ==================================================
+
+        localStorage.setItem(
+          "kerjivaAccessToken",
+          data.access_token
+        );
+
+        localStorage.setItem(
+          "kerjivaUser",
+          JSON.stringify(data.user)
+        );
+
+        localStorage.setItem(
+          "kerjivaActiveRole",
+          loginPageRole
+        );
+
+
+        // ==================================================
+        // SINKRONKAN SESSION KE SUPABASE AUTH
+        // ==================================================
+
+        if (
+          data.access_token &&
+          data.refresh_token
+        ) {
+
+          const { error: sessionError } =
+            await supabaseAuth.auth.setSession({
+              access_token:
+                data.access_token,
+
+              refresh_token:
+                data.refresh_token
+            });
+
+
+          if (sessionError) {
+
+            console.error(
+              "Gagal menyimpan session Supabase:",
+              sessionError
+            );
+
+          }
+
+        }
+
+
+        // ==================================================
+        // LOGIN BERHASIL
+        // ==================================================
+
+        message.textContent =
+          "Login berhasil. Mengalihkan...";
+
+
+        setTimeout(() => {
+
+          window.location.href =
+            "index.html";
+
+        }, 500);
+
+
+      } catch (error) {
+
+        console.error(
+          "Login error:",
+          error
+        );
+
+        message.textContent =
+          error.message ||
+          "Login gagal. Silakan coba lagi.";
+
+        submitBtn.disabled = false;
+
+      }
 
     });
 
-    document
-      .getElementById("toggleLoginPassword")
-      .addEventListener("click", () => {
-
-        const password =
-          document.getElementById("loginPagePassword");
-
-        password.type =
-          password.type === "password"
-            ? "text"
-            : "password";
-
-      });
-
-  </script>
+</script>
 
 </body>
 </html>
