@@ -4965,14 +4965,9 @@ if (isCompany) {
   const language =
     localStorage.getItem("siteLanguage") || "id";
 
-  showNotification(
-    "invalidAccount",
-    language === "en"
-      ? "This account does not have a Company profile yet."
-      : "Akun ini belum memiliki profil Perusahaan."
-  );
+showCompanyRegistrationAfterLogin();
 
-  return;
+return;
 }
 
 
