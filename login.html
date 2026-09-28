@@ -509,23 +509,44 @@
 
         try {
 
-          const {
-            data,
-            error
-          } =
-            await supabaseAuth.auth.signInWithPassword(
-              {
-                email,
-                password
-              }
-            );
+      const authUrl =
+  SUPABASE_URL.replace("/rest/v1/", "") +
+  "/auth/v1";
 
+const response =
+  await fetch(
+    `${authUrl}/token?grant_type=password`,
+    {
+      method: "POST",
 
-          if (error) {
+      headers: {
+        apikey: SUPABASE_KEY,
+        "Content-Type": "application/json"
+      },
 
-            throw error;
+      body: JSON.stringify({
+        email,
+        password
+      })
+    }
+  );
 
-          }
+const data =
+  await response.json();
+
+if (!response.ok) {
+
+  throw new Error(
+    data?.error_description ||
+    data?.msg ||
+    (
+      isLoginEnglish
+        ? "Invalid email or password."
+        : "Email atau password salah."
+    )
+  );
+
+}
 
 
           if (!data?.user?.id) {
