@@ -14264,6 +14264,12 @@ function showResetPasswordForm() {
 
   const companyFields =
     document.querySelector("#companyFields");
+  
+  const emailField =
+  document.querySelector("#email")?.parentElement;
+
+const passwordField =
+  document.querySelector("#password")?.closest("label");
 
   const confirmPasswordField =
     document.querySelector("#confirmPasswordField");
@@ -14300,11 +14306,18 @@ function showResetPasswordForm() {
   }
 
   if (companyFields) {
-    companyFields.style.display = "none";
+     companyFields.style.display = "none";
+  }
+  if (emailField) {
+     emailField.style.display = "none";
+  }
+
+  if (passwordField) {
+     passwordField.style.display = "none";
   }
 
   if (confirmPasswordField) {
-    confirmPasswordField.style.display = "none";
+       confirmPasswordField.style.display = "none";
   }
 
   if (switchAuth) {
