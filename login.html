@@ -1,15 +1,14 @@
 <!doctype html>
-
 <html lang="id">
 <head>
+
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<meta
-name="description"
-content="Login Kerjiva — Masuk ke akun pencari kerja atau perusahaan."
-
->
+  <meta
+    name="description"
+    content="Login Kerjiva — Masuk ke akun pencari kerja atau perusahaan."
+  >
 
   <title>Login — Kerjiva</title>
 
@@ -177,453 +176,439 @@ content="Login Kerjiva — Masuk ke akun pencari kerja atau perusahaan."
 
   <main class="kerjiva-login-page">
 
-<section class="kerjiva-login-card">
+    <section class="kerjiva-login-card">
 
-  <img
-    src="kerjiva.png"
-    alt="Kerjiva"
-    class="kerjiva-login-logo"
-  >
+      <img
+        src="kerjiva.png"
+        alt="Kerjiva"
+        class="kerjiva-login-logo"
+      >
 
-  <h1 id="loginPageTitle">Masuk ke Kerjiva</h1>
+      <h1 id="loginPageTitle">
+        Masuk ke Kerjiva
+      </h1>
 
-  <p id="loginPageDescription">
-     Masuk ke akun Anda untuk melanjutkan.
-   </p>
+      <p id="loginPageDescription">
+        Masuk ke akun Anda untuk melanjutkan.
+      </p>
 
-  <div class="login-role">
+      <div class="login-role">
 
-   <button
-     type="button"
-     id="loginJobseekerRole"
-     class="active"
-   >
-    👤 <span id="loginJobseekerRoleText">Pencari Kerja</span>
-   </button>
-
-   <button
-     type="button"
-     id="loginCompanyRole"
-   >
-   🏢 <span id="loginCompanyRoleText">Perusahaan</span>
-   </button>
-
-  </div>
-
-  <form id="loginPageForm">
-
-  <label>
-  <span id="loginEmailLabel">Email</span>
-
-  <input
-    id="loginPageEmail"
-    type="email"
-    required
-    placeholder="nama@email.com"
-    autocomplete="email"
-  >
-</label>
-      <label>
-       <span id="loginPasswordLabel">Password</span>
-
-       <div class="password-wrap">
-
-       <input
-         id="loginPagePassword"
-         type="password"
-         required
-        minlength="6"
-        placeholder="Minimal 6 karakter"
-        autocomplete="current-password"
-        >
         <button
           type="button"
-          id="toggleLoginPassword"
-          aria-label="Tampilkan password"
+          id="loginJobseekerRole"
+          class="active"
         >
-          👁️
+          👤
+          <span id="loginJobseekerRoleText">
+            Pencari Kerja
+          </span>
+        </button>
+
+        <button
+          type="button"
+          id="loginCompanyRole"
+        >
+          🏢
+          <span id="loginCompanyRoleText">
+            Perusahaan
+          </span>
         </button>
 
       </div>
-    </label>
 
-    <button
-      type="submit"
-      class="btn btn-primary"
-      id="loginSubmitBtn"
-    >
-      Masuk
-    </button>
+      <form id="loginPageForm">
 
-    <p id="loginMessage"></p>
+        <label>
 
-  </form>
+          <span id="loginEmailLabel">
+            Email
+          </span>
 
-  <div class="login-links">
+          <input
+            id="loginPageEmail"
+            type="email"
+            required
+            placeholder="nama@email.com"
+            autocomplete="email"
+          >
 
-   <a href="index.html">
-      <span id="loginBackLink">← Kembali ke Kerjiva</span>
-   </a>
+        </label>
 
-  </div>
+        <label>
 
-</section>
+          <span id="loginPasswordLabel">
+            Password
+          </span>
+
+          <div class="password-wrap">
+
+            <input
+              id="loginPagePassword"
+              type="password"
+              required
+              minlength="6"
+              placeholder="Minimal 6 karakter"
+              autocomplete="current-password"
+            >
+
+            <button
+              type="button"
+              id="toggleLoginPassword"
+              aria-label="Tampilkan password"
+            >
+              👁️
+            </button>
+
+          </div>
+
+        </label>
+
+        <button
+          type="submit"
+          class="btn btn-primary"
+          id="loginSubmitBtn"
+        >
+          Masuk
+        </button>
+
+        <p id="loginMessage"></p>
+
+      </form>
+
+      <div class="login-links">
+
+        <a href="index.html">
+
+          <span id="loginBackLink">
+            ← Kembali ke Kerjiva
+          </span>
+
+        </a>
+
+      </div>
+
+    </section>
 
   </main>
 
-<script>
-  function initKerjivaLogin() {
 
-  if (window.__kerjivaLoginInitialized) return;
-  window.__kerjivaLoginInitialized = true;
+  <script>
 
-  // ==================================================
-  // KONFIGURASI SUPABASE KERJIVA
-  // ==================================================
-  const SUPABASE_URL =
-    "https://ksqrimmecpriyepsuclc.supabase.co/rest/v1/";
+    // ==================================================
+    // SUPABASE
+    // ==================================================
 
-  const SUPABASE_KEY =
-    "sb_publishable_xvPQL9oniSRwZoqmSc5W4A_NS9ldWIL";
+    const SUPABASE_URL =
+      "https://ksqrimmecpriyepsuclc.supabase.co";
 
-  const supabaseAuth =
-    window.supabase.createClient(
-      SUPABASE_URL.replace("/rest/v1/", ""),
-      SUPABASE_KEY,
-      {
-        auth: {
-          flowType: "implicit",
-          detectSessionInUrl: true,
-          persistSession: true,
-          autoRefreshToken: true
+    const SUPABASE_KEY =
+      "sb_publishable_xvPQL9oniSRWzoqmSc5W4A_NS9ldWIL";
+
+    const supabaseAuth =
+      window.supabase.createClient(
+        SUPABASE_URL,
+        SUPABASE_KEY,
+        {
+          auth: {
+            flowType: "implicit",
+            detectSessionInUrl: true,
+            persistSession: true,
+            autoRefreshToken: true
+          }
         }
+      );
+
+
+    // ==================================================
+    // ELEMENT
+    // ==================================================
+
+    const jobseekerRoleBtn =
+      document.getElementById("loginJobseekerRole");
+
+    const companyRoleBtn =
+      document.getElementById("loginCompanyRole");
+
+    const passwordToggle =
+      document.getElementById("toggleLoginPassword");
+
+    const passwordInput =
+      document.getElementById("loginPagePassword");
+
+    const loginForm =
+      document.getElementById("loginPageForm");
+
+    const emailInput =
+      document.getElementById("loginPageEmail");
+
+    const message =
+      document.getElementById("loginMessage");
+
+    const submitBtn =
+      document.getElementById("loginSubmitBtn");
+
+
+    // ==================================================
+    // BAHASA
+    // ==================================================
+
+    const loginLanguage =
+      localStorage.getItem("siteLanguage") || "id";
+
+    const isLoginEnglish =
+      loginLanguage === "en";
+
+
+    document.documentElement.lang =
+      isLoginEnglish ? "en" : "id";
+
+
+    if (isLoginEnglish) {
+
+      document.getElementById("loginPageTitle").textContent =
+        "Log In to Kerjiva";
+
+      document.getElementById("loginPageDescription").textContent =
+        "Log in to your account to continue.";
+
+      document.getElementById("loginJobseekerRoleText").textContent =
+        "Job Seeker";
+
+      document.getElementById("loginCompanyRoleText").textContent =
+        "Company";
+
+      document.getElementById("loginPasswordLabel").textContent =
+        "Password";
+
+      document.getElementById("loginPageEmail").placeholder =
+        "name@email.com";
+
+      document.getElementById("loginPagePassword").placeholder =
+        "Minimum 6 characters";
+
+      document.getElementById("loginSubmitBtn").textContent =
+        "Log In";
+
+      document.getElementById("loginBackLink").textContent =
+        "← Back to Kerjiva";
+
+      passwordToggle.setAttribute(
+        "aria-label",
+        "Show password"
+      );
+
+    }
+
+
+    // ==================================================
+    // ROLE LOGIN
+    // ==================================================
+
+    let loginPageRole =
+      "jobseeker";
+
+
+    jobseekerRoleBtn.addEventListener(
+      "click",
+      () => {
+
+        loginPageRole =
+          "jobseeker";
+
+        jobseekerRoleBtn.classList.add(
+          "active"
+        );
+
+        companyRoleBtn.classList.remove(
+          "active"
+        );
+
       }
     );
 
 
-  // ==================================================
-  // ROLE LOGIN
-  // ==================================================
+    companyRoleBtn.addEventListener(
+      "click",
+      () => {
 
-  let loginPageRole = "jobseeker";
-  const loginLanguage =
-    localStorage.getItem("siteLanguage") || "id";
+        loginPageRole =
+          "company";
 
- const isLoginEnglish =
-   loginLanguage === "en";
-  
-  if (isLoginEnglish) {
-     document.documentElement.lang = "en";
-    
-      document.getElementById("toggleLoginPassword").setAttribute(
-       "aria-label",
-       "Show password"
-      );
-    
-     document.getElementById("loginEmailLabel").textContent =
-       "Email";
-
-     document.getElementById("loginPasswordLabel").textContent =
-       "Password";
-
-     document.getElementById("loginPageEmail").placeholder =
-       "name@email.com";
-
-     document.getElementById("loginPagePassword").placeholder =
-        "Minimum 6 characters";
-    
-     document.getElementById("loginJobseekerRoleText").textContent =
-         "Job Seeker";
-
-     document.getElementById("loginCompanyRoleText").textContent =
-      "Company";
-    
-      document.getElementById("loginSubmitBtn").textContent =
-       "Log In";
-
-     document.getElementById("loginPageTitle").textContent =
-      "Log In to Kerjiva";
-    
-    document.getElementById("loginBackLink").textContent =
-     "← Back to Kerjiva";
-
-     document.getElementById("loginPageDescription").textContent =
-       "Log in to your account to continue.";
-    
-     } else {
-       document.documentElement.lang = "id";
-    
-      document.getElementById("toggleLoginPassword").setAttribute(
-        "aria-label",
-        "Tampilkan password"
-      );
-    
-      document.getElementById("loginEmailLabel").textContent =
-        "Email";
-
-      document.getElementById("loginPasswordLabel").textContent =
-       "Password";
-
-      document.getElementById("loginPageEmail").placeholder =
-       "nama@email.com";
-
-      document.getElementById("loginPagePassword").placeholder =
-        "Minimal 6 karakter";
-    
-      document.getElementById("loginJobseekerRoleText").textContent =
-         "Pencari Kerja";
-
-      document.getElementById("loginCompanyRoleText").textContent =
-         "Perusahaan";
-    
-      document.getElementById("loginSubmitBtn").textContent =
-         "Masuk";
-
-      document.getElementById("loginPageTitle").textContent =
-          "Masuk ke Kerjiva";
-    
-      document.getElementById("loginBackLink").textContent =
-          "← Kembali ke Kerjiva";
-
-     document.getElementById("loginPageDescription").textContent =
-        "Masuk ke akun Anda untuk melanjutkan.";
-       }
-
-  const jobseekerRoleBtn =
-    document.getElementById("loginJobseekerRole");
-
-  const companyRoleBtn =
-    document.getElementById("loginCompanyRole");
-
-
-  jobseekerRoleBtn.addEventListener("click", () => {
-
-    loginPageRole = "jobseeker";
-
-    jobseekerRoleBtn.classList.add("active");
-    companyRoleBtn.classList.remove("active");
-
-  });
-
-
-  companyRoleBtn.addEventListener("click", () => {
-
-    loginPageRole = "company";
-
-    companyRoleBtn.classList.add("active");
-    jobseekerRoleBtn.classList.remove("active");
-
-  });
-
-
-  // ==================================================
-  // TAMPILKAN / SEMBUNYIKAN PASSWORD
-  // ==================================================
-
-  document
-    .getElementById("toggleLoginPassword")
-    .addEventListener("click", () => {
-
-      const password =
-        document.getElementById("loginPagePassword");
-
-      password.type =
-        password.type === "password"
-          ? "text"
-          : "password";
-
-    });
-
-
-  // ==================================================
-  // LOGIN
-  // ==================================================
-
-  document
-    .getElementById("loginPageForm")
-    .addEventListener("submit", async (e) => {
-
-      e.preventDefault();
-
-      const email =
-        document
-          .getElementById("loginPageEmail")
-          .value
-          .trim();
-
-      const password =
-        document
-          .getElementById("loginPagePassword")
-          .value;
-
-      const message =
-        document.getElementById("loginMessage");
-
-      const submitBtn =
-        document.getElementById("loginSubmitBtn");
-
-      message.textContent =
-        isLoginEnglish
-          ? "Logging in..."
-          : "Sedang masuk...";
-
-      submitBtn.disabled = true;
-
-      try {
-
-        // ==================================================
-        // LOGIN SUPABASE
-        // ==================================================
-
-        const authUrl =
-          SUPABASE_URL.replace("/rest/v1/", "") +
-          "/auth/v1";
-
-        const response =
-          await fetch(
-            `${authUrl}/token?grant_type=password`,
-            {
-              method: "POST",
-
-              headers: {
-                apikey: SUPABASE_KEY,
-                "Content-Type": "application/json"
-              },
-
-              body: JSON.stringify({
-                email,
-                password
-              })
-            }
-          );
-
-        const data =
-          await response.json();
-
-        if (!response.ok) {
-
-          throw new Error(
-            data?.error_description ||
-            data?.msg ||
-            (
-              isLoginEnglish
-                ? "Invalid email or password."
-                : "Email atau password salah."
-            )
-          );
-
-        }
-
-        if (!data?.user?.id) {
-
-          throw new Error(
-            isLoginEnglish
-              ? "User account could not be verified."
-              : "Akun pengguna tidak dapat diverifikasi."
-          );
-
-        }
-
-        // ==================================================
-        // SIMPAN SESSION KERJIVA
-        // ==================================================
-
-        localStorage.setItem(
-          "kerjivaAccessToken",
-          data.access_token
+        companyRoleBtn.classList.add(
+          "active"
         );
 
-        localStorage.setItem(
-          "kerjivaUser",
-          JSON.stringify(data.user)
+        jobseekerRoleBtn.classList.remove(
+          "active"
         );
 
-        // ==================================================
-        // ROLE AKTIF SESUAI PILIHAN LOGIN
-        // ==================================================
+      }
+    );
 
-        localStorage.setItem(
-          "kerjivaActiveRole",
-          loginPageRole
-        );
 
-        // ==================================================
-        // SINKRONKAN SESSION KE SUPABASE AUTH
-        // ==================================================
+    // ==================================================
+    // PASSWORD
+    // ==================================================
+
+    passwordToggle.addEventListener(
+      "click",
+      () => {
 
         if (
-          data.access_token &&
-          data.refresh_token
+          passwordInput.type === "password"
         ) {
 
-          const { error: sessionError } =
-            await supabaseAuth.auth.setSession({
-              access_token:
-                data.access_token,
+          passwordInput.type =
+            "text";
 
-              refresh_token:
-                data.refresh_token
-            });
+          passwordToggle.textContent =
+            "🙈";
 
-          if (sessionError) {
+        } else {
 
-            console.error(
-              "Gagal menyimpan session Supabase:",
-              sessionError
+          passwordInput.type =
+            "password";
+
+          passwordToggle.textContent =
+            "👁️";
+
+        }
+
+      }
+    );
+
+
+    // ==================================================
+    // LOGIN
+    // ==================================================
+
+    loginForm.addEventListener(
+      "submit",
+      async (e) => {
+
+        e.preventDefault();
+
+
+        const email =
+          emailInput.value.trim();
+
+        const password =
+          passwordInput.value;
+
+
+        message.textContent =
+          isLoginEnglish
+            ? "Logging in..."
+            : "Sedang masuk...";
+
+
+        submitBtn.disabled =
+          true;
+
+
+        try {
+
+          const {
+            data,
+            error
+          } =
+            await supabaseAuth.auth.signInWithPassword(
+              {
+                email,
+                password
+              }
+            );
+
+
+          if (error) {
+
+            throw error;
+
+          }
+
+
+          if (!data?.user?.id) {
+
+            throw new Error(
+              "USER_NOT_FOUND"
             );
 
           }
 
-        }
 
-        // ==================================================
-        // LOGIN BERHASIL
-        // ==================================================
+          // ==================================================
+          // SESSION KERJIVA
+          // ==================================================
 
-        message.textContent =
-          isLoginEnglish
-            ? "Login successful."
-            : "Login berhasil.";
-
-        // ==================================================
-        // MASUK KE SISTEM KERJIVA YANG SUDAH ADA
-        // ==================================================
-
-        setTimeout(() => {
-
-          window.location.href =
-            "index.html";
-
-        }, 500);
-
-      } catch (error) {
-
-        console.error(
-          "Login error:",
-          error
-        );
-
-        message.textContent =
-          error.message ||
-          (
-            isLoginEnglish
-              ? "Login failed. Please try again."
-              : "Login gagal. Silakan coba lagi."
+          localStorage.setItem(
+            "kerjivaUser",
+            JSON.stringify(data.user)
           );
 
-           submitBtn.disabled = false;
 
-    }
+          if (
+            data.session?.access_token
+          ) {
 
-  });
+            localStorage.setItem(
+              "kerjivaAccessToken",
+              data.session.access_token
+            );
 
-}
+          }
 
-// Jalankan login
-if (document.readyState === "loading") {
-  document.addEventListener("DOMContentLoaded", initKerjivaLogin);
-} else {
-  initKerjivaLogin();
-}
 
- 
+          localStorage.setItem(
+            "kerjivaActiveRole",
+            loginPageRole
+          );
+
+
+          // ==================================================
+          // BERHASIL
+          // ==================================================
+
+          message.textContent =
+            isLoginEnglish
+              ? "Login successful."
+              : "Login berhasil.";
+
+
+          setTimeout(
+            () => {
+
+              window.location.href =
+                "index.html";
+
+            },
+            500
+          );
+
+
+        } catch (error) {
+
+          console.error(
+            "Login error:",
+            error
+          );
+
+
+          message.textContent =
+            isLoginEnglish
+              ? "Invalid email or password."
+              : "Email atau password salah.";
+
+
+          submitBtn.disabled =
+            false;
+
+        }
+
+      }
+    );
+
+  </script>
+
+</body>
+</html>
