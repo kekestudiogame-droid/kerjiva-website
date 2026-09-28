@@ -272,6 +272,10 @@ content="Login Kerjiva — Masuk ke akun pencari kerja atau perusahaan."
   </main>
 
 <script>
+  function initKerjivaLogin() {
+
+  if (window.__kerjivaLoginInitialized) return;
+  window.__kerjivaLoginInitialized = true;
 
   // ==================================================
   // KONFIGURASI SUPABASE KERJIVA
@@ -607,11 +611,19 @@ content="Login Kerjiva — Masuk ke akun pencari kerja atau perusahaan."
               : "Login gagal. Silakan coba lagi."
           );
 
-        submitBtn.disabled = false;
+           submitBtn.disabled = false;
 
-      }
+    }
 
-    });
+  });
 
+}
+
+// Jalankan login
+if (document.readyState === "loading") {
+  document.addEventListener("DOMContentLoaded", initKerjivaLogin);
+} else {
+  initKerjivaLogin();
+}
 
  
