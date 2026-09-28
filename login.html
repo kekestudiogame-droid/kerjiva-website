@@ -1,1 +1,322 @@
+<!doctype html>
+
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<meta
+name="description"
+content="Login Kerjiva — Masuk ke akun pencari kerja atau perusahaan."
+
+>
+
+  <title>Login — Kerjiva</title>
+
+  <link rel="stylesheet" href="styles.css">
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+  <style>
+    body {
+      margin: 0;
+      min-height: 100vh;
+      background: #f4f7fb;
+      font-family: Arial, sans-serif;
+    }
+
+    .kerjiva-login-page {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 30px 16px;
+      box-sizing: border-box;
+    }
+
+    .kerjiva-login-card {
+      width: 100%;
+      max-width: 430px;
+      background: #ffffff;
+      border-radius: 20px;
+      padding: 34px 32px;
+      box-sizing: border-box;
+      box-shadow: 0 15px 45px rgba(15, 23, 42, 0.10);
+    }
+
+    .kerjiva-login-logo {
+      display: block;
+      width: 190px;
+      height: auto;
+      margin: 0 auto 24px;
+    }
+
+    .kerjiva-login-card h1 {
+      margin: 0 0 8px;
+      text-align: center;
+      color: #14213d;
+      font-size: 28px;
+    }
+
+    .kerjiva-login-card > p {
+      margin: 0 0 26px;
+      text-align: center;
+      color: #64748b;
+      line-height: 1.5;
+    }
+
+    .login-role {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      margin-bottom: 22px;
+    }
+
+    .login-role button {
+      border: 1px solid #dbe3ec;
+      background: #ffffff;
+      color: #334155;
+      padding: 12px;
+      border-radius: 10px;
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    .login-role button.active {
+      background: #123b6d;
+      border-color: #123b6d;
+      color: #ffffff;
+    }
+
+    .kerjiva-login-card label {
+      display: block;
+      margin-bottom: 16px;
+      color: #334155;
+      font-size: 14px;
+      font-weight: 600;
+    }
+
+    .kerjiva-login-card input {
+      width: 100%;
+      box-sizing: border-box;
+      margin-top: 7px;
+      padding: 13px 14px;
+      border: 1px solid #d1d5db;
+      border-radius: 10px;
+      outline: none;
+      font-size: 15px;
+    }
+
+    .kerjiva-login-card input:focus {
+      border-color: #123b6d;
+    }
+
+    .password-wrap {
+      position: relative;
+    }
+
+    .password-wrap input {
+      padding-right: 48px;
+    }
+
+    #toggleLoginPassword {
+      position: absolute;
+      right: 10px;
+      top: 50%;
+      transform: translateY(-50%);
+      border: none;
+      background: none;
+      font-size: 18px;
+      cursor: pointer;
+    }
+
+    #loginSubmitBtn {
+      width: 100%;
+      margin-top: 6px;
+    }
+
+    #loginMessage {
+      min-height: 20px;
+      margin: 14px 0 0;
+      text-align: center;
+      font-size: 14px;
+      color: #64748b;
+    }
+
+    .login-links {
+      margin-top: 22px;
+      text-align: center;
+      font-size: 14px;
+    }
+
+    .login-links a {
+      color: #123b6d;
+      font-weight: 600;
+      text-decoration: none;
+    }
+
+    @media (max-width: 600px) {
+      .kerjiva-login-card {
+        padding: 28px 20px;
+        border-radius: 16px;
+      }
+
+      .kerjiva-login-logo {
+        width: 165px;
+      }
+
+      .kerjiva-login-card h1 {
+        font-size: 25px;
+      }
+    }
+  </style>
+
+</head>
+
+<body>
+
+  <main class="kerjiva-login-page">
+
+<section class="kerjiva-login-card">
+
+  <img
+    src="kerjiva.png"
+    alt="Kerjiva"
+    class="kerjiva-login-logo"
+  >
+
+  <h1>Masuk ke Kerjiva</h1>
+
+  <p>
+    Masuk ke akun Anda untuk melanjutkan.
+  </p>
+
+  <div class="login-role">
+
+    <button
+      type="button"
+      id="loginJobseekerRole"
+      class="active"
+    >
+      👤 Pencari Kerja
+    </button>
+
+    <button
+      type="button"
+      id="loginCompanyRole"
+    >
+      🏢 Perusahaan
+    </button>
+
+  </div>
+
+  <form id="loginPageForm">
+
+    <label>
+      Email
+
+      <input
+        id="loginPageEmail"
+        type="email"
+        required
+        placeholder="nama@email.com"
+        autocomplete="email"
+      >
+    </label>
+
+    <label>
+      Password
+
+      <div class="password-wrap">
+
+        <input
+          id="loginPagePassword"
+          type="password"
+          required
+          minlength="6"
+          placeholder="Minimal 6 karakter"
+          autocomplete="current-password"
+        >
+
+        <button
+          type="button"
+          id="toggleLoginPassword"
+          aria-label="Tampilkan password"
+        >
+          👁️
+        </button>
+
+      </div>
+    </label>
+
+    <button
+      type="submit"
+      class="btn btn-primary"
+      id="loginSubmitBtn"
+    >
+      Masuk
+    </button>
+
+    <p id="loginMessage"></p>
+
+  </form>
+
+  <div class="login-links">
+
+    <a href="index.html">
+      ← Kembali ke Kerjiva
+    </a>
+
+  </div>
+
+</section>
+
+  </main>
+
+  <script>
+
+    let loginPageRole = "jobseeker";
+
+    const jobseekerRoleBtn =
+      document.getElementById("loginJobseekerRole");
+
+    const companyRoleBtn =
+      document.getElementById("loginCompanyRole");
+
+    jobseekerRoleBtn.addEventListener("click", () => {
+
+      loginPageRole = "jobseeker";
+
+      jobseekerRoleBtn.classList.add("active");
+      companyRoleBtn.classList.remove("active");
+
+    });
+
+    companyRoleBtn.addEventListener("click", () => {
+
+      loginPageRole = "company";
+
+      companyRoleBtn.classList.add("active");
+      jobseekerRoleBtn.classList.remove("active");
+
+    });
+
+    document
+      .getElementById("toggleLoginPassword")
+      .addEventListener("click", () => {
+
+        const password =
+          document.getElementById("loginPagePassword");
+
+        password.type =
+          password.type === "password"
+            ? "text"
+            : "password";
+
+      });
+
+  </script>
+
+</body>
+</html>
 
