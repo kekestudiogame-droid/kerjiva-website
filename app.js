@@ -2637,6 +2637,7 @@ function openModal(title, text){
 }
 
 function showCompanyRegistrationAfterLogin() {
+  window.kerjivaCompletingCompanyProfile = true;
 
   const language =
     localStorage.getItem("siteLanguage") || "id";
@@ -4522,6 +4523,78 @@ if (!jobseekerCity) {
    return;
 }
     }
+    // ==================================================
+// LENGKAPI PROFIL PERUSAHAAN DARI AKUN YANG SUDAH LOGIN
+// ==================================================
+
+if (window.kerjivaCompletingCompanyProfile) {
+
+  const existingAccessToken =
+    localStorage.getItem("kerjivaAccessToken");
+
+  const existingUserData =
+    localStorage.getItem("kerjivaUser");
+
+  let existingUser = null;
+
+  try {
+    existingUser =
+      JSON.parse(existingUserData || "{}");
+  } catch {
+    existingUser = null;
+  }
+
+  if (!existingAccessToken || !existingUser?.id) {
+    throw new Error(
+      "Sesi login tidak ditemukan. Silakan masuk kembali."
+    );
+  }
+
+  const companyResponse = await fetch(
+    `${SUPABASE_URL}companies`,
+    {
+      method: "POST",
+
+      headers: {
+        apikey: SUPABASE_KEY,
+        Authorization:
+          `Bearer ${existingAccessToken}`,
+        "Content-Type": "application/json",
+        Prefer: "return=minimal"
+      },
+
+      body: JSON.stringify({
+        user_id: existingUser.id,
+        company_name: companyName,
+        email: email,
+        phone: companyPhone,
+        website: companyWebsite,
+        city: companyCity,
+        address: companyAddress
+      })
+    }
+  );
+
+  if (!companyResponse.ok) {
+    const companyError =
+      await companyResponse.text();
+
+    throw new Error(companyError);
+  }
+
+  window.kerjivaCompletingCompanyProfile = false;
+
+  isRegister = false;
+  isCompany = true;
+
+  modal.classList.add("hidden");
+
+  showNotification("loginSuccess");
+
+  showCompanyDashboard();
+
+  return;
+}
 
     // ==================================================
     // SUPABASE AUTH
