@@ -4485,6 +4485,23 @@ localStorage.setItem(
   "kerjivaActiveRole",
   selectedRole
 );
+    // ==================================================
+// SINKRONKAN SESSION KE SUPABASE AUTH
+// ==================================================
+if (data.access_token && data.refresh_token) {
+  const { error: sessionError } =
+    await supabaseAuth.auth.setSession({
+      access_token: data.access_token,
+      refresh_token: data.refresh_token
+    });
+
+  if (sessionError) {
+    console.error(
+      "Gagal menyimpan session Supabase:",
+      sessionError
+    );
+  }
+}
 
 // ==================================================
 // PENCARI KERJA
