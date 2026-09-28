@@ -4690,8 +4690,6 @@ if (data.access_token && data.refresh_token) {
 // CEK ROLE YANG DIPILIH SAAT LOGIN
 // ==================================================
 
-const selectedRole =
-  isCompany ? "company" : "jobseeker";
 
 localStorage.setItem(
   "kerjivaActiveRole",
