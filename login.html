@@ -607,25 +607,24 @@ if (!response.ok) {
           );
 
 
-        } catch (error) {
+    } catch (error) {
+  console.error(
+    "Login error:",
+    error
+  );
 
-          console.error(
-            "Login error:",
-            error
-          );
+  const loginErrorMessage =
+    isLoginEnglish
+      ? "Invalid email or password."
+      : "Email atau password salah.";
 
+  message.textContent = "";
 
-          message.textContent =
-            isLoginEnglish
-              ? "Invalid email or password."
-              : "Email atau password salah.";
+  alert(loginErrorMessage);
 
-
-          submitBtn.disabled =
-            false;
-
-        }
-
+  submitBtn.disabled =
+    false;
+}
       }
     );
 
