@@ -482,6 +482,31 @@
     // ==================================================
     // LOGIN
     // ==================================================
+    function showLoginNotification(message) {
+  const notification = document.createElement("div");
+
+  notification.textContent = message;
+
+  notification.style.position = "fixed";
+  notification.style.top = "20px";
+  notification.style.left = "50%";
+  notification.style.transform = "translateX(-50%)";
+  notification.style.zIndex = "99999";
+  notification.style.padding = "14px 22px";
+  notification.style.borderRadius = "10px";
+  notification.style.background = "#1f2937";
+  notification.style.color = "#ffffff";
+  notification.style.fontSize = "15px";
+  notification.style.fontWeight = "500";
+  notification.style.boxShadow = "0 6px 20px rgba(0,0,0,0.25)";
+  notification.style.textAlign = "center";
+
+  document.body.appendChild(notification);
+
+  setTimeout(() => {
+    notification.remove();
+  }, 3000);
+}
 
     loginForm.addEventListener(
       "submit",
@@ -620,7 +645,7 @@ if (!response.ok) {
 
   message.textContent = "";
 
-  alert(loginErrorMessage);
+  showLoginNotification(loginErrorMessage);
 
   submitBtn.disabled =
     false;
