@@ -4687,73 +4687,99 @@ if (data.access_token && data.refresh_token) {
 }
 
 // ==================================================
+// CEK ROLE YANG DIPILIH SAAT LOGIN
+// ==================================================
+
+const metadata =
+  data.user?.user_metadata || {};
+
+const selectedRole =
+  isCompany ? "company" : "jobseeker";
+
+localStorage.setItem(
+  "kerjivaActiveRole",
+  selectedRole
+);
+
+// ==================================================
+// SINKRONKAN SESSION KE SUPABASE AUTH
+// ==================================================
+
+if (data.access_token && data.refresh_token) {
+  const { error: sessionError } =
+    await supabaseAuth.auth.setSession({
+      access_token: data.access_token,
+      refresh_token: data.refresh_token
+    });
+
+  if (sessionError) {
+    console.error(
+      "Gagal menyimpan session Supabase:",
+      sessionError
+    );
+  }
+}
+
+// ==================================================
 // PENCARI KERJA
 // ==================================================
 
 if (!isCompany) {
 
-  // Pastikan profil pencari kerja tersedia
-  if (data.user?.id) {
-
-    const profileCheck = await fetch(
-      `${SUPABASE_URL}jobseeker_profiles?id=eq.${data.user.id}&select=id`,
-      {
-        headers: {
-          apikey: SUPABASE_KEY,
-          Authorization:
-            `Bearer ${data.access_token}`
-        }
-      }
+  if (!data.user?.id) {
+    throw new Error(
+      "User ID tidak ditemukan."
     );
-
-    if (!profileCheck.ok) {
-      throw new Error(
-        await profileCheck.text()
-      );
-    }
-
-    const existingProfiles =
-      await profileCheck.json();
-
-    if (!existingProfiles.length) {
-
-      const profileResponse = await fetch(
-        `${SUPABASE_URL}jobseeker_profiles`,
-        {
-          method: "POST",
-          headers: {
-            apikey: SUPABASE_KEY,
-            Authorization:
-              `Bearer ${data.access_token}`,
-            "Content-Type": "application/json",
-            Prefer: "return=minimal"
-          },
-          body: JSON.stringify({
-            id: data.user.id,
-            full_name:
-              metadata.full_name || "",
-            phone:
-              metadata.phone || "",
-            city:
-              metadata.city || ""
-          })
-        }
-      );
-
-      if (!profileResponse.ok) {
-        const profileError =
-          await profileResponse.text();
-
-        throw new Error(profileError);
-      }
-    }
   }
 
-  modal.classList.add("hidden");
+  const profileCheck = await fetch(
+    `${SUPABASE_URL}jobseeker_profiles?id=eq.${data.user.id}&select=id`,
+    {
+      headers: {
+        apikey: SUPABASE_KEY,
+        Authorization:
+          `Bearer ${data.access_token}`
+      }
+    }
+  );
 
-  showJobseekerDashboard();
+  if (!profileCheck.ok) {
+    throw new Error(
+      await profileCheck.text()
+    );
+  }
 
-  showNotification("loginSuccess");
+  const existingProfiles =
+    await profileCheck.json();
+
+  // ----------------------------------------------
+  // PROFIL SUDAH ADA
+  // ----------------------------------------------
+
+  if (existingProfiles.length) {
+
+    modal.classList.add("hidden");
+
+    showJobseekerDashboard();
+
+    showNotification("loginSuccess");
+
+    return;
+  }
+
+  // ----------------------------------------------
+  // PROFIL BELUM ADA
+  // ----------------------------------------------
+
+  const language =
+    localStorage.getItem("siteLanguage") || "id";
+
+  showNotification(
+    "invalidAccount",
+    language === "en"
+      ? "This account does not have a Job Seeker profile yet."
+      : "Akun ini belum memiliki profil Pencari Kerja."
+  );
 
   return;
 }
@@ -4764,11 +4790,60 @@ if (!isCompany) {
 
 if (isCompany) {
 
-  modal.classList.add("hidden");
+  if (!data.user?.id) {
+    throw new Error(
+      "User ID tidak ditemukan."
+    );
+  }
 
-  showCompanyDashboard();
+  const companyCheck = await fetch(
+    `${SUPABASE_URL}companies?user_id=eq.${data.user.id}&select=id`,
+    {
+      headers: {
+        apikey: SUPABASE_KEY,
+        Authorization:
+          `Bearer ${data.access_token}`
+      }
+    }
+  );
 
-  showNotification("loginSuccess");
+  if (!companyCheck.ok) {
+    throw new Error(
+      await companyCheck.text()
+    );
+  }
+
+  const existingCompanies =
+    await companyCheck.json();
+
+  // ----------------------------------------------
+  // PROFIL PERUSAHAAN SUDAH ADA
+  // ----------------------------------------------
+
+  if (existingCompanies.length) {
+
+    modal.classList.add("hidden");
+
+    showCompanyDashboard();
+
+    showNotification("loginSuccess");
+
+    return;
+  }
+
+  // ----------------------------------------------
+  // PROFIL PERUSAHAAN BELUM ADA
+  // ----------------------------------------------
+
+  const language =
+    localStorage.getItem("siteLanguage") || "id";
+
+  showNotification(
+    "invalidAccount",
+    language === "en"
+      ? "This account does not have a Company profile yet."
+      : "Akun ini belum memiliki profil Perusahaan."
+  );
 
   return;
 }
@@ -4777,6 +4852,8 @@ if (isCompany) {
 throw new Error(
   "Jenis akun belum dapat diproses."
 );
+    
+
     
   } catch (error) {
 
