@@ -2636,6 +2636,138 @@ function openModal(title, text){
   modal.classList.remove("hidden");
 }
 
+function showCompanyRegistrationAfterLogin() {
+
+  const language =
+    localStorage.getItem("siteLanguage") || "id";
+
+  const isEnglish =
+    language === "en";
+
+  const notification =
+    document.createElement("div");
+
+  notification.id =
+    "kerjivaCompanyProfileNotification";
+
+  notification.className =
+    "kerjiva-registration-notification";
+
+  notification.innerHTML = `
+
+    <div class="kerjiva-registration-icon">
+      !
+    </div>
+
+    <div class="kerjiva-registration-content">
+
+      <div class="kerjiva-registration-title">
+        ${
+          isEnglish
+            ? "Company Profile Not Found"
+            : "Profil Perusahaan Belum Ada"
+        }
+      </div>
+
+      <div class="kerjiva-registration-message">
+        ${
+          isEnglish
+            ? "This account does not have a Company profile yet.<br>Please complete the Company registration form."
+            : "Akun ini belum memiliki profil Perusahaan.<br>Silakan lengkapi formulir pendaftaran Perusahaan."
+        }
+      </div>
+
+    </div>
+
+    <button
+      type="button"
+      class="kerjiva-registration-ok"
+    >
+      OK
+    </button>
+
+  `;
+
+  document.body.appendChild(notification);
+
+  requestAnimationFrame(() => {
+    notification.classList.add("show");
+  });
+
+  const okButton =
+    notification.querySelector(
+      ".kerjiva-registration-ok"
+    );
+
+  okButton.addEventListener("click", () => {
+
+    notification.classList.remove("show");
+
+    setTimeout(() => {
+
+      notification.remove();
+
+      isRegister = true;
+      isCompany = true;
+
+      if (companyFields) {
+        companyFields.style.display = "block";
+      }
+
+      if (jobseekerFields) {
+        jobseekerFields.style.display = "none";
+      }
+
+      const confirmPasswordField =
+        document.querySelector("#confirmPasswordField");
+
+      if (confirmPasswordField) {
+        confirmPasswordField.style.display = "block";
+      }
+
+      modalTitle.textContent =
+        isEnglish
+          ? "Register Company"
+          : "Daftar Perusahaan";
+
+      modalText.textContent =
+        isEnglish
+          ? "Create a company account to post job vacancies."
+          : "Buat akun perusahaan untuk memasang lowongan.";
+
+      const submitButton =
+        authForm?.querySelector(
+          'button[type="submit"]'
+        );
+
+      if (submitButton) {
+        submitButton.textContent =
+          isEnglish
+            ? "Sign Up"
+            : "Daftar";
+      }
+
+      if (authForm) {
+        authForm.classList.remove("hidden");
+      }
+
+      const switchAuthContainer =
+        document.querySelector(".switch-auth");
+
+      if (switchAuthContainer) {
+        switchAuthContainer.classList.remove("hidden");
+      }
+
+      if (modal) {
+        modal.classList.remove("hidden");
+      }
+
+    }, 250);
+
+  });
+
+}
+
 async function submitApplication(job){
 const accessToken = localStorage.getItem("kerjivaAccessToken");
 
