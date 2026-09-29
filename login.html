@@ -534,48 +534,15 @@
 
         try {
 
-      const authUrl =
-  SUPABASE_URL.replace("/rest/v1/", "") +
-  "/auth/v1";
+    const { data, error } =
+      await supabaseAuth.auth.signInWithPassword({
+      email,
+      password
+     });
 
-const response =
-  await fetch(
-    `${authUrl}/token?grant_type=password`,
-    {
-      method: "POST",
-
-      headers: {
-        apikey: SUPABASE_KEY,
-        "Content-Type": "application/json"
-      },
-
-      body: JSON.stringify({
-        email,
-        password
-      })
-    }
-  );
-
-const data =
-  await response.json();
-          
-          console.log("LOGIN STATUS:", response.status);
-          console.log("LOGIN RESPONSE:", data);
-
-if (!response.ok) {
-
-  throw new Error(
-    data?.error_description ||
-    data?.msg ||
-    (
-      isLoginEnglish
-        ? "Invalid email or password."
-        : "Email atau password salah."
-    )
-  );
-
-}
-
+   if (error) {
+     throw error;
+     }
 
           if (!data?.user?.id) {
 
