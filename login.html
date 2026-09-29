@@ -841,20 +841,62 @@
                 ? "You do not have a Job Seeker profile."
                 : "Anda belum memiliki profil Pencari Kerja.";
 
-          } else if (
-            error.message ===
-            "COMPANY_PROFILE_NOT_FOUND"
-          ) {
+        } else if (
+  error.message ===
+  "COMPANY_PROFILE_NOT_FOUND"
+) {
 
-            localStorage.setItem(
-              "kerjivaCompleteCompanyProfile",
-              "true"
-            );
+  localStorage.setItem(
+    "kerjivaCompleteCompanyProfile",
+    "true"
+  );
 
-            loginErrorMessage =
-              isLoginEnglish
-                ? "You do not have a Company profile."
-                : "Anda belum memiliki profil Perusahaan.";
+  const notification =
+    document.createElement("div");
+
+  notification.className =
+    "kerjiva-login-ok-notification";
+
+  notification.innerHTML = `
+    <div>
+      ${
+        isLoginEnglish
+          ? "You do not have a Company profile yet.<br>Please complete your Company registration."
+          : "Akun ini belum memiliki profil Perusahaan.<br>Silakan lengkapi pendaftaran Perusahaan."
+      }
+    </div>
+
+    <button
+      type="button"
+      class="kerjiva-login-ok-button"
+    >
+      OK
+    </button>
+  `;
+
+  document.body.appendChild(notification);
+
+  const okButton =
+    notification.querySelector(
+      ".kerjiva-login-ok-button"
+    );
+
+  okButton.addEventListener(
+    "click",
+    () => {
+
+      notification.remove();
+
+      window.location.href =
+        "index.html";
+
+    }
+  );
+
+  submitBtn.disabled = false;
+
+  return;
+}
 
           } else if (
             error.message ===
