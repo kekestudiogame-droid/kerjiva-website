@@ -557,6 +557,8 @@ const response = await fetch(
 );
 
 const data = await response.json();
+          console.log("LOGIN STATUS:", response.status);
+          console.log("LOGIN DATA:", data);
 
 if (!response.ok) {
   throw new Error(
