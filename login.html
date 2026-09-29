@@ -307,7 +307,7 @@
 
     const supabaseAuth =
       window.supabase.createClient(
-        SUPABASE_URL,
+       SUPABASE_URL.replace("/rest/v1/", ""),
         SUPABASE_KEY,
         {
           auth: {
