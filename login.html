@@ -1,3 +1,4 @@
+
 <!doctype html>
 <html lang="id">
 <head>
@@ -297,17 +298,23 @@
 
     // ==================================================
     // SUPABASE
+    // MENGIKUTI app.js
     // ==================================================
 
-   const SUPABASE_URL =
+    const SUPABASE_URL =
       "https://ksqrimmecpriyepsuclc.supabase.co/rest/v1/";
-    
+
+    /*
+      PENTING:
+      Ini harus sama persis dengan SUPABASE_KEY di app.js.
+    */
     const SUPABASE_KEY =
-      "sb_publishable_xvPQL9oniSRWzoqmSc5W4A_NS9ldWIL";
+      "sb_publishable_xvPQL9oniSRwZoqmSc5W4A_NS9ldWIL";
+
 
     const supabaseAuth =
       window.supabase.createClient(
-       SUPABASE_URL.replace("/rest/v1/", ""),
+        SUPABASE_URL.replace("/rest/v1/", ""),
         SUPABASE_KEY,
         {
           auth: {
@@ -359,7 +366,6 @@
     const isLoginEnglish =
       loginLanguage === "en";
 
-
     document.documentElement.lang =
       isLoginEnglish ? "en" : "id";
 
@@ -402,7 +408,11 @@
 
 
     // ==================================================
-    // ROLE LOGIN
+    // ROLE
+    // MENGIKUTI app.js
+    //
+    // jobseeker = Pencari Kerja
+    // company   = Perusahaan
     // ==================================================
 
     let loginPageRole =
@@ -480,33 +490,76 @@
 
 
     // ==================================================
-    // LOGIN
+    // NOTIFICATION
     // ==================================================
-    function showLoginNotification(message) {
-  const notification = document.createElement("div");
 
-  notification.textContent = message;
+    function showLoginNotification(
+      notificationMessage
+    ) {
 
-  notification.style.position = "fixed";
-  notification.style.top = "20px";
-  notification.style.left = "50%";
-  notification.style.transform = "translateX(-50%)";
-  notification.style.zIndex = "99999";
-  notification.style.padding = "14px 22px";
-  notification.style.borderRadius = "10px";
-  notification.style.background = "#1f2937";
-  notification.style.color = "#ffffff";
-  notification.style.fontSize = "15px";
-  notification.style.fontWeight = "500";
-  notification.style.boxShadow = "0 6px 20px rgba(0,0,0,0.25)";
-  notification.style.textAlign = "center";
+      const notification =
+        document.createElement("div");
 
-  document.body.appendChild(notification);
+      notification.textContent =
+        notificationMessage;
 
-  setTimeout(() => {
-    notification.remove();
-  }, 3000);
-}
+      notification.style.position =
+        "fixed";
+
+      notification.style.top =
+        "20px";
+
+      notification.style.left =
+        "50%";
+
+      notification.style.transform =
+        "translateX(-50%)";
+
+      notification.style.zIndex =
+        "99999";
+
+      notification.style.padding =
+        "14px 22px";
+
+      notification.style.borderRadius =
+        "10px";
+
+      notification.style.background =
+        "#1f2937";
+
+      notification.style.color =
+        "#ffffff";
+
+      notification.style.fontSize =
+        "15px";
+
+      notification.style.fontWeight =
+        "500";
+
+      notification.style.boxShadow =
+        "0 6px 20px rgba(0,0,0,0.25)";
+
+      notification.style.textAlign =
+        "center";
+
+      document.body.appendChild(
+        notification
+      );
+
+      setTimeout(
+        () => {
+          notification.remove();
+        },
+        3000
+      );
+
+    }
+
+
+    // ==================================================
+    // LOGIN
+    // MENGIKUTI AUTH app.js
+    // ==================================================
 
     loginForm.addEventListener(
       "submit",
@@ -534,40 +587,64 @@
 
         try {
 
-   const authUrl = SUPABASE_URL.replace(
-  "/rest/v1/",
-  "/auth/v1/"
-);
+          const authUrl =
+            SUPABASE_URL.replace(
+              "/rest/v1/",
+              "/auth/v1/"
+            );
 
-const response = await fetch(
-  `${authUrl}token?grant_type=password`,
-  {
-    method: "POST",
 
- headers: {
-  apikey: SUPABASE_KEY,
-  "Content-Type": "application/json"
-},
+          // ==================================================
+          // AUTH SAMA SEPERTI app.js
+          // ==================================================
 
-    body: JSON.stringify({
-      email,
-      password
-    })
-  }
-);
+          const response =
+            await fetch(
+              `${authUrl}/token?grant_type=password`,
+              {
+                method: "POST",
 
-const data = await response.json();
-          console.log("LOGIN STATUS:", response.status);
-          console.log("LOGIN DATA:", data);
+                headers: {
+                  apikey: SUPABASE_KEY,
+                  "Content-Type":
+                    "application/json"
+                },
 
-if (!response.ok) {
-  throw new Error(
-    data.msg ||
-    data.error_description ||
-    data.message ||
-    "Gagal"
-  );
-}
+                body: JSON.stringify({
+                  email,
+                  password
+                })
+              }
+            );
+
+
+          const data =
+            await response.json();
+
+
+          console.log(
+            "LOGIN STATUS:",
+            response.status
+          );
+
+
+          console.log(
+            "LOGIN DATA:",
+            data
+          );
+
+
+          if (!response.ok) {
+
+            throw new Error(
+              data.msg ||
+              data.error_description ||
+              data.message ||
+              "Gagal"
+            );
+
+          }
+
 
           if (!data?.user?.id) {
 
@@ -588,26 +665,138 @@ if (!response.ok) {
           );
 
 
-        if (data.access_token) {
+          if (data.access_token) {
 
-  localStorage.setItem(
-    "kerjivaAccessToken",
-    data.access_token
-  );
+            localStorage.setItem(
+              "kerjivaAccessToken",
+              data.access_token
+            );
 
-}
+          }
 
-if (
-  data.access_token &&
-  data.refresh_token
-) {
 
-  await supabaseAuth.auth.setSession({
-    access_token: data.access_token,
-    refresh_token: data.refresh_token
-  });
+          if (
+            data.access_token &&
+            data.refresh_token
+          ) {
 
-}
+            await supabaseAuth.auth.setSession({
+              access_token:
+                data.access_token,
+
+              refresh_token:
+                data.refresh_token
+            });
+
+          }
+
+
+          // ==================================================
+          // CEK ROLE SESUAI app.js
+          // ==================================================
+
+          if (
+            loginPageRole ===
+            "jobseeker"
+          ) {
+
+            const profileResponse =
+              await fetch(
+                `${SUPABASE_URL}jobseeker_profiles?id=eq.${encodeURIComponent(data.user.id)}&select=id`,
+                {
+                  method: "GET",
+
+                  headers: {
+                    apikey:
+                      SUPABASE_KEY,
+
+                    Authorization:
+                      `Bearer ${data.access_token}`
+                  }
+                }
+              );
+
+
+            if (!profileResponse.ok) {
+
+              throw new Error(
+                "PROFILE_CHECK_FAILED"
+              );
+
+            }
+
+
+            const profileData =
+              await profileResponse.json();
+
+
+            if (
+              !Array.isArray(profileData) ||
+              profileData.length === 0
+            ) {
+
+              throw new Error(
+                "JOBSEEKER_PROFILE_NOT_FOUND"
+              );
+
+            }
+
+          }
+
+
+          if (
+            loginPageRole ===
+            "company"
+          ) {
+
+            const companyResponse =
+              await fetch(
+                `${SUPABASE_URL}companies?user_id=eq.${encodeURIComponent(data.user.id)}&select=id`,
+                {
+                  method: "GET",
+
+                  headers: {
+                    apikey:
+                      SUPABASE_KEY,
+
+                    Authorization:
+                      `Bearer ${data.access_token}`
+                  }
+                }
+              );
+
+
+            if (!companyResponse.ok) {
+
+              throw new Error(
+                "COMPANY_PROFILE_CHECK_FAILED"
+              );
+
+            }
+
+
+            const companyData =
+              await companyResponse.json();
+
+
+            if (
+              !Array.isArray(companyData) ||
+              companyData.length === 0
+            ) {
+
+              throw new Error(
+                "COMPANY_PROFILE_NOT_FOUND"
+              );
+
+            }
+
+          }
+
+
+          // ==================================================
+          // ROLE AKTIF
+          // SAMA SEPERTI app.js
+          // ==================================================
 
           localStorage.setItem(
             "kerjivaActiveRole",
@@ -635,25 +824,72 @@ if (
             500
           );
 
+        } catch (error) {
 
-    } catch (error) {
-  console.error(
-    "Login error:",
-    error
-  );
+          console.error(
+            "Login error:",
+            error
+          );
 
-  const loginErrorMessage =
-    isLoginEnglish
-      ? "Invalid email or password."
-      : "Email atau password salah.";
 
-  message.textContent = "";
+          let loginErrorMessage;
 
-  showLoginNotification(loginErrorMessage);
 
-  submitBtn.disabled =
-    false;
-}
+          if (
+            error.message ===
+            "JOBSEEKER_PROFILE_NOT_FOUND"
+          ) {
+
+            loginErrorMessage =
+              isLoginEnglish
+                ? "You do not have a Job Seeker profile."
+                : "Anda belum memiliki profil Pencari Kerja.";
+
+          } else if (
+            error.message ===
+            "COMPANY_PROFILE_NOT_FOUND"
+          ) {
+
+            loginErrorMessage =
+              isLoginEnglish
+                ? "You do not have a Company profile."
+                : "Anda belum memiliki profil Perusahaan.";
+
+          } else if (
+            error.message ===
+            "PROFILE_CHECK_FAILED" ||
+            error.message ===
+            "COMPANY_PROFILE_CHECK_FAILED"
+          ) {
+
+            loginErrorMessage =
+              isLoginEnglish
+                ? "Unable to check your profile."
+                : "Profil Anda tidak dapat diperiksa.";
+
+          } else {
+
+            loginErrorMessage =
+              isLoginEnglish
+                ? "Invalid email or password."
+                : "Email atau password salah.";
+
+          }
+
+
+          message.textContent =
+            "";
+
+          showLoginNotification(
+            loginErrorMessage
+          );
+
+
+          submitBtn.disabled =
+            false;
+
+        }
+
       }
     );
 
