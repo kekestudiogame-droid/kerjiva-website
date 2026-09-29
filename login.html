@@ -299,9 +299,9 @@
     // SUPABASE
     // ==================================================
 
-    const SUPABASE_URL =
-      "https://ksqrimmecpriyepsuclc.supabase.co";
-
+   const SUPABASE_URL =
+      "https://ksqrimmecpriyepsuclc.supabase.co/rest/v1/";
+    
     const SUPABASE_KEY =
       "sb_publishable_xvPQL9oniSRWzoqmSc5W4A_NS9ldWIL";
 
@@ -534,15 +534,38 @@
 
         try {
 
-    const { data, error } =
-      await supabaseAuth.auth.signInWithPassword({
+   const authUrl = SUPABASE_URL.replace(
+  "/rest/v1/",
+  "/auth/v1/"
+);
+
+const response = await fetch(
+  `${authUrl}token?grant_type=password`,
+  {
+    method: "POST",
+
+    headers: {
+      apikey: SUPABASE_KEY,
+      "Content-Type": "application/json"
+    },
+
+    body: JSON.stringify({
       email,
       password
-     });
+    })
+  }
+);
 
-   if (error) {
-     throw error;
-     }
+const data = await response.json();
+
+if (!response.ok) {
+  throw new Error(
+    data.msg ||
+    data.error_description ||
+    data.message ||
+    "Gagal"
+  );
+}
 
           if (!data?.user?.id) {
 
@@ -563,17 +586,26 @@
           );
 
 
-          if (
-            data.session?.access_token
-          ) {
+        if (data.access_token) {
 
-            localStorage.setItem(
-              "kerjivaAccessToken",
-              data.session.access_token
-            );
+  localStorage.setItem(
+    "kerjivaAccessToken",
+    data.access_token
+  );
 
-          }
+}
 
+if (
+  data.access_token &&
+  data.refresh_token
+) {
+
+  await supabaseAuth.auth.setSession({
+    access_token: data.access_token,
+    refresh_token: data.refresh_token
+  });
+
+}
 
           localStorage.setItem(
             "kerjivaActiveRole",
