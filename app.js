@@ -12813,6 +12813,34 @@ if (document.readyState === "loading") {
   setupAuthButtons();
 
 }
+  // =====================================================
+// HANDOFF DARI LOGIN.HTML
+// LENGKAPI PROFIL PERUSAHAAN
+// =====================================================
+
+if (
+  localStorage.getItem(
+    "kerjivaCompleteCompanyProfile"
+  ) === "true"
+) {
+
+  localStorage.removeItem(
+    "kerjivaCompleteCompanyProfile"
+  );
+
+  setTimeout(() => {
+
+    if (
+      typeof showCompanyRegistrationAfterLogin ===
+      "function"
+    ) {
+      showCompanyRegistrationAfterLogin();
+    }
+
+  }, 300);
+
+}
+  
 window.showIncomingApplications = async function () {
  const userData = localStorage.getItem("kerjivaUser");
  const accessToken = localStorage.getItem("kerjivaAccessToken");
