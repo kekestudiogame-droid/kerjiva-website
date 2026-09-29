@@ -258,14 +258,26 @@
               autocomplete="current-password"
             >
 
-         <button
-              type="button"
-              id="toggleLoginPassword"
-              aria-label="Tampilkan password"
+       <button
+             type="button"
+             id="toggleLoginPassword"
+             aria-label="Tampilkan password"
              >
-            <span id="loginPasswordEye">👁</span>
-        </button>
-
+              <svg
+              id="loginPasswordEye"
+              width="20"
+              height="20"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              >
+           <path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12z"></path>
+           <circle cx="12" cy="12" r="3"></circle>
+           </svg>
+           </button>
           </div>
 
         </label>
@@ -462,38 +474,77 @@
     );
 
 
-    // ==================================================
-    // PASSWORD
-    // ==================================================
+ // ==================================================
+// PASSWORD
+// ==================================================
 
-    passwordToggle.addEventListener(
-      "click",
-      () => {
+const eyeOpen =
+  `<svg
+    width="20"
+    height="20"
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    stroke-width="2"
+    stroke-linecap="round"
+    stroke-linejoin="round">
+    <path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12z"></path>
+    <circle cx="12" cy="12" r="3"></circle>
+  </svg>`;
 
-        if (
-          passwordInput.type === "password"
-        ) {
+const eyeClosed =
+  `<svg
+    width="20"
+    height="20"
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    stroke-width="2"
+    stroke-linecap="round"
+    stroke-linejoin="round">
+    <path d="M3 3l18 18"></path>
+    <path d="M10.6 10.6a2 2 0 0 0 2.8 2.8"></path>
+    <path d="M9.9 5.2A10.8 10.8 0 0 1 12 5c6.5 0 10 7 10 7a18.5 18.5 0 0 1-3.2 4.1"></path>
+    <path d="M6.2 6.2C3.6 8 2 12 2 12s3.5 7 10 7c1.5 0 2.8-.3 4-.8"></path>
+  </svg>`;
 
-          passwordInput.type =
-            "text";
+passwordToggle.innerHTML = eyeOpen;
 
-          passwordToggle.textContent =
-            "🙈";
+passwordToggle.addEventListener(
+  "click",
+  () => {
 
-        } else {
+    if (
+      passwordInput.type === "password"
+    ) {
 
-          passwordInput.type =
-            "password";
+      passwordInput.type = "text";
 
-          passwordToggle.textContent =
-            "👁️";
+      passwordToggle.innerHTML =
+        eyeClosed;
 
-        }
+      passwordToggle.setAttribute(
+        "aria-label",
+        "Sembunyikan password"
+      );
 
-      }
-    );
+    } else {
 
+      passwordInput.type =
+        "password";
 
+      passwordToggle.innerHTML =
+        eyeOpen;
+
+      passwordToggle.setAttribute(
+        "aria-label",
+        "Tampilkan password"
+      );
+
+    }
+
+  }
+);
     // ==================================================
     // NOTIFICATION
     // ==================================================
