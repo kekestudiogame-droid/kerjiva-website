@@ -12732,37 +12732,7 @@ function setupAuthButtons() {
   const modalText = document.getElementById("modalText");
   const authForm = document.getElementById("authForm");
 
-
-  if (loginBtn) {
-
-    loginBtn.addEventListener("click", () => {
-
-      if (authModal) {
-        authModal.classList.remove("hidden");
-      }
-
-      if (modalTitle) {
-        modalTitle.textContent =
-          localStorage.getItem("siteLanguage") === "en"
-            ? "Log in"
-            : "Masuk";
-      }
-
-      if (modalText) {
-        modalText.textContent =
-          localStorage.getItem("siteLanguage") === "en"
-            ? "Log in to your account"
-            : "Masuk ke akun Anda";
-      }
-
-      if (authForm) {
-        authForm.dataset.mode = "login";
-      }
-
-    });
-
-  }
-
+ 
 
   if (registerBtn) {
 
