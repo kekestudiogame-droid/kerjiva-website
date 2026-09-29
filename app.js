@@ -4722,11 +4722,15 @@ if (window.kerjivaCompletingCompanyProfile) {
     throw new Error(companyError);
   }
 
-  window.kerjivaCompletingCompanyProfile = false;
+ window.kerjivaCompletingCompanyProfile = false;
 
-  isRegister = false;
-  isCompany = true;
+isRegister = false;
+isCompany = true;
 
+localStorage.setItem(
+  "kerjivaActiveRole",
+  "company"
+);
   modal.classList.add("hidden");
 
   showNotification("loginSuccess");
