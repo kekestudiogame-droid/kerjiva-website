@@ -4908,6 +4908,11 @@ if (data.access_token && data.user?.id) {
     "kerjivaUser",
     JSON.stringify(data.user)
   );
+  
+    localStorage.setItem(
+    "kerjivaActiveRole",
+    registeredAccountType
+  );
 
   isRegister = false;
   isCompany = false;
