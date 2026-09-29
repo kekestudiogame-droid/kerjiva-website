@@ -3935,6 +3935,34 @@ if (menuLogout) {
 
 if (loginBtn) {
   loginBtn.addEventListener("click", () => {
+
+    // ==================================================
+    // CEK SESSION AKTIF
+    // ==================================================
+
+    const userData =
+      localStorage.getItem("kerjivaUser");
+
+    const accessToken =
+      localStorage.getItem("kerjivaAccessToken");
+
+    const activeRole =
+      localStorage.getItem("kerjivaActiveRole");
+
+    if (userData && accessToken && activeRole) {
+
+      const isEnglish =
+        localStorage.getItem("siteLanguage") === "en";
+
+      alert(
+        isEnglish
+          ? "You are already logged in."
+          : "Anda masih dalam keadaan login."
+      );
+
+      return;
+    }
+
     isRegister = false;
     isCompany = false;
 
