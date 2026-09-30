@@ -12744,36 +12744,6 @@ function setupAuthButtons() {
 
  
 
-  if (registerBtn) {
-
-    registerBtn.addEventListener("click", () => {
-
-      if (authModal) {
-        authModal.classList.remove("hidden");
-      }
-
-      if (modalTitle) {
-        modalTitle.textContent =
-          localStorage.getItem("siteLanguage") === "en"
-            ? "Register"
-            : "Daftar";
-      }
-
-      if (modalText) {
-        modalText.textContent =
-          localStorage.getItem("siteLanguage") === "en"
-            ? "Create a new account"
-            : "Buat akun baru";
-      }
-
-      if (authForm) {
-        authForm.dataset.mode = "register";
-      }
-
-    });
-
-  }
-
 
   if (closeModal) {
 
