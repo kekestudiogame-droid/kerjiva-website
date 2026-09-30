@@ -5238,8 +5238,10 @@ if (!isCompany) {
     );
   }
 
+  const userId = data.user.id;
+
   const profileCheck = await fetch(
-    `${SUPABASE_URL}jobseeker_profiles?id=eq.${data.user.id}&select=id`,
+    `${SUPABASE_URL}jobseeker_profiles?id=eq.${userId}&select=*`,
     {
       headers: {
         apikey: SUPABASE_KEY,
@@ -5275,16 +5277,75 @@ if (!isCompany) {
 
   // ----------------------------------------------
   // PROFIL BELUM ADA
+  // AMBIL DATA DARI SUPABASE AUTH METADATA
   // ----------------------------------------------
 
- const language =
-  localStorage.getItem("siteLanguage") || "id";
+  const userMetadata =
+    data.user?.user_metadata || {};
 
-showJobseekerRegistrationAfterLogin();
+  const firstName =
+    userMetadata.first_name || "";
 
-return;
+  const lastName =
+    userMetadata.last_name || "";
+
+  const fullName =
+    userMetadata.full_name ||
+    `${firstName} ${lastName}`.trim();
+
+  const phone =
+    userMetadata.phone || "";
+
+  const city =
+    userMetadata.city || "";
+
+  // ----------------------------------------------
+  // BUAT PROFIL DARI DATA PENDAFTARAN
+  // ----------------------------------------------
+
+  const profileResponse = await fetch(
+    `${SUPABASE_URL}jobseeker_profiles`,
+    {
+      method: "POST",
+
+      headers: {
+        apikey: SUPABASE_KEY,
+        Authorization:
+          `Bearer ${data.access_token}`,
+        "Content-Type": "application/json",
+        Prefer: "return=minimal"
+      },
+
+      body: JSON.stringify({
+        id: userId,
+        full_name: fullName,
+        phone: phone,
+        city: city
+      })
+    }
+  );
+
+  if (!profileResponse.ok) {
+
+    const profileError =
+      await profileResponse.text();
+
+    throw new Error(profileError);
+  }
+
+  // ----------------------------------------------
+  // PROFIL BERHASIL DIBUAT
+  // LANGSUNG KE DASHBOARD
+  // ----------------------------------------------
+
+  modal.classList.add("hidden");
+
+  showJobseekerDashboard();
+
+  showNotification("loginSuccess");
+
+  return;
 }
-
 // ==================================================
 // PERUSAHAAN
 // ==================================================
