@@ -5062,7 +5062,12 @@ if (
     // ==================================================
     // SUPABASE AUTH
     // ==================================================
-    console.log("AUTH MODE SEBELUM FETCH:", isRegister);
+      console.log(
+           "AUTH MODE SEBELUM FETCH:",
+             isRegister,
+           "IS COMPANY:",
+              isCompany
+         );
 
     const response = await fetch(
       isRegister
