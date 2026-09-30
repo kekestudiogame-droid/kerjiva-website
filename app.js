@@ -5379,10 +5379,7 @@ throw new Error(
     return;
   }
 
-  showNotification(
-    "invalidAccount",
-    " " + errorMessage
-  );
+showNotification("invalidAccount");
 }
 });
   
