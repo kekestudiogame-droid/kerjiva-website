@@ -1843,7 +1843,6 @@ function showNotification(key, extraMessage = "") {
     notificationTranslations[key];
 
   if (!notification) {
-    alert(extraMessage);
     return;
   }
 
@@ -1852,5 +1851,49 @@ function showNotification(key, extraMessage = "") {
       ? notification.en
       : notification.id;
 
-  alert(message + extraMessage);
+  // Hapus notifikasi lama jika masih ada
+  const oldNotification =
+    document.querySelector(
+      "#kerjivaNotification"
+    );
+
+  if (oldNotification) {
+    oldNotification.remove();
+  }
+
+  // Buat notifikasi
+  const notificationBox =
+    document.createElement("div");
+
+  notificationBox.id =
+    "kerjivaNotification";
+
+  notificationBox.className =
+    "kerjiva-notification";
+
+  notificationBox.textContent =
+    message + extraMessage;
+
+  document.body.appendChild(
+    notificationBox
+  );
+
+  // Munculkan dengan efek halus
+  requestAnimationFrame(() => {
+    notificationBox.classList.add("show");
+  });
+
+  // Hilang otomatis
+  setTimeout(() => {
+
+    notificationBox.classList.remove(
+      "show"
+    );
+
+    setTimeout(() => {
+      notificationBox.remove();
+    }, 300);
+
+  }, 2500);
+
 }
