@@ -4913,7 +4913,7 @@ localStorage.setItem(
 
   return;
 }
-    // ==================================================
+  // ==================================================
 // TAMBAH ROLE PERUSAHAAN KE AKUN AUTH YANG SUDAH ADA
 // ==================================================
 
@@ -4923,60 +4923,111 @@ if (
   !window.kerjivaCompletingCompanyProfile
 ) {
 
-  const existingAccessToken =
-    localStorage.getItem("kerjivaAccessToken");
+  // Login ke akun Auth yang sudah ada
+  const existingLoginResponse =
+    await fetch(
+      `${authUrl}/token?grant_type=password`,
+      {
+        method: "POST",
 
-  const existingUserData =
-    localStorage.getItem("kerjivaUser");
+        headers: {
+          apikey: SUPABASE_KEY,
+          "Content-Type": "application/json"
+        },
 
-  let existingUser = null;
+        body: JSON.stringify({
+          email,
+          password
+        })
+      }
+    );
 
-  try {
-    existingUser =
-      JSON.parse(existingUserData || "{}");
-  } catch {
-    existingUser = null;
-  }
+  const existingLoginData =
+    await existingLoginResponse.json();
 
-  // Jika akun yang sedang login adalah akun yang sama,
-  // langsung tambahkan role Company.
+  // Jika email + password cocok,
+  // berarti ini akun Auth yang sudah ada.
   if (
-    existingAccessToken &&
-    existingUser?.id
+    existingLoginResponse.ok &&
+    existingLoginData.access_token &&
+    existingLoginData.user?.id
   ) {
 
-    const companyResponse =
-      await fetch(
-        `${SUPABASE_URL}companies`,
-        {
-          method: "POST",
+    const existingAccessToken =
+      existingLoginData.access_token;
 
+    const existingUser =
+      existingLoginData.user;
+
+    // Cek apakah role Company sudah ada
+    const companyCheck =
+      await fetch(
+        `${SUPABASE_URL}companies?user_id=eq.${existingUser.id}&select=id`,
+        {
           headers: {
             apikey: SUPABASE_KEY,
             Authorization:
-              `Bearer ${existingAccessToken}`,
-            "Content-Type": "application/json",
-            Prefer: "return=minimal"
-          },
-
-          body: JSON.stringify({
-            user_id: existingUser.id,
-            company_name: companyName,
-            email: email,
-            phone: companyPhone,
-            website: companyWebsite,
-            city: companyCity,
-            address: companyAddress
-          })
+              `Bearer ${existingAccessToken}`
+          }
         }
       );
 
-    if (!companyResponse.ok) {
-      const companyError =
-        await companyResponse.text();
-
-      throw new Error(companyError);
+    if (!companyCheck.ok) {
+      throw new Error(
+        await companyCheck.text()
+      );
     }
+
+    const existingCompanies =
+      await companyCheck.json();
+
+    // Jika belum ada, buat profil Company
+    if (!existingCompanies.length) {
+
+      const companyResponse =
+        await fetch(
+          `${SUPABASE_URL}companies`,
+          {
+            method: "POST",
+
+            headers: {
+              apikey: SUPABASE_KEY,
+              Authorization:
+                `Bearer ${existingAccessToken}`,
+              "Content-Type": "application/json",
+              Prefer: "return=minimal"
+            },
+
+            body: JSON.stringify({
+              user_id: existingUser.id,
+              company_name: companyName,
+              email: email,
+              phone: companyPhone,
+              website: companyWebsite,
+              city: companyCity,
+              address: companyAddress
+            })
+          }
+        );
+
+      if (!companyResponse.ok) {
+        const companyError =
+          await companyResponse.text();
+
+        throw new Error(companyError);
+      }
+    }
+
+    // Simpan session akun Auth yang sama
+    localStorage.setItem(
+      "kerjivaAccessToken",
+      existingAccessToken
+    );
+
+    localStorage.setItem(
+      "kerjivaUser",
+      JSON.stringify(existingUser)
+    );
 
     localStorage.setItem(
       "kerjivaActiveRole",
@@ -4994,8 +5045,20 @@ if (
 
     return;
   }
-}
 
+  // Jika email/password tidak cocok,
+  // jangan membuat akun Auth baru secara diam-diam.
+  const language =
+    localStorage.getItem("siteLanguage") || "id";
+
+  alert(
+    language === "en"
+      ? "This email is already registered. Please use the correct password to add the Company role."
+      : "Email ini sudah terdaftar. Gunakan password yang benar untuk menambahkan role Perusahaan."
+  );
+
+  return;
+}
     // ==================================================
     // SUPABASE AUTH
     // ==================================================
