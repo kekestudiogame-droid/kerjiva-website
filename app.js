@@ -4913,6 +4913,88 @@ localStorage.setItem(
 
   return;
 }
+    // ==================================================
+// TAMBAH ROLE PERUSAHAAN KE AKUN AUTH YANG SUDAH ADA
+// ==================================================
+
+if (
+  isRegister &&
+  isCompany &&
+  !window.kerjivaCompletingCompanyProfile
+) {
+
+  const existingAccessToken =
+    localStorage.getItem("kerjivaAccessToken");
+
+  const existingUserData =
+    localStorage.getItem("kerjivaUser");
+
+  let existingUser = null;
+
+  try {
+    existingUser =
+      JSON.parse(existingUserData || "{}");
+  } catch {
+    existingUser = null;
+  }
+
+  // Jika akun yang sedang login adalah akun yang sama,
+  // langsung tambahkan role Company.
+  if (
+    existingAccessToken &&
+    existingUser?.id
+  ) {
+
+    const companyResponse =
+      await fetch(
+        `${SUPABASE_URL}companies`,
+        {
+          method: "POST",
+
+          headers: {
+            apikey: SUPABASE_KEY,
+            Authorization:
+              `Bearer ${existingAccessToken}`,
+            "Content-Type": "application/json",
+            Prefer: "return=minimal"
+          },
+
+          body: JSON.stringify({
+            user_id: existingUser.id,
+            company_name: companyName,
+            email: email,
+            phone: companyPhone,
+            website: companyWebsite,
+            city: companyCity,
+            address: companyAddress
+          })
+        }
+      );
+
+    if (!companyResponse.ok) {
+      const companyError =
+        await companyResponse.text();
+
+      throw new Error(companyError);
+    }
+
+    localStorage.setItem(
+      "kerjivaActiveRole",
+      "company"
+    );
+
+    isRegister = false;
+    isCompany = false;
+
+    modal.classList.add("hidden");
+
+    showCompanyDashboard();
+
+    showNotification("loginSuccess");
+
+    return;
+  }
+}
 
     // ==================================================
     // SUPABASE AUTH
