@@ -5351,19 +5351,41 @@ throw new Error(
     
 
     
-  } catch (error) {
+} catch (error) {
 
-    console.error(
-      "AUTH ERROR:",
-      error
+  console.error(
+    "AUTH ERROR:",
+    error
+  );
+
+  const language =
+    localStorage.getItem("siteLanguage") || "id";
+
+  const errorMessage =
+    error?.message || "";
+
+  if (
+    errorMessage.toLowerCase().includes(
+      "invalid login credentials"
+    )
+  ) {
+
+    alert(
+      language === "en"
+        ? "Invalid login credentials."
+        : "Email atau password salah."
     );
 
-    showNotification(
-      "invalidAccount",
-      " " + error.message
-    );
+    return;
   }
+
+  showNotification(
+    "invalidAccount",
+    " " + errorMessage
+  );
+}
 });
+  
 // ==================================================
 // NOTIFIKASI PENDAFTARAN BERHASIL
 // ==================================================
