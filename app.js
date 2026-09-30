@@ -12871,6 +12871,14 @@ menuBtn.addEventListener("click", (e) => {
     mainMenu.style.display === "none" ? "block" : "none";
 });
   }
+  
+  // Tutup menu setelah salah satu item menu diklik
+  
+   if (mainMenu) {
+      mainMenu.addEventListener("click", () => {
+      mainMenu.style.display = "none";
+     });
+   }
 
 function setupAuthButtons() {
 
