@@ -59,25 +59,7 @@ supabaseAuth.auth.onAuthStateChange(
         JSON.stringify(session.user)
       );
 
-      // Pertahankan role yang sudah dipilih sebelumnya.
-      // Jangan menimpa role jika sudah ada.
-      
-      if (!localStorage.getItem("kerjivaActiveRole")) {
-
-        const accountType =
-          session.user?.user_metadata?.account_type;
-
-        if (
-          accountType === "company" ||
-          accountType === "jobseeker"
-        ) {
-          localStorage.setItem(
-            "kerjivaActiveRole",
-            accountType
-          );
-        }
-      }
-
+    
     }
 
   }
