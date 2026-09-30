@@ -4053,6 +4053,30 @@ if (forgotPasswordWrapper) {
 
 if (registerBtn) {
   registerBtn.addEventListener("click", () => {
+
+    const userData =
+      localStorage.getItem("kerjivaUser");
+
+    const accessToken =
+      localStorage.getItem("kerjivaAccessToken");
+
+    const activeRole =
+      localStorage.getItem("kerjivaActiveRole");
+
+    if (userData && accessToken && activeRole) {
+
+      const isEnglish =
+        localStorage.getItem("siteLanguage") === "en";
+
+      alert(
+        isEnglish
+          ? "You are already logged in."
+          : "Anda masih dalam keadaan login."
+      );
+
+      return;
+    }
+
     isRegister = true;
     isCompany = false;
 
