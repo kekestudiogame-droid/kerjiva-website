@@ -5493,8 +5493,8 @@ function showRegistrationNotification() {
       <div class="kerjiva-registration-message">
         ${
           isEnglish
-            ? "Your account has been created.<br>Please log in to continue."
-            : "Akun Anda berhasil dibuat.<br>Silakan masuk untuk melanjutkan."
+            ? "Your account has been created.<br>Please check your email and click the confirmation link to activate your account.<br>After that, you can log in to Kerjiva."
+            : "Akun Anda berhasil dibuat.<br>Silakan cek email Anda dan klik link konfirmasi untuk mengaktifkan akun.<br>Setelah itu, Anda dapat masuk ke Kerjiva."
         }
       </div>
 
@@ -5531,8 +5531,6 @@ function showRegistrationNotification() {
   });
 
 }
-
-
 // ================= DASHBOARD PENCARI KERJA =================
 
  window.showJobseekerDashboard = async function () {
