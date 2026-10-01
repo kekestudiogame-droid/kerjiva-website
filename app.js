@@ -5529,16 +5529,16 @@ if (isCompany) {
   // PROFIL PERUSAHAAN SUDAH ADA
   // ----------------------------------------------
 
-  if (existingCompanies.length) {
+if (existingCompanies.length) {
 
-    modal.classList.add("hidden");
+  modal.classList.add("hidden");
 
-    showCompanyDashboard();
+  showNotification("loginSuccess");
 
-    showNotification("loginSuccess");
+  showCompanyDashboard();
 
-    return;
-  }
+  return;
+}
 
   // ----------------------------------------------
   // PROFIL PERUSAHAAN BELUM ADA
