@@ -5551,21 +5551,17 @@ if (existingCompanies.length) {
   // PROFIL PERUSAHAAN BELUM ADA
   // ----------------------------------------------
 
-  const language =
-    localStorage.getItem("siteLanguage") || "id";
+  showCompanyRegistrationAfterLogin();
 
-showCompanyRegistrationAfterLogin();
-
-return;
+  return;
 }
 
 
 throw new Error(
   "Jenis akun belum dapat diproses."
 );
-    
 
-    
+
 } catch (error) {
 
   console.error(
@@ -5594,7 +5590,7 @@ throw new Error(
     return;
   }
 
-showNotification("invalidAccount");
+  showNotification("invalidAccount");
 }
 });
   
