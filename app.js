@@ -5415,13 +5415,10 @@ if (!isCompany) {
   // ----------------------------------------------
 
   if (existingProfiles.length) {
-
-    modal.classList.add("hidden");
-
-    showJobseekerDashboard();
-
+    
+ modal.classList.add("hidden");
     showNotification("loginSuccess");
-
+    showJobseekerDashboard();
     return;
   }
 
