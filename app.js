@@ -5416,11 +5416,14 @@ if (!isCompany) {
 
   if (existingProfiles.length) {
     
- modal.classList.add("hidden");
-    showNotification("loginSuccess");
-    showJobseekerDashboard();
-    return;
-  }
+if (existingProfiles.length) {
+    
+  modal.classList.add("hidden");
+  console.log("LOGIN SUKSES - AKAN TAMPIL NOTIFIKASI");
+  showNotification("loginSuccess");
+  showJobseekerDashboard();
+  return;
+}
 
   // ----------------------------------------------
   // PROFIL BELUM ADA
