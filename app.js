@@ -5414,14 +5414,16 @@ if (!isCompany) {
   // PROFIL SUDAH ADA
   // ----------------------------------------------
 
-  if (existingProfiles.length) {
-    
-if (existingProfiles.length) {
-    
+ if (existingProfiles.length) {
+
   modal.classList.add("hidden");
-  console.log("LOGIN SUKSES - AKAN TAMPIL NOTIFIKASI");
+
   showNotification("loginSuccess");
-  showJobseekerDashboard();
+
+  setTimeout(() => {
+    showJobseekerDashboard();
+  }, 800);
+
   return;
 }
 
