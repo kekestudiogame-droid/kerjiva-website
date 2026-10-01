@@ -891,7 +891,7 @@
 
 .kerjiva-notification {
   position: fixed;
-  top: 50%;
+  top: 24px;
   left: 50%;
 
   width: min(380px, calc(100vw - 32px));
@@ -919,7 +919,7 @@
  visibility: hidden;
 
 transform:
-  translate(-50%, -50%)
+  translate(-50%, -20px)
   scale(0.92);
   
 transition:
@@ -932,9 +932,9 @@ transition:
   opacity: 1;
   visibility: visible;
 
-  transform:
-    translate(-50%, -50%)
-    scale(1);
+ transform:
+  translate(-50%, 0)
+  scale(1);
 }
 
 @media (max-width: 600px) {
