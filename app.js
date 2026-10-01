@@ -5596,37 +5596,6 @@ throw new Error(
 }
 });
   
-} catch (error) {
-
-  console.error(
-    "AUTH ERROR:",
-    error
-  );
-
-  const language =
-    localStorage.getItem("siteLanguage") || "id";
-
-  const errorMessage =
-    error?.message || "";
-
-  if (
-    errorMessage.toLowerCase().includes(
-      "invalid login credentials"
-    )
-  ) {
-
-    alert(
-      language === "en"
-        ? "Invalid login credentials."
-        : "Email atau password salah."
-    );
-
-    return;
-  }
-
-  showNotification("invalidAccount");
-}
-});
   
 // ==================================================
 // NOTIFIKASI PENDAFTARAN BERHASIL
