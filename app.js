@@ -5488,8 +5488,6 @@ if (existingProfiles.length) {
   // LANGSUNG KE DASHBOARD
   // ----------------------------------------------
 
-if (existingProfiles.length) {
-
   modal.classList.add("hidden");
 
   showNotification("loginSuccess");
@@ -5500,6 +5498,8 @@ if (existingProfiles.length) {
 
   return;
 }
+
+
 // ==================================================
 // PERUSAHAAN
 // ==================================================
@@ -5536,16 +5536,18 @@ if (isCompany) {
   // PROFIL PERUSAHAAN SUDAH ADA
   // ----------------------------------------------
 
-if (existingCompanies.length) {
+  if (existingCompanies.length) {
 
-  modal.classList.add("hidden");
+    modal.classList.add("hidden");
 
-  showNotification("loginSuccess");
+    showNotification("loginSuccess");
 
-  showCompanyDashboard();
+    setTimeout(() => {
+      showCompanyDashboard();
+    }, 800);
 
-  return;
-}
+    return;
+  }
 
   // ----------------------------------------------
   // PROFIL PERUSAHAAN BELUM ADA
@@ -5562,6 +5564,38 @@ throw new Error(
 );
 
 
+} catch (error) {
+
+  console.error(
+    "AUTH ERROR:",
+    error
+  );
+
+  const language =
+    localStorage.getItem("siteLanguage") || "id";
+
+  const errorMessage =
+    error?.message || "";
+
+  if (
+    errorMessage.toLowerCase().includes(
+      "invalid login credentials"
+    )
+  ) {
+
+    alert(
+      language === "en"
+        ? "Invalid login credentials."
+        : "Email atau password salah."
+    );
+
+    return;
+  }
+
+  showNotification("invalidAccount");
+}
+});
+  
 } catch (error) {
 
   console.error(
