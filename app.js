@@ -174,7 +174,7 @@ const jobTypes = [
   "Admin Pembelian",
   "Admin Gudang",
   "Admin Proyek",
-  "Customer Service Admin",
+  "customer Service Admin",
 
   "Staff Akuntansi",
   "Accounting Admin",
