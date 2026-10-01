@@ -5488,11 +5488,15 @@ if (existingProfiles.length) {
   // LANGSUNG KE DASHBOARD
   // ----------------------------------------------
 
+if (existingProfiles.length) {
+
   modal.classList.add("hidden");
 
-  showJobseekerDashboard();
-
   showNotification("loginSuccess");
+
+  setTimeout(() => {
+    showJobseekerDashboard();
+  }, 800);
 
   return;
 }
