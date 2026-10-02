@@ -5113,12 +5113,7 @@ if (!isRegister) {
     const language =
       localStorage.getItem("siteLanguage") || "id";
 
-    showNotification(
-      "invalidAccount",
-      language === "en"
-        ? " This email is not registered. Please register first."
-        : " Email ini belum terdaftar. Silakan daftar terlebih dahulu."
-    );
+  showNotification("emailNotRegistered");
 
     return;
   }
