@@ -5533,7 +5533,9 @@ const metadata =
 console.log("IS COMPANY SAAT LOGIN:", isCompany);
 
 const selectedRole =
-  isCompany ? "company" : "jobseeker";
+  metadata.account_type === "company"
+    ? "company"
+    : "jobseeker";
 
 console.log("ROLE YANG DIPILIH:", selectedRole);
     
