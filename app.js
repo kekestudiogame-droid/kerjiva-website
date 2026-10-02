@@ -20,7 +20,7 @@ const supabaseAuth =
 // SUPABASE AUTH SESSION
 // ==================================================
 supabaseAuth.auth.onAuthStateChange(
-  (event, session) => {
+  async (event, session) => {
 
     console.log("AUTH EVENT:", event);
 
