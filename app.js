@@ -4726,8 +4726,7 @@ authForm.addEventListener("submit", async e => {
   e.preventDefault();
 
   const emailInput = document.querySelector('input[type="email"]');
-  const passwordInput = document.querySelector('input[type="password"]');
-
+  const passwordInput = document.querySelector("#password");
   const email = emailInput.value.trim();
   const password = passwordInput.value;
 
