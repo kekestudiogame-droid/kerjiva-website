@@ -2431,6 +2431,9 @@ const jobseekerFields = document.querySelector("#jobseekerFields");
 
 if (companyAccountBtn) {
   companyAccountBtn.addEventListener("click", () => {
+    
+        companyAccountBtn.classList.add("active");
+    jobseekerAccountBtn?.classList.remove("active");
 
     const isEnglish =
       localStorage.getItem("siteLanguage") === "en";
@@ -2518,6 +2521,9 @@ if (companyAccountBtn) {
 }
 
 jobseekerAccountBtn.addEventListener("click", () => {
+  
+   jobseekerAccountBtn.classList.add("active");
+   companyAccountBtn?.classList.remove("active");
 
   const isEnglish =
     localStorage.getItem("siteLanguage") === "en";
