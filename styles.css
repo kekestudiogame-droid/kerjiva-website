@@ -725,7 +725,7 @@ footer{border-top:1px solid var(--line)}
 }
 
 .account-type button.active {
-  background: #1664ff;
+  background: #123b6d;
   color: #fff;
-  box-shadow: 0 3px 8px rgba(22,100,255,.18);
+  box-shadow: 0 3px 8px rgba(18,59,109,.18);
 }
