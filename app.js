@@ -5433,8 +5433,6 @@ if (data.access_token && data.user?.id) {
     showJobseekerDashboard();
   }
 
-  showNotification("loginSuccess");
-
   return;
 }
 
