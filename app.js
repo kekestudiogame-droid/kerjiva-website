@@ -5538,6 +5538,7 @@ const selectedRole =
     : "jobseeker";
 
 console.log("ROLE YANG DIPILIH:", selectedRole);
+    isCompany = selectedRole === "company";
     
 localStorage.setItem(
   "kerjivaActiveRole",
