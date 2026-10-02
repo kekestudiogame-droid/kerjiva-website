@@ -4731,6 +4731,35 @@ if (sendResetPasswordBtn) {
   });
 
 }
+  // ==================================================
+// CEK EMAIL TERDAFTAR
+// SISTEM BERSAMA KERJIVA
+// ==================================================
+
+async function isKerjivaEmailRegistered(email) {
+
+  const response = await fetch(
+    `${SUPABASE_URL}rpc/check_email_registered`,
+    {
+      method: "POST",
+
+      headers: {
+        apikey: SUPABASE_KEY,
+        "Content-Type": "application/json"
+      },
+
+      body: JSON.stringify({
+        check_email: email
+      })
+    }
+  );
+
+  if (!response.ok) {
+    throw new Error("EMAIL_CHECK_FAILED");
+  }
+
+  return await response.json();
+}
 
 
 authForm.addEventListener("submit", async e => {
