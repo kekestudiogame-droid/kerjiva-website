@@ -4952,7 +4952,8 @@ localStorage.setItem(
 
   return;
 }
-  // ==================================================
+    
+// ==================================================
 // TAMBAH ROLE PERUSAHAAN KE AKUN AUTH YANG SUDAH ADA
 // ==================================================
 
@@ -4962,141 +4963,166 @@ if (
   !window.kerjivaCompletingCompanyProfile
 ) {
 
-  // Login ke akun Auth yang sudah ada
-  const existingLoginResponse =
-    await fetch(
-      `${authUrl}/token?grant_type=password`,
-      {
-        method: "POST",
+  // Cek apakah email sudah terdaftar di Auth
+  const emailRegistered =
+    await isKerjivaEmailRegistered(email);
 
-        headers: {
-          apikey: SUPABASE_KEY,
-          "Content-Type": "application/json"
-        },
+  // ==================================================
+  // EMAIL BELUM TERDAFTAR
+  // Biarkan proses lanjut ke /signup di bawah
+  // ==================================================
 
-        body: JSON.stringify({
-          email,
-          password
-        })
-      }
+  if (!emailRegistered) {
+
+    console.log(
+      "EMAIL BARU - LANJUT KE SIGNUP PERUSAHAAN"
     );
 
-  const existingLoginData =
-    await existingLoginResponse.json();
+  } else {
 
-  // Jika email + password cocok,
-  // berarti ini akun Auth yang sudah ada.
-  if (
-    existingLoginResponse.ok &&
-    existingLoginData.access_token &&
-    existingLoginData.user?.id
-  ) {
+    // ==================================================
+    // EMAIL SUDAH TERDAFTAR
+    // Coba login ke akun Auth yang sama
+    // untuk menambahkan role Perusahaan
+    // ==================================================
 
-    const existingAccessToken =
-      existingLoginData.access_token;
-
-    const existingUser =
-      existingLoginData.user;
-
-    // Cek apakah role Company sudah ada
-    const companyCheck =
+    const existingLoginResponse =
       await fetch(
-        `${SUPABASE_URL}companies?user_id=eq.${existingUser.id}&select=id`,
+        `${authUrl}/token?grant_type=password`,
         {
+          method: "POST",
+
           headers: {
             apikey: SUPABASE_KEY,
-            Authorization:
-              `Bearer ${existingAccessToken}`
-          }
+            "Content-Type": "application/json"
+          },
+
+          body: JSON.stringify({
+            email,
+            password
+          })
         }
       );
 
-    if (!companyCheck.ok) {
-      throw new Error(
-        await companyCheck.text()
-      );
-    }
+    const existingLoginData =
+      await existingLoginResponse.json();
 
-    const existingCompanies =
-      await companyCheck.json();
+    // Jika email + password cocok
+    if (
+      existingLoginResponse.ok &&
+      existingLoginData.access_token &&
+      existingLoginData.user?.id
+    ) {
 
-    // Jika belum ada, buat profil Company
-    if (!existingCompanies.length) {
+      const existingAccessToken =
+        existingLoginData.access_token;
 
-      const companyResponse =
+      const existingUser =
+        existingLoginData.user;
+
+      // Cek apakah profil Company sudah ada
+      const companyCheck =
         await fetch(
-          `${SUPABASE_URL}companies`,
+          `${SUPABASE_URL}companies?user_id=eq.${existingUser.id}&select=id`,
           {
-            method: "POST",
-
             headers: {
               apikey: SUPABASE_KEY,
               Authorization:
-                `Bearer ${existingAccessToken}`,
-              "Content-Type": "application/json",
-              Prefer: "return=minimal"
-            },
-
-            body: JSON.stringify({
-              user_id: existingUser.id,
-              company_name: companyName,
-              email: email,
-              phone: companyPhone,
-              website: companyWebsite,
-              city: companyCity,
-              address: companyAddress
-            })
+                `Bearer ${existingAccessToken}`
+            }
           }
         );
 
-      if (!companyResponse.ok) {
-        const companyError =
-          await companyResponse.text();
-
-        throw new Error(companyError);
+      if (!companyCheck.ok) {
+        throw new Error(
+          await companyCheck.text()
+        );
       }
+
+      const existingCompanies =
+        await companyCheck.json();
+
+      // Jika belum ada profil Company,
+      // buat profil Company baru
+      if (!existingCompanies.length) {
+
+        const companyResponse =
+          await fetch(
+            `${SUPABASE_URL}companies`,
+            {
+              method: "POST",
+
+              headers: {
+                apikey: SUPABASE_KEY,
+                Authorization:
+                  `Bearer ${existingAccessToken}`,
+                "Content-Type": "application/json",
+                Prefer: "return=minimal"
+              },
+
+              body: JSON.stringify({
+                user_id: existingUser.id,
+                company_name: companyName,
+                email: email,
+                phone: companyPhone,
+                website: companyWebsite,
+                city: companyCity,
+                address: companyAddress
+              })
+            }
+          );
+
+        if (!companyResponse.ok) {
+          const companyError =
+            await companyResponse.text();
+
+          throw new Error(companyError);
+        }
+      }
+
+      // Simpan session akun Auth yang sama
+      localStorage.setItem(
+        "kerjivaAccessToken",
+        existingAccessToken
+      );
+
+      localStorage.setItem(
+        "kerjivaUser",
+        JSON.stringify(existingUser)
+      );
+
+      localStorage.setItem(
+        "kerjivaActiveRole",
+        "company"
+      );
+
+      isRegister = false;
+      isCompany = false;
+
+      modal.classList.add("hidden");
+
+      showCompanyDashboard();
+
+      showNotification("loginSuccess");
+
+      return;
     }
 
-    // Simpan session akun Auth yang sama
-    localStorage.setItem(
-      "kerjivaAccessToken",
-      existingAccessToken
+    // ==================================================
+    // EMAIL ADA, TETAPI PASSWORD TIDAK COCOK
+    // ==================================================
+
+    const language =
+      localStorage.getItem("siteLanguage") || "id";
+
+    alert(
+      language === "en"
+        ? "This email is already registered. Please use the correct password to add the Company role."
+        : "Email ini sudah terdaftar. Gunakan password yang benar untuk menambahkan role Perusahaan."
     );
-
-    localStorage.setItem(
-      "kerjivaUser",
-      JSON.stringify(existingUser)
-    );
-
-    localStorage.setItem(
-      "kerjivaActiveRole",
-      "company"
-    );
-
-    isRegister = false;
-    isCompany = false;
-
-    modal.classList.add("hidden");
-
-    showCompanyDashboard();
-
-    showNotification("loginSuccess");
 
     return;
   }
-
-  // Jika email/password tidak cocok,
-  // jangan membuat akun Auth baru secara diam-diam.
-  const language =
-    localStorage.getItem("siteLanguage") || "id";
-
-  alert(
-    language === "en"
-      ? "This email is already registered. Please use the correct password to add the Company role."
-      : "Email ini sudah terdaftar. Gunakan password yang benar untuk menambahkan role Perusahaan."
-  );
-
-  return;
 }
     // ==================================================
 // CEK EMAIL TERDAFTAR SEBELUM LOGIN
