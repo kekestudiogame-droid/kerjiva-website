@@ -688,3 +688,46 @@ footer{border-top:1px solid var(--line)}
     opacity: 0.7;
   }
 }
+/* =========================
+   PILIHAN JENIS AKUN
+   ========================= */
+
+.account-type {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 18px 0 20px;
+  padding: 5px;
+  background: #f1f5f9;
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+}
+
+.account-type p {
+  display: none;
+}
+
+.account-type button {
+  flex: 1;
+  border: 0;
+  background: transparent;
+  color: #64748b;
+  padding: 11px 12px;
+  border-radius: 9px;
+  font-family: inherit;
+  font-size: 13px;
+  font-weight: 750;
+  cursor: pointer;
+  transition: .2s ease;
+}
+
+.account-type button:hover {
+  color: #1664ff;
+  background: #eaf1ff;
+}
+
+.account-type button.active {
+  background: #1664ff;
+  color: #fff;
+  box-shadow: 0 3px 8px rgba(22, 100, 255, .20);
+}
