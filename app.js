@@ -5648,10 +5648,9 @@ function showRegistrationNotification() {
   
   notification.innerHTML = `
 
-    <div class="kerjiva-registration-icon">
-      ✓
-    </div>
-
+  <div class="kerjiva-registration-icon">
+    <strong>✓</strong>
+  </div>
     <div class="kerjiva-registration-content">
 
       <div class="kerjiva-registration-title">
