@@ -1754,6 +1754,10 @@ const notificationTranslations = {
     id: "Data akun tidak valid. Silakan login kembali.",
     en: "Invalid account data. Please log in again."
   },
+     emailNotRegistered: {
+      id: "Email ini belum terdaftar. Silakan daftar terlebih dahulu.",
+      en: "This email is not registered. Please register first."
+  },
 
   userIdNotFound: {
     id: "ID pengguna tidak ditemukan.",
