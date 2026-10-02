@@ -610,6 +610,37 @@ passwordToggle.addEventListener(
       );
 
     }
+    // ==================================================
+// CEK EMAIL TERDAFTAR
+// SISTEM BERSAMA KERJIVA
+// ==================================================
+
+async function isKerjivaEmailRegistered(email) {
+
+  const response = await fetch(
+    `${SUPABASE_URL}rpc/check_email_registered`,
+    {
+      method: "POST",
+
+      headers: {
+        apikey: SUPABASE_KEY,
+        "Content-Type": "application/json"
+      },
+
+      body: JSON.stringify({
+        check_email: email
+      })
+    }
+  );
+
+  if (!response.ok) {
+    throw new Error(
+      "EMAIL_CHECK_FAILED"
+    );
+  }
+
+  return await response.json();
+}
 
 
     // ==================================================
@@ -631,19 +662,48 @@ passwordToggle.addEventListener(
           passwordInput.value;
 
 
-        message.textContent =
+       message.textContent =
+  isLoginEnglish
+    ? "Checking email..."
+    : "Memeriksa email...";
+
+submitBtn.disabled =
+  true;
+
+try {
+
+  // ==================================================
+  // CEK EMAIL TERDAFTAR SEBELUM LOGIN
+  // ==================================================
+
+  const emailRegistered =
+    await isKerjivaEmailRegistered(email);
+
+  if (!emailRegistered) {
+
+    message.textContent = "";
+
+    showLoginNotification(
+      isLoginEnglish
+        ? "This email is not registered. Please register first."
+        : "Email ini belum terdaftar. Silakan daftar terlebih dahulu."
+    );
+
+    submitBtn.disabled = false;
+
+    return;
+  }
+
+  // ==================================================
+  // EMAIL TERDAFTAR → LANJUT KE LOGIN LAMA
+  // ==================================================
+
+          message.textContent =
           isLoginEnglish
-            ? "Logging in..."
-            : "Sedang masuk...";
+          ? "Logging in..."
+          : "Sedang masuk...";
 
-
-        submitBtn.disabled =
-          true;
-
-
-        try {
-
-          const authUrl =
+            const authUrl =
             SUPABASE_URL.replace(
               "/rest/v1/",
               "/auth/v1/"
