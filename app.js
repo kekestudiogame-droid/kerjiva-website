@@ -5212,6 +5212,7 @@ if (isCompany && data.user?.id && data.access_token) {
 
 const registeredAccountType =
   isCompany ? "company" : "jobseeker";
+      console.log("DEBUG: SHOW REGISTRATION NOTIFICATION");
 
 showRegistrationNotification();
 
