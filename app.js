@@ -43,25 +43,121 @@ supabaseAuth.auth.onAuthStateChange(
     // ==================================================
     // SINKRONKAN SESSION SUPABASE KE LOCALSTORAGE KERJIVA
     // ==================================================
-    if (
-      session &&
-      session.access_token &&
-      session.user
-    ) {
-
-      localStorage.setItem(
-        "kerjivaAccessToken",
-        session.access_token
-      );
-
-      localStorage.setItem(
-        "kerjivaUser",
-        JSON.stringify(session.user)
-      );
-
     
-    }
+ if (
+  session &&
+  session.access_token &&
+  session.user
+) {
 
+  localStorage.setItem(
+    "kerjivaAccessToken",
+    session.access_token
+  );
+
+  localStorage.setItem(
+    "kerjivaUser",
+    JSON.stringify(session.user)
+  );
+
+  // ==================================================
+  // LANJUTKAN PENDAFTARAN COMPANY SETELAH KONFIRMASI EMAIL
+  // ==================================================
+
+  const pendingCompany =
+    localStorage.getItem(
+      "kerjivaPendingCompanyRegistration"
+    );
+
+  if (
+    pendingCompany &&
+    session.user?.user_metadata?.account_type === "company"
+  ) {
+
+    try {
+
+      const companyData =
+        JSON.parse(pendingCompany);
+
+      const companyCheck =
+        await fetch(
+          `${SUPABASE_URL}companies?user_id=eq.${session.user.id}&select=id`,
+          {
+            headers: {
+              apikey: SUPABASE_KEY,
+              Authorization:
+                `Bearer ${session.access_token}`
+            }
+          }
+        );
+
+      if (!companyCheck.ok) {
+        throw new Error(
+          await companyCheck.text()
+        );
+      }
+
+      const existingCompanies =
+        await companyCheck.json();
+
+      if (!existingCompanies.length) {
+
+        const companyResponse =
+          await fetch(
+            `${SUPABASE_URL}companies`,
+            {
+              method: "POST",
+
+              headers: {
+                apikey: SUPABASE_KEY,
+                Authorization:
+                  `Bearer ${session.access_token}`,
+                "Content-Type": "application/json",
+                Prefer: "return=minimal"
+              },
+
+              body: JSON.stringify({
+                user_id: session.user.id,
+                company_name: companyData.companyName,
+                email: companyData.email,
+                phone: companyData.phone,
+                website: companyData.website,
+                city: companyData.city,
+                address: companyData.address
+              })
+            }
+          );
+
+        if (!companyResponse.ok) {
+          throw new Error(
+            await companyResponse.text()
+          );
+        }
+      }
+
+      localStorage.removeItem(
+        "kerjivaPendingCompanyRegistration"
+      );
+
+      localStorage.setItem(
+        "kerjivaActiveRole",
+        "company"
+      );
+
+      console.log(
+        "PENDAFTARAN COMPANY SELESAI SETELAH KONFIRMASI EMAIL"
+      );
+
+    } catch (error) {
+
+      console.error(
+        "GAGAL MENYELESAIKAN PENDAFTARAN COMPANY:",
+        error
+      );
+
+    }
+  }
+}
   }
 );
 
