@@ -688,3 +688,34 @@ footer{border-top:1px solid var(--line)}
     opacity: 0.7;
   }
 }
+/* =========================
+   PILIHAN JENIS AKUN
+   SAMA DENGAN LOGIN.HTML
+   ========================= */
+
+.account-type {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  margin-bottom: 22px;
+}
+
+.account-type p {
+  display: none;
+}
+
+.account-type button {
+  border: 1px solid #dbe3ec;
+  background: #ffffff;
+  color: #334155;
+  padding: 12px;
+  border-radius: 10px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.account-type button.active {
+  background: #123b6d;
+  border-color: #123b6d;
+  color: #ffffff;
+}
