@@ -5099,6 +5099,31 @@ if (
   return;
 }
     // ==================================================
+// CEK EMAIL TERDAFTAR SEBELUM LOGIN
+// HANYA UNTUK MODE LOGIN
+// ==================================================
+
+if (!isRegister) {
+
+  const emailRegistered =
+    await isKerjivaEmailRegistered(email);
+
+  if (!emailRegistered) {
+
+    const language =
+      localStorage.getItem("siteLanguage") || "id";
+
+    showNotification(
+      "invalidAccount",
+      language === "en"
+        ? " This email is not registered. Please register first."
+        : " Email ini belum terdaftar. Silakan daftar terlebih dahulu."
+    );
+
+    return;
+  }
+}
+    // ==================================================
     // SUPABASE AUTH
     // ==================================================
       console.log(
