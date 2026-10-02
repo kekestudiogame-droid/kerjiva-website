@@ -5725,18 +5725,16 @@ if (isCompany) {
   // PROFIL PERUSAHAAN SUDAH ADA
   // ----------------------------------------------
 
-  if (existingCompanies.length) {
+if (existingCompanies.length) {
 
-    modal.classList.add("hidden");
+  modal.classList.add("hidden");
 
-    showNotification("loginSuccess");
+  setTimeout(() => {
+    showCompanyDashboard();
+  }, 300);
 
-    setTimeout(() => {
-      showCompanyDashboard();
-    }, 800);
-
-    return;
-  }
+  return;
+}
 
   // ----------------------------------------------
   // PROFIL PERUSAHAAN BELUM ADA
