@@ -5643,6 +5643,8 @@ function showRegistrationNotification() {
   notification.style.padding = "20px 24px";
   notification.style.borderRadius = "14px";
   notification.style.boxShadow = "0 8px 30px rgba(0,0,0,0.20)";
+  notification.style.border = "1px solid #e5e7eb";
+  notification.style.borderLeft = "5px solid #16a34a";
   
   notification.innerHTML = `
 
