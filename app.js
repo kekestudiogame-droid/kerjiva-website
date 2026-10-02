@@ -139,14 +139,20 @@ supabaseAuth.auth.onAuthStateChange(
         "kerjivaPendingCompanyRegistration"
       );
 
-      localStorage.setItem(
-        "kerjivaActiveRole",
-        "company"
-      );
+   localStorage.setItem(
+      "kerjivaActiveRole",
+      "company"
+    );
 
-      console.log(
-        "PENDAFTARAN COMPANY SELESAI SETELAH KONFIRMASI EMAIL"
-      );
+   showNotification("registrationSuccess");
+
+   setTimeout(() => {
+     showCompanyDashboard();
+     }, 800);
+
+   console.log(
+      "PENDAFTARAN COMPANY SELESAI SETELAH KONFIRMASI EMAIL"
+    );
 
     } catch (error) {
 
