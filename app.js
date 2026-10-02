@@ -5633,12 +5633,12 @@ function showRegistrationNotification() {
 
   notification.className =
     "kerjiva-registration-notification";
+  
   notification.style.position = "fixed";
-  notification.style.top = "50%";
+  notification.style.top = "8%";
   notification.style.left = "50%";
-  notification.style.transform = "translate(-50%, -50%)";
+  notification.style.transform = "translateX(-50%)";
   notification.style.zIndex = "999999";
-
   notification.innerHTML = `
 
     <div class="kerjiva-registration-icon">
