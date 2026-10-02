@@ -5204,6 +5204,100 @@ if (!isRegister) {
         "Gagal"
       );
     }
+    // ==================================================
+// LENGKAPI PROFIL PERUSAHAAN SETELAH LOGIN
+// ==================================================
+
+if (
+  window.kerjivaCompletingCompanyProfile &&
+  isRegister &&
+  isCompany
+) {
+
+  const completingAccessToken =
+    localStorage.getItem("kerjivaAccessToken");
+
+  const completingUserData =
+    localStorage.getItem("kerjivaUser");
+
+  if (!completingAccessToken || !completingUserData) {
+    throw new Error(
+      "Sesi perusahaan tidak ditemukan."
+    );
+  }
+
+  let completingUser;
+
+  try {
+    completingUser =
+      JSON.parse(completingUserData);
+  } catch {
+    throw new Error(
+      "Data akun perusahaan tidak valid."
+    );
+  }
+
+  if (!completingUser?.id) {
+    throw new Error(
+      "User ID perusahaan tidak ditemukan."
+    );
+  }
+
+  const companyResponse =
+    await fetch(
+      `${SUPABASE_URL}companies`,
+      {
+        method: "POST",
+
+        headers: {
+          apikey: SUPABASE_KEY,
+          Authorization:
+            `Bearer ${completingAccessToken}`,
+          "Content-Type": "application/json",
+          Prefer: "return=minimal"
+        },
+
+        body: JSON.stringify({
+          user_id: completingUser.id,
+          company_name: companyName,
+          email: email,
+          phone: companyPhone,
+          website: companyWebsite,
+          city: companyCity,
+          address: companyAddress
+        })
+      }
+    );
+
+  if (!companyResponse.ok) {
+    const companyError =
+      await companyResponse.text();
+
+    throw new Error(companyError);
+  }
+
+  // Profil perusahaan berhasil dibuat
+  window.kerjivaCompletingCompanyProfile =
+    false;
+
+  isRegister = false;
+  isCompany = false;
+
+  localStorage.setItem(
+    "kerjivaActiveRole",
+    "company"
+  );
+
+  modal.classList.add("hidden");
+
+  showNotification("registrationSuccess");
+
+  setTimeout(() => {
+    showCompanyDashboard();
+  }, 800);
+
+  return;
+}
 
     // ==================================================
     // PENDAFTARAN
