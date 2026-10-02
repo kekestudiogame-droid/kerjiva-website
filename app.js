@@ -5636,7 +5636,7 @@ function showRegistrationNotification() {
   
   notification.style.position = "fixed";
   notification.style.top = "8%";
-  notification.style.left = "50%";
+  notification.style.left = "45%";
   notification.style.transform = "translateX(-50%)";
   notification.style.zIndex = "999999";
   notification.innerHTML = `
