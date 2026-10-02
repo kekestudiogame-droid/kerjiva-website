@@ -5640,6 +5640,10 @@ function showRegistrationNotification() {
   notification.style.transform = "translateX(-50%)";
   notification.style.zIndex = "999999";
   notification.style.background = "#ffffff";
+  notification.style.padding = "20px 24px";
+  notification.style.borderRadius = "14px";
+  notification.style.boxShadow = "0 8px 30px rgba(0,0,0,0.20)";
+  
   notification.innerHTML = `
 
     <div class="kerjiva-registration-icon">
