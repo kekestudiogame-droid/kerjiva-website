@@ -2429,15 +2429,15 @@ const jobseekerAccountBtn = document.querySelector("#jobseekerAccount");
 const companyFields = document.querySelector("#companyFields");
 const jobseekerFields = document.querySelector("#jobseekerFields");
 
-if (companyAccountBtn) {
+  if (companyAccountBtn) {
   companyAccountBtn.addEventListener("click", () => {
-    
-        companyAccountBtn.classList.add("active");
-    jobseekerAccountBtn?.classList.remove("active");
+
+    companyAccountBtn.classList.add("active");
+    jobseekerAccountBtn.classList.remove("active");
 
     const isEnglish =
       localStorage.getItem("siteLanguage") === "en";
-
+    
     // ==================================================
     // MODE MASUK
     // ==================================================
