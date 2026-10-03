@@ -5174,13 +5174,15 @@ localStorage.setItem(
   "kerjivaActiveRole",
   "company"
 );
-  modal.classList.add("hidden");
+modal.classList.add("hidden");
 
-  showNotification("loginSuccess");
+showNotification("registrationSuccess");
 
+setTimeout(() => {
   showCompanyDashboard();
+}, 800);
 
-  return;
+return;
 }
     
 // ==================================================
