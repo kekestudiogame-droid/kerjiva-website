@@ -60,218 +60,30 @@ const supabaseAuth =
     JSON.stringify(session.user)
   );
 
-  // ==================================================
-  // LANJUTKAN PENDAFTARAN COMPANY SETELAH KONFIRMASI EMAIL
-  // ==================================================
+// ==================================================
+// SINKRONKAN SESSION SUPABASE KE LOCALSTORAGE KERJIVA
+// ==================================================
 
-  const pendingCompany =
-    localStorage.getItem(
-      "kerjivaPendingCompanyRegistration"
-    );
+if (
+  session &&
+  session.access_token &&
+  session.user
+) {
 
-  if (
-    pendingCompany &&
-    session.user?.user_metadata?.account_type === "company"
-  ) {
-   
-    try {
+  localStorage.setItem(
+    "kerjivaAccessToken",
+    session.access_token
+  );
 
-      const companyData =
-        JSON.parse(pendingCompany);
+  localStorage.setItem(
+    "kerjivaUser",
+    JSON.stringify(session.user)
+  );
 
-      const companyCheck =
-        await fetch(
-          `${SUPABASE_URL}companies?user_id=eq.${session.user.id}&select=id`,
-          {
-            headers: {
-              apikey: SUPABASE_KEY,
-              Authorization:
-                `Bearer ${session.access_token}`
-            }
-          }
-        );
-
-      if (!companyCheck.ok) {
-        throw new Error(
-          await companyCheck.text()
-        );
-      }
-
-      const existingCompanies =
-        await companyCheck.json();
-
-      if (!existingCompanies.length) {
-
-        const companyResponse =
-          await fetch(
-            `${SUPABASE_URL}companies`,
-            {
-              method: "POST",
-
-              headers: {
-                apikey: SUPABASE_KEY,
-                Authorization:
-                  `Bearer ${session.access_token}`,
-                "Content-Type": "application/json",
-                Prefer: "return=minimal"
-              },
-
-              body: JSON.stringify({
-                user_id: session.user.id,
-                company_name: companyData.companyName,
-                email: companyData.email,
-                phone: companyData.phone,
-                website: companyData.website,
-                city: companyData.city,
-                address: companyData.address
-              })
-            }
-          );
-
-        if (!companyResponse.ok) {
-          throw new Error(
-            await companyResponse.text()
-          );
-        }
-      }
-
-      localStorage.removeItem(
-        "kerjivaPendingCompanyRegistration"
-      );
-
-   localStorage.setItem(
-      "kerjivaActiveRole",
-      "company"
-    );
-
-   showNotification("registrationSuccess");
-
-   setTimeout(() => {
-     showCompanyDashboard();
-     }, 800);
-
-   console.log(
-      "PENDAFTARAN COMPANY SELESAI SETELAH KONFIRMASI EMAIL"
-    );
-
-    } catch (error) {
-
-      console.error(
-        "GAGAL MENYELESAIKAN PENDAFTARAN COMPANY:",
-        error
-      );
-
-    }
-  }
-   
-  // ==================================================
-  // LANJUTKAN PENDAFTARAN JOBSEEKER
-  // SETELAH KONFIRMASI EMAIL
-  // ==================================================
-
-  const pendingJobseeker =
-    localStorage.getItem(
-      "kerjivaPendingJobseekerRegistration"
-    );
-
-  if (pendingJobseeker) {
-
-    try {
-
-      const jobseekerData =
-        JSON.parse(pendingJobseeker);
-
-      const profileCheck =
-        await fetch(
-          `${SUPABASE_URL}jobseeker_profiles?id=eq.${session.user.id}&select=id`,
-          {
-            headers: {
-              apikey: SUPABASE_KEY,
-              Authorization:
-                `Bearer ${session.access_token}`
-            }
-          }
-        );
-
-      if (!profileCheck.ok) {
-        throw new Error(
-          await profileCheck.text()
-        );
-      }
-
-      const existingProfiles =
-        await profileCheck.json();
-
-      if (!existingProfiles.length) {
-
-        const profileResponse =
-          await fetch(
-            `${SUPABASE_URL}jobseeker_profiles`,
-            {
-              method: "POST",
-
-              headers: {
-                apikey: SUPABASE_KEY,
-                Authorization:
-                  `Bearer ${session.access_token}`,
-                "Content-Type": "application/json",
-                Prefer: "return=minimal"
-              },
-
-              body: JSON.stringify({
-                id: session.user.id,
-                full_name:
-                  jobseekerData.fullName,
-                phone:
-                  jobseekerData.phone,
-                city:
-                  jobseekerData.city
-              })
-            }
-          );
-
-        if (!profileResponse.ok) {
-          throw new Error(
-            await profileResponse.text()
-          );
-        }
-      }
-
-      localStorage.removeItem(
-        "kerjivaPendingJobseekerRegistration"
-      );
-
-      localStorage.setItem(
-        "kerjivaActiveRole",
-        "jobseeker"
-      );
-
-      showNotification(
-        "registrationSuccess"
-      );
-
-      setTimeout(() => {
-        showJobseekerDashboard();
-      }, 800);
-
-      console.log(
-        "PENDAFTARAN JOBSEEKER SELESAI SETELAH KONFIRMASI EMAIL"
-      );
-
-    } catch (error) {
-
-      console.error(
-        "GAGAL MENYELESAIKAN PENDAFTARAN JOBSEEKER:",
-        error
-      );
-
-    }
-  }
-
-   
 }
   }
 );
+
 
 const supabaseHeaders = {
   apikey: SUPABASE_KEY,
@@ -6131,23 +5943,7 @@ if (!isCompany) {
 
   const userId = data.user.id;
   
-  // ==================================================
-  // JIKA INI ADALAH PENYELESAIAN PENDAFTARAN
-  // SETELAH KONFIRMASI EMAIL, BIARKAN
-  // onAuthStateChange YANG MENANGANINYA
-  // ==================================================
 
-  const pendingJobseeker =
-    localStorage.getItem(
-      "kerjivaPendingJobseekerRegistration"
-    );
-
-  if (pendingJobseeker) {
-    console.log(
-      "PENDING JOBSEEKER TERDETEKSI - LEWATI CEK PROFIL LOGIN"
-    );
-    return;
-  }
   
   console.log(
   "CEK PROFIL JOBSEEKER UNTUK USER:",
