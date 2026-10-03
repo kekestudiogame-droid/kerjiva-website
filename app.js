@@ -5328,10 +5328,15 @@ if (!isRegister) {
                 email,
                 password,
 
-                data: isCompany
-                  ? {
-                      account_type: "company"
-                    }
+             data: isCompany
+           ? {
+      account_type: "company",
+      company_name: companyName,
+      company_phone: companyPhone,
+      company_website: companyWebsite,
+      company_city: companyCity,
+      company_address: companyAddress
+    }
                   : {
                       account_type: "jobseeker",
                       first_name: firstName,
