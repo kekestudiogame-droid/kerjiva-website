@@ -5736,44 +5736,65 @@ if (
       // PENCARI KERJA
       // ------------------------------------------------
 
-      if (!isCompany && data.user?.id) {
+    if (!isCompany && data.user?.id) {
 
-        // Jika signup langsung menghasilkan token,
-        // buat profil sekarang.
-        if (data.access_token) {
+  // Jika signup langsung menghasilkan token,
+  // buat profil sekarang.
+  if (data.access_token) {
 
-          const profileResponse = await fetch(
-            `${SUPABASE_URL}jobseeker_profiles`,
-            {
-              method: "POST",
+    const profileResponse = await fetch(
+      `${SUPABASE_URL}jobseeker_profiles`,
+      {
+        method: "POST",
 
-              headers: {
-                apikey: SUPABASE_KEY,
-                Authorization:
-                  `Bearer ${data.access_token}`,
-                "Content-Type": "application/json",
-                Prefer: "return=minimal"
-              },
+        headers: {
+          apikey: SUPABASE_KEY,
+          Authorization:
+            `Bearer ${data.access_token}`,
+          "Content-Type": "application/json",
+          Prefer: "return=minimal"
+        },
 
-              body: JSON.stringify({
-                id: data.user.id,
-                full_name:
-                  `${firstName} ${lastName}`.trim(),
-                phone: jobseekerPhone,
-                city: jobseekerCity
-              })
-            }
-          );
-
-          if (!profileResponse.ok) {
-            const profileError =
-              await profileResponse.text();
-
-            throw new Error(profileError);
-          }
-        }
+        body: JSON.stringify({
+          id: data.user.id,
+          full_name:
+            `${firstName} ${lastName}`.trim(),
+          phone: jobseekerPhone,
+          city: jobseekerCity
+        })
       }
-      
+    );
+
+    if (!profileResponse.ok) {
+      const profileError =
+        await profileResponse.text();
+
+      throw new Error(profileError);
+    }
+
+  } else {
+
+    // ==================================================
+    // SIMPAN DATA PENDAFTARAN JOBSEEKER SEMENTARA
+    // UNTUK DISELESAIKAN SETELAH KONFIRMASI EMAIL
+    // ==================================================
+
+    localStorage.setItem(
+      "kerjivaPendingJobseekerRegistration",
+      JSON.stringify({
+        fullName:
+          `${firstName} ${lastName}`.trim(),
+        email: email,
+        phone: jobseekerPhone,
+        city: jobseekerCity
+      })
+    );
+
+    console.log(
+      "PENDING REGISTRATION JOBSEEKER TERSIMPAN"
+    );
+  }
+}
             // ------------------------------------------------
 // PERUSAHAAN
 // ------------------------------------------------
