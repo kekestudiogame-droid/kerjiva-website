@@ -5646,23 +5646,25 @@ return;
       JSON.stringify(data.user || {})
     );
 
-  // ==================================================
+// ==================================================
 // CEK ROLE YANG DIPILIH SAAT LOGIN
 // ==================================================
 
-const metadata =
-  data.user?.user_metadata || {};
-
-console.log("IS COMPANY SAAT LOGIN:", isCompany);
+console.log(
+  "IS COMPANY SAAT LOGIN:",
+  isCompany
+);
 
 const selectedRole =
-  metadata.account_type === "company"
+  isCompany
     ? "company"
     : "jobseeker";
 
-console.log("ROLE YANG DIPILIH:", selectedRole);
-    isCompany = selectedRole === "company";
-    
+console.log(
+  "ROLE YANG DIPILIH PENGGUNA:",
+  selectedRole
+);
+
 localStorage.setItem(
   "kerjivaActiveRole",
   selectedRole
