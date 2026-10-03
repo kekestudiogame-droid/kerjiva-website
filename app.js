@@ -2964,16 +2964,13 @@ notification.style.background = "#ffffff";
       ".kerjiva-registration-ok"
     );
 
-  okButton.addEventListener("click", () => {
+ okButton.addEventListener("click", () => {
 
-    notification.classList.remove("show");
+  notification.classList.remove("show");
+  notification.remove();
 
-    setTimeout(() => {
-
-      notification.remove();
-
-      isRegister = true;
-      isCompany = false;
+  isRegister = true;
+  isCompany = false;
 
       const accountType =
         document.querySelector("#accountType");
@@ -3030,11 +3027,9 @@ notification.style.background = "#ffffff";
         switchAuthContainer.classList.remove("hidden");
       }
 
-      if (modal) {
+          if (modal) {
         modal.classList.remove("hidden");
       }
-
-    }, 250);
 
   });
 
