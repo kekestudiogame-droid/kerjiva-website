@@ -80,7 +80,6 @@ if (
     JSON.stringify(session.user)
   );
 
-}
   }
 );
 
