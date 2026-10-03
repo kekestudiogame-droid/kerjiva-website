@@ -5110,6 +5110,95 @@ if (
   );
 }
     // ==================================================
+// LENGKAPI PROFIL JOBSEEKER DARI AKUN YANG SUDAH LOGIN
+// ==================================================
+
+if (window.kerjivaCompletingJobseekerProfile) {
+
+  const completingAccessToken =
+    localStorage.getItem("kerjivaAccessToken");
+
+  const completingUserData =
+    localStorage.getItem("kerjivaUser");
+
+  if (!completingAccessToken || !completingUserData) {
+    throw new Error(
+      "Sesi pencari kerja tidak ditemukan."
+    );
+  }
+
+  let completingUser;
+
+  try {
+    completingUser =
+      JSON.parse(completingUserData);
+  } catch {
+    throw new Error(
+      "Data akun pencari kerja tidak valid."
+    );
+  }
+
+  if (!completingUser?.id) {
+    throw new Error(
+      "User ID pencari kerja tidak ditemukan."
+    );
+  }
+
+  const profileResponse =
+    await fetch(
+      `${SUPABASE_URL}jobseeker_profiles`,
+      {
+        method: "POST",
+
+        headers: {
+          apikey: SUPABASE_KEY,
+          Authorization:
+            `Bearer ${completingAccessToken}`,
+          "Content-Type": "application/json",
+          Prefer: "return=minimal"
+        },
+
+        body: JSON.stringify({
+          id: completingUser.id,
+          full_name:
+            `${firstName} ${lastName}`.trim(),
+          phone: jobseekerPhone,
+          city: jobseekerCity
+        })
+      }
+    );
+
+  if (!profileResponse.ok) {
+    const profileError =
+      await profileResponse.text();
+
+    throw new Error(profileError);
+  }
+
+  // Profil pencari kerja berhasil dibuat
+  window.kerjivaCompletingJobseekerProfile =
+    false;
+
+  isRegister = false;
+  isCompany = false;
+
+  localStorage.setItem(
+    "kerjivaActiveRole",
+    "jobseeker"
+  );
+
+  modal.classList.add("hidden");
+
+  showNotification("registrationSuccess");
+
+  setTimeout(() => {
+    showJobseekerDashboard();
+  }, 800);
+
+  return;
+}
+    
+    // ==================================================
 // LENGKAPI PROFIL PERUSAHAAN DARI AKUN YANG SUDAH LOGIN
 // ==================================================
 
