@@ -40,27 +40,7 @@ const supabaseAuth =
       return;
     }
 
-    // ==================================================
-    // SINKRONKAN SESSION SUPABASE KE LOCALSTORAGE KERJIVA
-    // ==================================================
-    
- if (
-  session &&
-  session.access_token &&
-  session.user
-) {
-
-  localStorage.setItem(
-    "kerjivaAccessToken",
-    session.access_token
-  );
-
-  localStorage.setItem(
-    "kerjivaUser",
-    JSON.stringify(session.user)
-  );
-
-// ==================================================
+   // ==================================================
 // SINKRONKAN SESSION SUPABASE KE LOCALSTORAGE KERJIVA
 // ==================================================
 
@@ -80,8 +60,10 @@ if (
     JSON.stringify(session.user)
   );
 
+}
   }
 );
+
 
 
 const supabaseHeaders = {
