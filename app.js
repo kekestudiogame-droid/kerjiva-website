@@ -4935,6 +4935,50 @@ const authUrl = SUPABASE_URL.replace(
     // ==================================================
 
     if (isRegister) {
+      // ---------------- PERUSAHAAN ----------------
+
+if (isCompany) {
+
+  if (!companyName) {
+    showNotification(
+      "invalidAccount",
+      localStorage.getItem("siteLanguage") === "en"
+        ? " Company name is required."
+        : " Nama perusahaan wajib diisi."
+    );
+    return;
+  }
+
+  if (!companyPhone) {
+    showNotification(
+      "invalidAccount",
+      localStorage.getItem("siteLanguage") === "en"
+        ? " Phone number is required."
+        : " Nomor telepon wajib diisi."
+    );
+    return;
+  }
+
+  if (!companyCity) {
+    showNotification(
+      "invalidAccount",
+      localStorage.getItem("siteLanguage") === "en"
+        ? " City is required."
+        : " Kota wajib diisi."
+    );
+    return;
+  }
+
+  if (!companyAddress) {
+    showNotification(
+      "invalidAccount",
+      localStorage.getItem("siteLanguage") === "en"
+        ? " Address is required."
+        : " Alamat wajib diisi."
+    );
+    return;
+  }
+}
 
       // Harus memilih jenis akun
       if (
