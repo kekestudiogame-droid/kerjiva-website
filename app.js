@@ -19,7 +19,7 @@ const supabaseAuth =
 // ==================================================
 // SUPABASE AUTH SESSION
 // ==================================================
-supabaseAuth.auth.onAuthStateChange(
+  supabaseAuth.auth.onAuthStateChange(
   async (event, session) => {
 
     console.log("AUTH EVENT:", event);
@@ -73,7 +73,7 @@ supabaseAuth.auth.onAuthStateChange(
     pendingCompany &&
     session.user?.user_metadata?.account_type === "company"
   ) {
-
+   
     try {
 
       const companyData =
@@ -163,6 +163,112 @@ supabaseAuth.auth.onAuthStateChange(
 
     }
   }
+   
+  // ==================================================
+  // LANJUTKAN PENDAFTARAN JOBSEEKER
+  // SETELAH KONFIRMASI EMAIL
+  // ==================================================
+
+  const pendingJobseeker =
+    localStorage.getItem(
+      "kerjivaPendingJobseekerRegistration"
+    );
+
+  if (pendingJobseeker) {
+
+    try {
+
+      const jobseekerData =
+        JSON.parse(pendingJobseeker);
+
+      const profileCheck =
+        await fetch(
+          `${SUPABASE_URL}jobseeker_profiles?id=eq.${session.user.id}&select=id`,
+          {
+            headers: {
+              apikey: SUPABASE_KEY,
+              Authorization:
+                `Bearer ${session.access_token}`
+            }
+          }
+        );
+
+      if (!profileCheck.ok) {
+        throw new Error(
+          await profileCheck.text()
+        );
+      }
+
+      const existingProfiles =
+        await profileCheck.json();
+
+      if (!existingProfiles.length) {
+
+        const profileResponse =
+          await fetch(
+            `${SUPABASE_URL}jobseeker_profiles`,
+            {
+              method: "POST",
+
+              headers: {
+                apikey: SUPABASE_KEY,
+                Authorization:
+                  `Bearer ${session.access_token}`,
+                "Content-Type": "application/json",
+                Prefer: "return=minimal"
+              },
+
+              body: JSON.stringify({
+                id: session.user.id,
+                full_name:
+                  jobseekerData.fullName,
+                phone:
+                  jobseekerData.phone,
+                city:
+                  jobseekerData.city
+              })
+            }
+          );
+
+        if (!profileResponse.ok) {
+          throw new Error(
+            await profileResponse.text()
+          );
+        }
+      }
+
+      localStorage.removeItem(
+        "kerjivaPendingJobseekerRegistration"
+      );
+
+      localStorage.setItem(
+        "kerjivaActiveRole",
+        "jobseeker"
+      );
+
+      showNotification(
+        "registrationSuccess"
+      );
+
+      setTimeout(() => {
+        showJobseekerDashboard();
+      }, 800);
+
+      console.log(
+        "PENDAFTARAN JOBSEEKER SELESAI SETELAH KONFIRMASI EMAIL"
+      );
+
+    } catch (error) {
+
+      console.error(
+        "GAGAL MENYELESAIKAN PENDAFTARAN JOBSEEKER:",
+        error
+      );
+
+    }
+  }
+
+   
 }
   }
 );
@@ -231,7 +337,7 @@ async function loadJobsFromDatabase() {
           .substring(0, 2)
           .toUpperCase()
     }));
-
+  
     // =====================================================
     // SATU JALUR DATA FINAL
     // renderJobs menangani translation + tampilan
@@ -1096,9 +1202,9 @@ if (locationInput) {
         `;
       }).join("")}
     `;
-  citySuggestions.classList.remove("hidden");
+   citySuggestions.classList.remove("hidden");
 
-citySuggestions
+   citySuggestions
   .querySelectorAll(".job-suggestion-item")
   .forEach(button => {
     button.addEventListener("click", () => {
