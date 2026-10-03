@@ -3798,6 +3798,7 @@ if (menuJobseeker) {
     }
 
     // SUDAH LOGIN SEBAGAI PENCAri KERJA
+    
     if (activeRole === "jobseeker") {
       if (typeof showJobseekerDashboard === "function") {
         showJobseekerDashboard();
@@ -3869,13 +3870,54 @@ if (menuCompany) {
     }
 
     // SUDAH LOGIN SEBAGAI PERUSAHAAN
-    if (activeRole === "company") {
-      if (typeof showCompanyDashboard === "function") {
-        showCompanyDashboard();
-      }
+    
+  if (activeRole === "company") {
 
-      return;
+  let parsedUser = null;
+
+  try {
+    parsedUser = JSON.parse(userData || "{}");
+  } catch {
+    parsedUser = null;
+  }
+
+  if (!parsedUser?.id) {
+    return;
+  }
+
+  const companyCheck = await fetch(
+    `${SUPABASE_URL}companies?user_id=eq.${parsedUser.id}&select=id`,
+    {
+      headers: {
+        apikey: SUPABASE_KEY,
+        Authorization:
+          `Bearer ${localStorage.getItem("kerjivaAccessToken")}`
+      }
     }
+  );
+
+  if (!companyCheck.ok) {
+    console.error(
+      "GAGAL CEK PROFIL PERUSAHAAN:",
+      await companyCheck.text()
+    );
+    return;
+  }
+
+  const existingCompanies =
+    await companyCheck.json();
+
+  if (existingCompanies.length) {
+    if (typeof showCompanyDashboard === "function") {
+      showCompanyDashboard();
+    }
+    return;
+  }
+
+  showCompanyRegistrationAfterLogin();
+
+  return;
+}
 
     // LOGIN SEBAGAI PENCAri KERJA
     const isEnglish =
