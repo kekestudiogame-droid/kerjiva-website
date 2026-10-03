@@ -2908,6 +2908,13 @@ function showJobseekerRegistrationAfterLogin() {
   notification.className =
     "kerjiva-registration-notification";
 
+notification.style.position = "fixed";
+notification.style.top = "8%";
+notification.style.left = "78%";
+notification.style.transform = "translateX(-50%)";
+notification.style.zIndex = "999999";
+notification.style.background = "#ffffff";
+
   notification.innerHTML = `
 
     <div class="kerjiva-registration-icon">
