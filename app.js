@@ -5530,6 +5530,114 @@ if (!isRegister) {
         "Gagal"
       );
     }
+// ==================================================
+// SELESAIKAN PENDAFTARAN JOBSEEKER
+// SETELAH KONFIRMASI EMAIL + LOGIN
+// ==================================================
+
+if (
+  !isRegister &&
+  data.access_token &&
+  data.user?.id
+) {
+
+  const pendingJobseeker =
+    localStorage.getItem(
+      "kerjivaPendingJobseekerRegistration"
+    );
+
+  if (pendingJobseeker) {
+
+    let pendingData = null;
+
+    try {
+      pendingData =
+        JSON.parse(pendingJobseeker);
+    } catch {
+      pendingData = null;
+    }
+
+    if (
+      pendingData &&
+      pendingData.email?.toLowerCase() ===
+        email.toLowerCase()
+    ) {
+
+      const profileResponse =
+        await fetch(
+          `${SUPABASE_URL}jobseeker_profiles`,
+          {
+            method: "POST",
+
+            headers: {
+              apikey: SUPABASE_KEY,
+              Authorization:
+                `Bearer ${data.access_token}`,
+              "Content-Type": "application/json",
+              Prefer: "return=minimal"
+            },
+
+            body: JSON.stringify({
+              id: data.user.id,
+              full_name: pendingData.fullName,
+              phone: pendingData.phone,
+              city: pendingData.city
+            })
+          }
+        );
+
+      if (!profileResponse.ok) {
+
+        const profileError =
+          await profileResponse.text();
+
+        throw new Error(profileError);
+      }
+
+      // ==============================================
+      // SIMPAN SESSION + ROLE JOBSEEKER
+      // ==============================================
+
+      localStorage.setItem(
+        "kerjivaAccessToken",
+        data.access_token
+      );
+
+      localStorage.setItem(
+        "kerjivaUser",
+        JSON.stringify(data.user)
+      );
+
+      localStorage.setItem(
+        "kerjivaActiveRole",
+        "jobseeker"
+      );
+
+      // ==============================================
+      // PENDAFTARAN SUDAH SELESAI
+      // ==============================================
+
+      localStorage.removeItem(
+        "kerjivaPendingJobseekerRegistration"
+      );
+
+      isRegister = false;
+      isCompany = false;
+
+      modal.classList.add("hidden");
+
+      showNotification("loginSuccess");
+
+      setTimeout(() => {
+        showJobseekerDashboard();
+      }, 800);
+
+      return;
+    }
+  }
+}
+    
+    
     // ==================================================
 // LENGKAPI PROFIL PERUSAHAAN SETELAH LOGIN
 // ==================================================
