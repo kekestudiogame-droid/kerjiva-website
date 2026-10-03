@@ -5808,6 +5808,10 @@ if (!isCompany) {
   }
 
   const userId = data.user.id;
+  console.log(
+  "CEK PROFIL JOBSEEKER UNTUK USER:",
+  userId
+);
 
   const profileCheck = await fetch(
     `${SUPABASE_URL}jobseeker_profiles?id=eq.${userId}&select=*`,
@@ -5826,8 +5830,13 @@ if (!isCompany) {
     );
   }
 
-  const existingProfiles =
-    await profileCheck.json();
+ const existingProfiles =
+  await profileCheck.json();
+
+console.log(
+  "HASIL CEK PROFIL JOBSEEKER:",
+  existingProfiles
+);
 
   // ----------------------------------------------
   // PROFIL SUDAH ADA
@@ -5852,6 +5861,9 @@ if (!isCompany) {
 // PROFIL JOBSEEKER BELUM ADA
 // TAMPILKAN FORM PENDAFTARAN
 // ----------------------------------------------
+console.log(
+  "PROFIL JOBSEEKER TIDAK ADA - TAMPILKAN FORM"
+);
 
 showJobseekerRegistrationAfterLogin();
 
