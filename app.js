@@ -2942,6 +2942,9 @@ function showJobseekerRegistrationAfterLogin() {
     </button>
 
   `;
+    if (modal) {
+    modal.classList.add("hidden");
+  }
 
   document.body.appendChild(notification);
 
