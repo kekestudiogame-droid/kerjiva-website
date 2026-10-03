@@ -2757,7 +2757,14 @@ function showCompanyRegistrationAfterLogin() {
 
     <div class="kerjiva-registration-content">
 
-      <div class="kerjiva-registration-title">
+     <div
+     class="kerjiva-registration-title"
+     style="
+     font-size:20px;
+     font-weight:700;
+     color:#111827;
+     "
+     >
         ${
           isEnglish
             ? "Company Profile Not Found"
@@ -2765,7 +2772,15 @@ function showCompanyRegistrationAfterLogin() {
         }
       </div>
 
-      <div class="kerjiva-registration-message">
+      <div
+        class="kerjiva-registration-message"
+        style="
+        font-size:16px;
+        font-weight:500;
+        line-height:1.6;
+       color:#374151;
+        "
+        >
         ${
           isEnglish
             ? "This account does not have a Company profile yet.<br>Please complete the Company registration form."
