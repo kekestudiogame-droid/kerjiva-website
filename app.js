@@ -2915,15 +2915,43 @@ notification.style.transform = "translateX(-50%)";
 notification.style.zIndex = "999999";
 notification.style.background = "#ffffff";
 
-  notification.innerHTML = `
+notification.innerHTML = `
 
-    <div class="kerjiva-registration-icon">
+  <div style="
+    display:flex;
+    align-items:flex-start;
+    gap:14px;
+  ">
+
+    <div style="
+      width:42px;
+      height:42px;
+      min-width:42px;
+      border-radius:50%;
+      background:#fff7ed;
+      color:#f59e0b;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      font-size:22px;
+      font-weight:700;
+      box-shadow:0 2px 8px rgba(0,0,0,0.08);
+    ">
       !
     </div>
 
-    <div class="kerjiva-registration-content">
+    <div style="
+      flex:1;
+      padding-top:1px;
+    ">
 
-      <div class="kerjiva-registration-title">
+      <div style="
+        font-size:17px;
+        font-weight:700;
+        color:#123b6d;
+        margin-bottom:7px;
+        line-height:1.3;
+      ">
         ${
           isEnglish
             ? "Job Seeker Profile Not Found"
@@ -2931,7 +2959,11 @@ notification.style.background = "#ffffff";
         }
       </div>
 
-      <div class="kerjiva-registration-message">
+      <div style="
+        font-size:14px;
+        line-height:1.6;
+        color:#64748b;
+      ">
         ${
           isEnglish
             ? "This account does not have a Job Seeker profile yet.<br>Please complete the Job Seeker registration form."
@@ -2941,14 +2973,36 @@ notification.style.background = "#ffffff";
 
     </div>
 
+  </div>
+
+  <div style="
+    display:flex;
+    justify-content:flex-end;
+    margin-top:18px;
+  ">
+
     <button
       type="button"
       class="kerjiva-registration-ok"
+      style="
+        min-width:78px;
+        padding:9px 20px;
+        border:none;
+        border-radius:8px;
+        background:#123b6d;
+        color:#ffffff;
+        font-size:13px;
+        font-weight:600;
+        cursor:pointer;
+        box-shadow:0 3px 8px rgba(18,59,109,0.20);
+      "
     >
       OK
     </button>
 
-  `;
+  </div>
+
+`;
     if (modal) {
     modal.classList.add("hidden");
   }
