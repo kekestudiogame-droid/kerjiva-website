@@ -5846,81 +5846,16 @@ if (!isCompany) {
   return;
 }
 
-  // ----------------------------------------------
-  // PROFIL BELUM ADA
-  // AMBIL DATA DARI SUPABASE AUTH METADATA
-  // ----------------------------------------------
-
-  const userMetadata =
-    data.user?.user_metadata || {};
-
-  const firstName =
-    userMetadata.first_name || "";
-
-  const lastName =
-    userMetadata.last_name || "";
-
-  const fullName =
-    userMetadata.full_name ||
-    `${firstName} ${lastName}`.trim();
-
-  const phone =
-    userMetadata.phone || "";
-
-  const city =
-    userMetadata.city || "";
-
-  // ----------------------------------------------
-  // BUAT PROFIL DARI DATA PENDAFTARAN
-  // ----------------------------------------------
-
-  const profileResponse = await fetch(
-    `${SUPABASE_URL}jobseeker_profiles`,
-    {
-      method: "POST",
-
-      headers: {
-        apikey: SUPABASE_KEY,
-        Authorization:
-          `Bearer ${data.access_token}`,
-        "Content-Type": "application/json",
-        Prefer: "return=minimal"
-      },
-
-      body: JSON.stringify({
-        id: userId,
-        full_name: fullName,
-        phone: phone,
-        city: city
-      })
-    }
-  );
-
-  if (!profileResponse.ok) {
-
-    const profileError =
-      await profileResponse.text();
-
-    throw new Error(profileError);
-  }
-
-  // ----------------------------------------------
-  // PROFIL BERHASIL DIBUAT
-  // LANGSUNG KE DASHBOARD
-  // ----------------------------------------------
-
-  modal.classList.add("hidden");
-
-  showNotification("loginSuccess");
-
-  setTimeout(() => {
-    showJobseekerDashboard();
-  }, 800);
-
-  return;
-}
 
 
+// ----------------------------------------------
+// PROFIL JOBSEEKER BELUM ADA
+// TAMPILKAN FORM PENDAFTARAN
+// ----------------------------------------------
+
+showJobseekerRegistrationAfterLogin();
+
+return;
 // ==================================================
 // PERUSAHAAN
 // ==================================================
