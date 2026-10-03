@@ -5089,28 +5089,7 @@ if (!jobseekerCity) {
 }
     }
 
-    // ==================================================
-// SIMPAN DATA PENDAFTARAN COMPANY
-// AGAR DAPAT DILANJUTKAN SETELAH KONFIRMASI EMAIL
-// ==================================================
-
-if (
-  isRegister &&
-  isCompany &&
-  !window.kerjivaCompletingCompanyProfile
-) {
-  localStorage.setItem(
-    "kerjivaPendingCompanyRegistration",
-    JSON.stringify({
-      companyName: companyName,
-      email: email,
-      phone: companyPhone,
-      website: companyWebsite,
-      city: companyCity,
-      address: companyAddress
-    })
-  );
-}
+  
     // ==================================================
 // LENGKAPI PROFIL JOBSEEKER DARI AKUN YANG SUDAH LOGIN
 // ==================================================
