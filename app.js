@@ -2743,12 +2743,12 @@ function showCompanyRegistrationAfterLogin() {
 
   notification.className =
     "kerjiva-registration-notification";
-  notification.style.position = "fixed";
-  notification.style.top = "8%";
-  notification.style.left = "50%";
-  notification.style.transform = "translateX(-50%)";
-  notification.style.zIndex = "999999";
-
+ notification.style.position = "fixed";
+ notification.style.top = "8%";
+ notification.style.right = "2%";
+ notification.style.left = "auto";
+ notification.style.transform = "none";
+ notification.style.zIndex = "999999";
   notification.innerHTML = `
 
     <div class="kerjiva-registration-icon">
