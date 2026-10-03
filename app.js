@@ -3820,7 +3820,7 @@ if (menuJobseeker) {
 }
 
 if (menuCompany) {
-  menuCompany.onclick = function () {
+ menuCompany.onclick = async function () {
     const userData =
       localStorage.getItem("kerjivaUser");
 
