@@ -5851,16 +5851,16 @@ if (isCompany) {
   // ----------------------------------------------
 
 if (existingCompanies.length) {
-
   modal.classList.add("hidden");
+
+  showNotification("loginSuccess");
 
   setTimeout(() => {
     showCompanyDashboard();
-  }, 300);
+  }, 800);
 
   return;
 }
-
   // ----------------------------------------------
   // PROFIL PERUSAHAAN BELUM ADA
   // ----------------------------------------------
