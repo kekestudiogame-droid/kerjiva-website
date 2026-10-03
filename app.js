@@ -3758,7 +3758,8 @@ if (menuHome) {
   };
 }
 if (menuJobseeker) {
-  menuJobseeker.onclick = function () {
+  menuJobseeker.onclick = async function () {
+
     const userData =
       localStorage.getItem("kerjivaUser");
 
@@ -3808,11 +3809,58 @@ if (menuJobseeker) {
     }
 
     // SUDAH LOGIN SEBAGAI PENCAri KERJA
-    
     if (activeRole === "jobseeker") {
-      if (typeof showJobseekerDashboard === "function") {
-        showJobseekerDashboard();
+
+      let parsedUser = null;
+
+      try {
+        parsedUser =
+          JSON.parse(userData || "{}");
+      } catch {
+        parsedUser = null;
       }
+
+      if (!parsedUser?.id) {
+        return;
+      }
+
+      const profileCheck =
+        await fetch(
+          `${SUPABASE_URL}jobseeker_profiles?id=eq.${parsedUser.id}&select=id`,
+          {
+            headers: {
+              apikey: SUPABASE_KEY,
+              Authorization:
+                `Bearer ${localStorage.getItem("kerjivaAccessToken")}`
+            }
+          }
+        );
+
+      if (!profileCheck.ok) {
+        console.error(
+          "GAGAL CEK PROFIL JOBSEEKER:",
+          await profileCheck.text()
+        );
+        return;
+      }
+
+      const existingProfiles =
+        await profileCheck.json();
+
+      if (existingProfiles.length) {
+
+        if (
+          typeof showJobseekerDashboard ===
+          "function"
+        ) {
+          showJobseekerDashboard();
+        }
+
+        return;
+      }
+
+      // PROFIL JOBSEEKER BELUM ADA
+      showJobseekerRegistrationAfterLogin();
 
       return;
     }
@@ -3828,7 +3876,6 @@ if (menuJobseeker) {
     );
   };
 }
-
 if (menuCompany) {
  menuCompany.onclick = async function () {
     const userData =
