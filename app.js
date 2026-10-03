@@ -5856,10 +5856,12 @@ if (!isCompany) {
 showJobseekerRegistrationAfterLogin();
 
 return;
+}
+
+
 // ==================================================
 // PERUSAHAAN
 // ==================================================
-
 if (isCompany) {
 
   if (!data.user?.id) {
