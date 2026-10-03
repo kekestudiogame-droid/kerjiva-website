@@ -2801,6 +2801,9 @@ function showCompanyRegistrationAfterLogin() {
   `;
 
   document.body.appendChild(notification);
+  if (modal) {
+  modal.classList.add("hidden");
+}
 
   requestAnimationFrame(() => {
     notification.classList.add("show");
