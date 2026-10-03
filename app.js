@@ -5509,64 +5509,7 @@ if (
 
   } else {
 
-    // ==================================================
-    // SIMPAN DATA PENDAFTARAN JOBSEEKER SEMENTARA
-    // UNTUK DISELESAIKAN SETELAH KONFIRMASI EMAIL
-    // ==================================================
-
-    localStorage.setItem(
-      "kerjivaPendingJobseekerRegistration",
-      JSON.stringify({
-        fullName:
-          `${firstName} ${lastName}`.trim(),
-        email: email,
-        phone: jobseekerPhone,
-        city: jobseekerCity
-      })
-    );
-
-    console.log(
-      "PENDING REGISTRATION JOBSEEKER TERSIMPAN"
-    );
-  }
-}
-            // ------------------------------------------------
-// PERUSAHAAN
-// ------------------------------------------------
-
-if (isCompany && data.user?.id && data.access_token) {
-
-  const companyResponse = await fetch(
-    `${SUPABASE_URL}companies`,
-    {
-      method: "POST",
-
-      headers: {
-        apikey: SUPABASE_KEY,
-        Authorization:
-          `Bearer ${data.access_token}`,
-        "Content-Type": "application/json",
-        Prefer: "return=minimal"
-      },
-
-      body: JSON.stringify({
-        user_id: data.user.id,
-        company_name: companyName,
-        email: email,
-        phone: companyPhone,
-        website: companyWebsite,
-        city: companyCity,
-        address: companyAddress
-      })
-    }
-  );
-
-  if (!companyResponse.ok) {
-    const companyError =
-      await companyResponse.text();
-
-    throw new Error(companyError);
-  }
+  
 }
 
     // ------------------------------------------------
