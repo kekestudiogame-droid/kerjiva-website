@@ -5789,8 +5789,7 @@ if (data.access_token && data.user?.id) {
 // ==================================================
 
 isRegister = false;
-isCompany = false;
-
+isCompany = registeredAccountType === "company";
 const isEnglish =
   localStorage.getItem("siteLanguage") === "en";
 
