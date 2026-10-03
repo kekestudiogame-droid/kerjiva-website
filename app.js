@@ -6130,6 +6130,25 @@ if (!isCompany) {
   }
 
   const userId = data.user.id;
+  
+  // ==================================================
+  // JIKA INI ADALAH PENYELESAIAN PENDAFTARAN
+  // SETELAH KONFIRMASI EMAIL, BIARKAN
+  // onAuthStateChange YANG MENANGANINYA
+  // ==================================================
+
+  const pendingJobseeker =
+    localStorage.getItem(
+      "kerjivaPendingJobseekerRegistration"
+    );
+
+  if (pendingJobseeker) {
+    console.log(
+      "PENDING JOBSEEKER TERDETEKSI - LEWATI CEK PROFIL LOGIN"
+    );
+    return;
+  }
+  
   console.log(
   "CEK PROFIL JOBSEEKER UNTUK USER:",
   userId
