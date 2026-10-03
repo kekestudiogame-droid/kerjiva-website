@@ -2773,13 +2773,14 @@ function showCompanyRegistrationAfterLogin() {
       </div>
 
       <div
-        class="kerjiva-registration-message"
-        style="
-        font-size:16px;
-        font-weight:500;
-        line-height:1.6;
-       color:#374151;
-        "
+       class="kerjiva-registration-message"
+       style="
+       font-size:16px;
+       font-weight:600;
+       line-height:1.6;
+       color:#111827;
+       opacity:1;
+       "
         >
         ${
           isEnglish
