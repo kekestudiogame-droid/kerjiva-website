@@ -392,8 +392,7 @@ async function loadCompanyStats() {
 
  const [
   statsRes,
-  jobsRes,
-  companiesRes
+  jobsRes
 ] = await Promise.all([
    
   fetch(
@@ -408,31 +407,22 @@ async function loadCompanyStats() {
     }
   ),
 
-  fetch(
+   fetch(
     `${SUPABASE_URL}jobs?status=eq.published&select=id,company_name,city,user_id`,
     {
       headers: supabaseHeaders
     }
-  ),
-   fetch(
-  `${SUPABASE_URL}companies?select=id`,
-  {
-    headers: supabaseHeaders
-  }
-)
-
+  )
 ]);
   
- if (!statsRes.ok || !jobsRes.ok || !companiesRes.ok) {
-  throw new Error(
-    "Gagal mengambil data statistik dari Supabase."
-  );
+if (!statsRes.ok || !jobsRes.ok) {
+  throw new Error("Gagal mengambil data statistik dari Supabase.");
 }
 
 const publicStats = await statsRes.json();
 
 const jobs = await jobsRes.json();
-    const companies = await companiesRes.json();
+   
 
 const jobseekersCount =
   Number(publicStats.jobseekers) || 0;
@@ -454,12 +444,11 @@ const applicationsCount =
     }
 
   // Total perusahaan dari tabel companies
-    if (statNumbers[1]) {
-    statNumbers[1].textContent =
-    Array.isArray(companies)
-      ? companies.length
-      : 0;
-     }
+    
+   if (statNumbers[1]) {
+     statNumbers[1].textContent =
+     Number(publicStats.companies) || 0;
+    }
 
     // Lowongan Aktif
     // Tetap menggunakan jumlah jobs published
