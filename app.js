@@ -2816,205 +2816,207 @@ if (modal) {
   });
 
 }
-function showJobseekerRegistrationAfterLogin() {
 
+function showJobseekerRegistrationAfterLogin() {
   window.kerjivaCompletingJobseekerProfile = true;
 
   const language =
     localStorage.getItem("siteLanguage") || "id";
 
-  const isEnglish =
-    language === "en";
+  const isEnglish = language === "en";
 
-  const notification =
-    document.createElement("div");
+  const backdrop = document.createElement("div");
+  backdrop.id = "kerjivaJobseekerRegistrationBackdrop";
 
-  notification.id =
-    "kerjivaJobseekerProfileNotification";
+  Object.assign(backdrop.style, {
+    position: "fixed",
+    inset: "0",
+    width: "100%",
+    height: "100%",
+    background: "#F3F4F6",
+    zIndex: "1000000",
+    overflow: "hidden",
+    touchAction: "none"
+  });
 
-  notification.className =
-    "kerjiva-registration-notification";
+  const notification = document.createElement("div");
+  notification.id = "kerjivaJobseekerProfileNotification";
+  notification.className = "kerjiva-registration-notification";
 
-notification.style.position = "fixed";
-notification.style.top = "8%";
-notification.style.left = "78%";
-notification.style.transform = "translateX(-50%)";
-notification.style.zIndex = "999999";
-notification.style.background = "#ffffff";
+  Object.assign(notification.style, {
+    position: "fixed",
+    top: "50%",
+    left: "50%",
+    right: "auto",
+    transform: "translate(-50%, -50%)",
+    zIndex: "1000001",
+    width: "calc(100% - 32px)",
+    maxWidth: "420px",
+    boxSizing: "border-box",
+    background: "#FFFFFF",
+    borderRadius: "16px",
+    padding: "24px",
+    maxHeight: "none",
+    overflow: "visible",
+    boxShadow: "0 8px 30px rgba(0,0,0,0.15)"
+  });
 
-notification.innerHTML = `
-
-  <div style="
-    display:flex;
-    align-items:flex-start;
-    gap:14px;
-  ">
-
+  notification.innerHTML = `
     <div style="
-      width:42px;
-      height:42px;
-      min-width:42px;
-      border-radius:50%;
-      background:#fff7ed;
-      color:#f59e0b;
       display:flex;
-      align-items:center;
-      justify-content:center;
-      font-size:22px;
-      font-weight:700;
-      box-shadow:0 2px 8px rgba(0,0,0,0.08);
+      align-items:flex-start;
+      gap:14px;
     ">
-      !
+      <div style="
+        width:42px;
+        height:42px;
+        min-width:42px;
+        border-radius:50%;
+        background:#FFF0E5;
+        color:#F47721;
+        display:flex;
+        align-items:center;
+        justify-content:center;
+        font-size:22px;
+        font-weight:700;
+      ">
+        !
+      </div>
+
+      <div style="flex:1;min-width:0;">
+        <div style="
+          font-size:18px;
+          font-weight:700;
+          color:#111827;
+          margin-bottom:7px;
+          line-height:1.4;
+        ">
+          ${
+            isEnglish
+              ? "Job Seeker Profile Not Found"
+              : "Profil Pencari Kerja Belum Ada"
+          }
+        </div>
+
+        <div style="
+          font-size:15px;
+          line-height:1.6;
+          color:#374151;
+        ">
+          ${
+            isEnglish
+              ? "This account does not have a Job Seeker profile yet.<br>Please complete the Job Seeker registration form."
+              : "Akun ini belum memiliki profil Pencari Kerja.<br>Silakan lengkapi formulir pendaftaran Pencari Kerja."
+          }
+        </div>
+      </div>
     </div>
 
     <div style="
-      flex:1;
-      padding-top:1px;
+      display:flex;
+      justify-content:flex-end;
+      margin-top:18px;
     ">
-
-      <div style="
-        font-size:17px;
-        font-weight:700;
-        color:#123b6d;
-        margin-bottom:7px;
-        line-height:1.3;
-      ">
-        ${
-          isEnglish
-            ? "Job Seeker Profile Not Found"
-            : "Profil Pencari Kerja Belum Ada"
-        }
-      </div>
-
-      <div style="
-        font-size:14px;
-        line-height:1.6;
-        color:#64748b;
-      ">
-        ${
-          isEnglish
-            ? "This account does not have a Job Seeker profile yet.<br>Please complete the Job Seeker registration form."
-            : "Akun ini belum memiliki profil Pencari Kerja.<br>Silakan lengkapi formulir pendaftaran Pencari Kerja."
-        }
-      </div>
-
+      <button
+        type="button"
+        class="kerjiva-registration-ok"
+        style="
+          min-width:78px;
+          padding:10px 22px;
+          border:none;
+          border-radius:8px;
+          background:#F47721;
+          color:#FFFFFF;
+          font-size:14px;
+          font-weight:700;
+          cursor:pointer;
+        "
+      >
+        OK
+      </button>
     </div>
+  `;
 
-  </div>
-
-  <div style="
-    display:flex;
-    justify-content:flex-end;
-    margin-top:18px;
-  ">
-
-    <button
-      type="button"
-      class="kerjiva-registration-ok"
-      style="
-        min-width:78px;
-        padding:9px 20px;
-        border:none;
-        border-radius:8px;
-        background:#123b6d;
-        color:#ffffff;
-        font-size:13px;
-        font-weight:600;
-        cursor:pointer;
-        box-shadow:0 3px 8px rgba(18,59,109,0.20);
-      "
-    >
-      OK
-    </button>
-
-  </div>
-
-`;
-    if (modal) {
+  if (modal) {
     modal.classList.add("hidden");
   }
 
+  document.body.appendChild(backdrop);
   document.body.appendChild(notification);
 
   requestAnimationFrame(() => {
     notification.classList.add("show");
   });
 
-  const okButton =
-    notification.querySelector(
-      ".kerjiva-registration-ok"
+  const okButton = notification.querySelector(
+    ".kerjiva-registration-ok"
+  );
+
+  okButton.addEventListener("click", () => {
+    notification.classList.remove("show");
+    notification.remove();
+    backdrop.remove();
+
+    isRegister = true;
+    isCompany = false;
+
+    const accountType =
+      document.querySelector("#accountType");
+
+    if (accountType) {
+      accountType.style.display = "none";
+    }
+
+    if (companyFields) {
+      companyFields.style.display = "none";
+    }
+
+    if (jobseekerFields) {
+      jobseekerFields.style.display = "block";
+    }
+
+    const confirmPasswordField =
+      document.querySelector("#confirmPasswordField");
+
+    if (confirmPasswordField) {
+      confirmPasswordField.style.display = "block";
+    }
+
+    modalTitle.textContent = isEnglish
+      ? "Register Job Seeker"
+      : "Daftar Pencari Kerja";
+
+    modalText.textContent = isEnglish
+      ? "Create a job seeker profile to find and apply for jobs."
+      : "Lengkapi profil pencari kerja untuk menemukan dan melamar pekerjaan.";
+
+    const submitButton = authForm?.querySelector(
+      'button[type="submit"]'
     );
 
- okButton.addEventListener("click", () => {
+    if (submitButton) {
+      submitButton.textContent = isEnglish
+        ? "Sign Up"
+        : "Daftar";
+    }
 
-  notification.classList.remove("show");
-  notification.remove();
+    if (authForm) {
+      authForm.classList.remove("hidden");
+    }
 
-  isRegister = true;
-  isCompany = false;
+    const switchAuthContainer =
+      document.querySelector(".switch-auth");
 
-      const accountType =
-        document.querySelector("#accountType");
+    if (switchAuthContainer) {
+      switchAuthContainer.classList.remove("hidden");
+    }
 
-      if (accountType) {
-        accountType.style.display = "none";
-      }
-
-      if (companyFields) {
-        companyFields.style.display = "none";
-      }
-
-      if (jobseekerFields) {
-        jobseekerFields.style.display = "block";
-      }
-
-      const confirmPasswordField =
-        document.querySelector("#confirmPasswordField");
-
-      if (confirmPasswordField) {
-        confirmPasswordField.style.display = "block";
-      }
-
-      modalTitle.textContent =
-        isEnglish
-          ? "Register Job Seeker"
-          : "Daftar Pencari Kerja";
-
-      modalText.textContent =
-        isEnglish
-          ? "Create a job seeker profile to find and apply for jobs."
-          : "Lengkapi profil pencari kerja untuk menemukan dan melamar pekerjaan.";
-
-      const submitButton =
-        authForm?.querySelector(
-          'button[type="submit"]'
-        );
-
-      if (submitButton) {
-        submitButton.textContent =
-          isEnglish
-            ? "Sign Up"
-            : "Daftar";
-      }
-
-      if (authForm) {
-        authForm.classList.remove("hidden");
-      }
-
-      const switchAuthContainer =
-        document.querySelector(".switch-auth");
-
-      if (switchAuthContainer) {
-        switchAuthContainer.classList.remove("hidden");
-      }
-
-          if (modal) {
-        modal.classList.remove("hidden");
-      }
-
+    if (modal) {
+      modal.classList.remove("hidden");
+    }
   });
-
 }
+
 
 async function submitApplication(job){
 const accessToken = localStorage.getItem("kerjivaAccessToken");
