@@ -2700,23 +2700,30 @@ notification.style.overflow = "visible";
     </div>
 
   
-<button
-  type="button"
-  class="kerjiva-registration-ok"
-  style="
-    min-width:78px;
-    padding:10px 22px;
-    border:none;
-    border-radius:8px;
-    background:#F47721;
-    color:#FFFFFF;
-    font-size:14px;
-    font-weight:700;
-    cursor:pointer;
-  "
->
-  OK
-</button>
+
+<div style="
+  display:flex;
+  justify-content:flex-end;
+  margin-top:18px;
+">
+  <button
+    type="button"
+    class="kerjiva-registration-ok"
+    style="
+      min-width:78px;
+      padding:10px 22px;
+      border:none;
+      border-radius:8px;
+      background:#F47721;
+      color:#FFFFFF;
+      font-size:14px;
+      font-weight:700;
+      cursor:pointer;
+    "
+  >
+    OK
+  </button>
+</div>
 
 
   `;
