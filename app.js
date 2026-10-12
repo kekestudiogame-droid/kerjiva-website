@@ -2708,10 +2708,28 @@ notification.style.overflow = "visible";
 
   `;
 
-  document.body.appendChild(notification);
-  if (modal) {
+
+const backdrop = document.createElement("div");
+backdrop.id = "kerjivaRegistrationBackdrop";
+
+Object.assign(backdrop.style, {
+  position: "fixed",
+  inset: "0",
+  width: "100%",
+  height: "100%",
+  background: "#F3F4F6",
+  zIndex: "1000000",
+  overflow: "hidden",
+  touchAction: "none"
+});
+
+document.body.appendChild(backdrop);
+document.body.appendChild(notification);
+
+if (modal) {
   modal.classList.add("hidden");
 }
+
 
   requestAnimationFrame(() => {
     notification.classList.add("show");
