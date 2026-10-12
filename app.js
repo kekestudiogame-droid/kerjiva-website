@@ -2650,9 +2650,12 @@ notification.style.left = "50%";
 notification.style.right = "auto";
 notification.style.transform = "translate(-50%, -50%)";
 notification.style.zIndex = "1000001";
-notification.style.width = "calc(100% - 32px)";
-notification.style.maxWidth = "420px";
+notification.style.width = "max-content";
+notification.style.maxWidth = "calc(100vw - 32px)";
+notification.style.height = "auto";
+notification.style.maxHeight = "none";
 notification.style.boxSizing = "border-box";
+notification.style.overflow = "visible";
 
   notification.innerHTML = `
 
