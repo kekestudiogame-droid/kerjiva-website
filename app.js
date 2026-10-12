@@ -2640,14 +2640,20 @@ function showCompanyRegistrationAfterLogin() {
   notification.id =
     "kerjivaCompanyProfileNotification";
 
-  notification.className =
-    "kerjiva-registration-notification";
- notification.style.position = "fixed";
- notification.style.top = "8%";
- notification.style.right = "2%";
- notification.style.left = "auto";
- notification.style.transform = "none";
- notification.style.zIndex = "999999";
+ 
+notification.className =
+  "kerjiva-registration-notification";
+
+notification.style.position = "fixed";
+notification.style.top = "50%";
+notification.style.left = "50%";
+notification.style.right = "auto";
+notification.style.transform = "translate(-50%, -50%)";
+notification.style.zIndex = "1000001";
+notification.style.width = "calc(100% - 32px)";
+notification.style.maxWidth = "420px";
+notification.style.boxSizing = "border-box";
+
   notification.innerHTML = `
 
     <div class="kerjiva-registration-icon">
