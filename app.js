@@ -2747,6 +2747,7 @@ if (modal) {
     setTimeout(() => {
 
       notification.remove();
+      backdrop.remove();
 
       isRegister = true;
       isCompany = true;
