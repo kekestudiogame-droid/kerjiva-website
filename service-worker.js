@@ -38,9 +38,37 @@ self.addEventListener("activate", event => {
   self.clients.claim();
 });
 
+
 self.addEventListener("fetch", event => {
+  if (event.request.method !== "GET") return;
+
+  const url = new URL(event.request.url);
+
+  if (url.origin !== self.location.origin) return;
+
   event.respondWith(
     fetch(event.request)
-      .catch(() => caches.match(event.request))
+      .then(response => {
+        if (!response || !response.ok) {
+          throw new Error("Network response tidak tersedia");
+        }
+
+        return response;
+      })
+      .catch(async () => {
+        const cachedResponse = await caches.match(event.request);
+
+        if (cachedResponse) {
+          return cachedResponse;
+        }
+
+        return new Response("Halaman tidak tersedia. Periksa koneksi internet.", {
+          status: 503,
+          headers: {
+            "Content-Type": "text/plain; charset=utf-8"
+          }
+        });
+      })
   );
 });
+
