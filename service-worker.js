@@ -1,8 +1,9 @@
-// =====================================================
-// KERJIVA SERVICE WORKER
-// =====================================================
 
-const CACHE_NAME = "kerjiva-v1";
+ // =====================================================
+ // KERJIVA SERVICE WORKER
+ // =====================================================
+
+const CACHE_NAME = "kerjiva-v2";
 
 const FILES_TO_CACHE = [
   "./",
@@ -38,7 +39,6 @@ self.addEventListener("activate", event => {
   self.clients.claim();
 });
 
-
 self.addEventListener("fetch", event => {
   if (event.request.method !== "GET") return;
 
@@ -47,28 +47,14 @@ self.addEventListener("fetch", event => {
   if (url.origin !== self.location.origin) return;
 
   event.respondWith(
-    fetch(event.request)
-      .then(response => {
-        if (!response || !response.ok) {
-          throw new Error("Network response tidak tersedia");
-        }
+    fetch(event.request).catch(async () => {
+      const cachedResponse = await caches.match(event.request);
 
-        return response;
-      })
-      .catch(async () => {
-        const cachedResponse = await caches.match(event.request);
+      if (cachedResponse) {
+        return cachedResponse;
+      }
 
-        if (cachedResponse) {
-          return cachedResponse;
-        }
-
-        return new Response("Halaman tidak tersedia. Periksa koneksi internet.", {
-          status: 503,
-          headers: {
-            "Content-Type": "text/plain; charset=utf-8"
-          }
-        });
-      })
+      return Response.error();
+    })
   );
 });
-
