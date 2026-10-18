@@ -15002,6 +15002,9 @@ if (saveNewPasswordBtn) {
       );
 
       // Buka kembali modal autentikasi dalam mode Masuk.
+      
+      isRegister = false;
+      isCompany = false;
       const authModal =
         document.querySelector("#authModal");
 
@@ -15025,25 +15028,67 @@ if (saveNewPasswordBtn) {
       const passwordField =
         document.querySelector("#password");
 
-      const switchAuth =
-        document.querySelector("#switchAuth");
+     
+const switchAuth =
+  document.querySelector("#switchAuth");
 
-      const authSubmitBtn =
-        document.querySelector("#authSubmitBtn");
+const submitButton =
+  authForm?.querySelector('button[type="submit"]');
 
-      if (accountType) accountType.style.display = "";
-      if (jobseekerFields) jobseekerFields.style.display = "";
-      if (companyFields) companyFields.style.display = "";
-      if (emailField) emailField.style.display = "";
-      if (passwordField) passwordField.style.display = "";
+const modalTitle =
+  document.querySelector("#modalTitle");
 
-      if (switchAuth) {
-        switchAuth.style.display = "";
-      }
+const modalText =
+  document.querySelector("#modalText");
 
-      if (authSubmitBtn) {
-        authSubmitBtn.style.display = "";
-      }
+if (accountType) accountType.style.display = "none";
+if (jobseekerFields) jobseekerFields.style.display = "none";
+if (companyFields) companyFields.style.display = "none";
+
+if (emailField) emailField.style.display = "";
+if (passwordField) passwordField.style.display = "";
+
+if (modalTitle) {
+  modalTitle.textContent =
+    language === "en" ? "Log In" : "Masuk";
+}
+
+if (modalText) {
+  modalText.textContent =
+    language === "en"
+      ? "Enter your email and password to log in."
+      : "Masukkan email dan password untuk masuk.";
+}
+
+if (submitButton) {
+  submitButton.textContent =
+    language === "en" ? "Log In" : "Masuk";
+  submitButton.style.display = "";
+}
+
+if (switchAuth) {
+  switchAuth.textContent =
+    language === "en" ? "Sign Up" : "Daftar";
+  switchAuth.style.display = "";
+  if (switchAuth.parentElement) {
+    switchAuth.parentElement.style.display = "";
+  }
+}
+
+const forgotPasswordWrapper =
+  document.querySelector("#forgotPasswordWrapper");
+
+if (forgotPasswordWrapper) {
+  forgotPasswordWrapper.style.display = "block";
+}
+
+const forgotPasswordForm =
+  document.querySelector("#forgotPasswordForm");
+
+if (forgotPasswordForm) {
+  forgotPasswordForm.style.display = "none";
+}
+
 
       // Tampilkan notifikasi hanya setelah update berhasil.
       alert(
