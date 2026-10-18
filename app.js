@@ -15072,19 +15072,37 @@ if (authModal) {
   });
 
 }
-  // ================= DETEKSI RESET PASSWORD =================
+ 
+ // ================= DETEKSI RESET PASSWORD =================
 
 const resetPasswordParam =
   new URLSearchParams(window.location.search).get("reset");
 
-if (resetPasswordParam === "password") {
+const recoveryHashParams =
+  new URLSearchParams(window.location.hash.substring(1));
 
+const recoveryError =
+  recoveryHashParams.get("error") ||
+  recoveryHashParams.get("error_code");
+
+if (resetPasswordParam === "password") {
   console.log("RESET PASSWORD URL TERDETEKSI");
 
-  showResetPasswordForm();
+  if (recoveryError) {
+    console.error(
+      "PASSWORD RECOVERY DITOLAK SUPABASE:",
+      recoveryError
+    );
 
+    alert(
+      "Tautan reset password tidak dapat digunakan. Silakan minta tautan reset yang baru."
+    );
+  } else {
+    console.log(
+      "Menunggu sesi pemulihan password dari Supabase."
+    );
+  }
 }
 
-}
 
   
