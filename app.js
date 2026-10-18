@@ -14985,6 +14985,7 @@ if (saveNewPasswordBtn) {
         return;
       }
 
+    
       // Password sudah berhasil diperbarui di Supabase.
       document.querySelector("#newPassword").value = "";
       document.querySelector("#confirmNewPassword").value = "";
@@ -14996,108 +14997,23 @@ if (saveNewPasswordBtn) {
         resetForm.style.display = "none";
       }
 
-      // Bersihkan penanda reset dari URL.
+      // Bersihkan URL reset.
       window.history.replaceState(
         {},
         document.title,
         window.location.pathname
       );
 
-      // Buka kembali modal autentikasi dalam mode Masuk.
-      
-      isRegister = false;
-      isCompany = false;
-      const authModal =
-        document.querySelector("#authModal");
-
-      if (authModal) {
-        authModal.classList.remove("hidden");
-        authModal.style.display = "";
-      }
-
-      const accountType =
-        document.querySelector("#accountType");
-
-      const jobseekerFields =
-        document.querySelector("#jobseekerFields");
-
-      const companyFields =
-        document.querySelector("#companyFields");
-
-      const emailField =
-        document.querySelector("#email");
-
-      const passwordField =
-        document.querySelector("#password");
-
-     
-const switchAuth =
-  document.querySelector("#switchAuth");
-
-const submitButton =
-  authForm?.querySelector('button[type="submit"]');
-
-const modalTitle =
-  document.querySelector("#modalTitle");
-
-const modalText =
-  document.querySelector("#modalText");
-
-if (accountType) accountType.style.display = "none";
-if (jobseekerFields) jobseekerFields.style.display = "none";
-if (companyFields) companyFields.style.display = "none";
-
-if (emailField) emailField.style.display = "";
-if (passwordField) passwordField.style.display = "";
-
-if (modalTitle) {
-  modalTitle.textContent =
-    language === "en" ? "Log In" : "Masuk";
-}
-
-if (modalText) {
-  modalText.textContent =
-    language === "en"
-      ? "Enter your email and password to log in."
-      : "Masukkan email dan password untuk masuk.";
-}
-
-if (submitButton) {
-  submitButton.textContent =
-    language === "en" ? "Log In" : "Masuk";
-  submitButton.style.display = "";
-}
-
-if (switchAuth) {
-  switchAuth.textContent =
-    language === "en" ? "Sign Up" : "Daftar";
-  switchAuth.style.display = "";
-  if (switchAuth.parentElement) {
-    switchAuth.parentElement.style.display = "";
-  }
-}
-
-const forgotPasswordWrapper =
-  document.querySelector("#forgotPasswordWrapper");
-
-if (forgotPasswordWrapper) {
-  forgotPasswordWrapper.style.display = "block";
-}
-
-const forgotPasswordForm =
-  document.querySelector("#forgotPasswordForm");
-
-if (forgotPasswordForm) {
-  forgotPasswordForm.style.display = "none";
-}
-
-
-      // Tampilkan notifikasi hanya setelah update berhasil.
+      // Tampilkan notifikasi sebelum kembali ke halaman utama.
       alert(
         language === "en"
           ? "Password has been successfully changed. Please log in with your new password."
           : "Password berhasil diubah. Silakan masuk dengan password baru."
       );
+
+      // Kembali ke halaman utama Kerjiva.
+      window.location.replace("/");
+
 
     } catch (error) {
       console.error("UPDATE PASSWORD ERROR:", error);
