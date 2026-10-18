@@ -14920,15 +14920,14 @@ const passwordField =
   }
 
 }
-  // ================= SIMPAN PASSWORD BARU =================
+
+ // ================= SIMPAN PASSWORD BARU =================
 
 const saveNewPasswordBtn =
   document.querySelector("#saveNewPasswordBtn");
 
 if (saveNewPasswordBtn) {
-
   saveNewPasswordBtn.addEventListener("click", async () => {
-
     const newPassword =
       document.querySelector("#newPassword")?.value || "";
 
@@ -14939,139 +14938,135 @@ if (saveNewPasswordBtn) {
       localStorage.getItem("siteLanguage") || "id";
 
     if (!newPassword || !confirmNewPassword) {
-
-      alert(
-        language === "en"
-          ? "Please fill in both password fields."
-          : "Silakan isi kedua kolom password."
-      );
-
+      alert(language === "en"
+        ? "Please fill in both password fields."
+        : "Silakan isi kedua kolom password.");
       return;
     }
 
     if (newPassword.length < 6) {
-
-      alert(
-        language === "en"
-          ? "Password must be at least 6 characters."
-          : "Password minimal 6 karakter."
-      );
-
+      alert(language === "en"
+        ? "Password must be at least 6 characters."
+        : "Password minimal 6 karakter.");
       return;
     }
 
     if (newPassword !== confirmNewPassword) {
-
-      alert(
-        language === "en"
-          ? "Passwords do not match."
-          : "Password tidak sama."
-      );
-
+      alert(language === "en"
+        ? "Passwords do not match."
+        : "Password tidak sama.");
       return;
     }
 
     saveNewPasswordBtn.disabled = true;
-
-    const originalText =
-      saveNewPasswordBtn.textContent;
+    const originalText = saveNewPasswordBtn.textContent;
 
     saveNewPasswordBtn.textContent =
-      language === "en"
-        ? "Saving..."
-        : "Menyimpan...";
+      language === "en" ? "Saving..." : "Menyimpan...";
 
     try {
-const { data: sessionData, error: sessionError } =
-  await supabaseAuth.auth.getSession();
+      const { data, error } =
+        await supabaseAuth.auth.updateUser({
+          password: newPassword
+        });
 
-if (sessionError) {
-  console.error(
-    "GET RECOVERY SESSION ERROR:",
-    sessionError
-  );
-}
-
-if (!sessionData?.session) {
-
-  alert(
-    language === "en"
-      ? "Recovery session is no longer available. Please request a new reset link."
-      : "Sesi pemulihan sudah tidak tersedia. Silakan minta link reset baru."
-  );
-
-  return;
-}
-
-const { error } =
-  await supabaseAuth.auth.updateUser({
-    password: newPassword
-  });
-
-      if (error) {
-
-        console.error(
-          "UPDATE PASSWORD ERROR:",
-          error
-        );
+      if (error || !data?.user) {
+        console.error("UPDATE PASSWORD ERROR:", error);
 
         alert(
           language === "en"
-            ? "Failed to save new password: " + error.message
-            : "Gagal menyimpan password baru: " + error.message
+            ? "Failed to save new password: " +
+              (error?.message || "Please try again.")
+            : "Gagal menyimpan password baru: " +
+              (error?.message || "Silakan coba lagi.")
         );
-
         return;
       }
 
-    alert(
-  language === "en"
-    ? "Password has been successfully changed."
-    : "Password berhasil diubah."
-);
+      // Password sudah berhasil diperbarui di Supabase.
+      document.querySelector("#newPassword").value = "";
+      document.querySelector("#confirmNewPassword").value = "";
 
-document.querySelector("#newPassword").value = "";
-document.querySelector("#confirmNewPassword").value = "";
+      const resetForm =
+        document.querySelector("#resetPasswordForm");
 
-// Tutup form reset password
-const resetForm =
-  document.querySelector("#resetPasswordForm");
+      if (resetForm) {
+        resetForm.style.display = "none";
+      }
 
-const authModal =
-  document.querySelector("#authModal");
+      // Bersihkan penanda reset dari URL.
+      window.history.replaceState(
+        {},
+        document.title,
+        window.location.pathname
+      );
 
-if (resetForm) {
-  resetForm.style.display = "none";
-}
+      // Buka kembali modal autentikasi dalam mode Masuk.
+      const authModal =
+        document.querySelector("#authModal");
 
-if (authModal) {
-  authModal.classList.add("hidden");
-  authModal.style.display = "none";
-}
+      if (authModal) {
+        authModal.classList.remove("hidden");
+        authModal.style.display = "";
+      }
+
+      const accountType =
+        document.querySelector("#accountType");
+
+      const jobseekerFields =
+        document.querySelector("#jobseekerFields");
+
+      const companyFields =
+        document.querySelector("#companyFields");
+
+      const emailField =
+        document.querySelector("#email");
+
+      const passwordField =
+        document.querySelector("#password");
+
+      const switchAuth =
+        document.querySelector("#switchAuth");
+
+      const authSubmitBtn =
+        document.querySelector("#authSubmitBtn");
+
+      if (accountType) accountType.style.display = "";
+      if (jobseekerFields) jobseekerFields.style.display = "";
+      if (companyFields) companyFields.style.display = "";
+      if (emailField) emailField.style.display = "";
+      if (passwordField) passwordField.style.display = "";
+
+      if (switchAuth) {
+        switchAuth.style.display = "";
+      }
+
+      if (authSubmitBtn) {
+        authSubmitBtn.style.display = "";
+      }
+
+      // Tampilkan notifikasi hanya setelah update berhasil.
+      alert(
+        language === "en"
+          ? "Password has been successfully changed. Please log in with your new password."
+          : "Password berhasil diubah. Silakan masuk dengan password baru."
+      );
 
     } catch (error) {
-
-      console.error(
-        "UPDATE PASSWORD ERROR:",
-        error
-      );
+      console.error("UPDATE PASSWORD ERROR:", error);
 
       alert(
         language === "en"
           ? "An error occurred while changing the password."
           : "Terjadi kesalahan saat mengubah password."
       );
-
     } finally {
-
       saveNewPasswordBtn.disabled = false;
       saveNewPasswordBtn.textContent = originalText;
-
     }
-
   });
-
 }
+
  
  // ================= DETEKSI RESET PASSWORD =================
 
