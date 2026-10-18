@@ -14574,12 +14574,14 @@ if (cvDisplay) {
 }
       }
     }
+
   } catch (error) {
     console.error("Gagal mengambil profil:", error);
   }
+};
 
+// ================= UPLOAD FOTO PROFIL =================
 
-  // ================= UPLOAD FOTO PROFIL =================
 
   const photoInput = document.getElementById("jobseekerPhotoInput");
 
