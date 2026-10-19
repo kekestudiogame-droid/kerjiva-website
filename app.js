@@ -5309,26 +5309,7 @@ return;
 }
     
 
-    // ==================================================
-// CEK EMAIL TERDAFTAR SEBELUM LOGIN
-// HANYA UNTUK MODE LOGIN
-// ==================================================
-
-if (!isRegister) {
-
-  const emailRegistered =
-    await isKerjivaEmailRegistered(email);
-
-  if (!emailRegistered) {
-
-    const language =
-      localStorage.getItem("siteLanguage") || "id";
-
-  showNotification("emailNotRegistered");
-
-    return;
-  }
-}
+   
     // ==================================================
     // SUPABASE AUTH
     // ==================================================
