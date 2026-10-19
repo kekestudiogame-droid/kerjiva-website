@@ -5385,6 +5385,8 @@ if (!isRegister) {
     );
 
     const data = await response.json();
+    console.log("AUTH RESPONSE STATUS:", response.status);
+    console.log("AUTH RESPONSE DATA:", data);
 
     if (!response.ok) {
       throw new Error(
