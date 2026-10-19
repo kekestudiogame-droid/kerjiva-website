@@ -5308,6 +5308,25 @@ setTimeout(() => {
 return;
 }
     
+    // ==================================================
+    // CEK EMAIL TERDAFTAR SEBELUM LOGIN
+    // HANYA UNTUK MODE LOGIN
+    // ==================================================
+    if (!isRegister) {
+      const emailRegistered =
+        await isKerjivaEmailRegistered(email);
+
+      if (!emailRegistered) {
+        showNotification("emailNotRegistered");
+        return;
+      }
+    }
+
+    // ==================================================
+    // SUPABASE AUTH
+    // ==================================================
+
+    
 
    
     // ==================================================
