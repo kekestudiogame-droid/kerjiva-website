@@ -70,16 +70,26 @@ Jangan memasukkan informasi sensitif ke repository, termasuk:
 
 Konfigurasi yang bersifat publik harus tetap mengikuti mekanisme keamanan dan Row Level Security (RLS) yang diterapkan pada backend.
 
-## Status Project
+## Status Proyek
 
-Kerjiva sedang dalam tahap **persiapan rilis publik**.
+Kerjiva telah online melalui https://kerjiva.com dan sedang dalam tahap persiapan peluncuran publik secara bertahap.
 
-Tahapan berikutnya meliputi:
+### Yang Sudah Selesai
 
-* Pengujian PWA di perangkat mobile
-* Pembuatan dan pengujian APK
-* Pengujian Android
-* Backup data
-* Pembersihan data testing sebelum launch
-* Persiapan domain
-* Finalisasi rilis publik
+- Website online dengan domain dan HTTPS aktif.
+- Sistem registrasi, login, dan reset password.
+- Dashboard pencari kerja dan perusahaan.
+- Pengujian sistem utama dan perbaikan masalah yang ditemukan.
+- Pembersihan data testing.
+- Sitemap dan persiapan indeks Google.
+- Pembuatan APK Android.
+
+### Tahap Berikutnya
+
+- Menunggu hasil peninjauan Google AdSense.
+- Menyelesaikan persiapan publikasi aplikasi Android di Google Play.
+- Melanjutkan promosi untuk mendapatkan perusahaan dan lowongan kerja pertama.
+
+### Prinsip Pengembangan
+
+Kerjiva memprioritaskan stabilitas, keamanan, kemudahan penggunaan, dan pengembangan bertahap sesuai kebutuhan pengguna.
