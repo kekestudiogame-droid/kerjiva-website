@@ -13367,6 +13367,7 @@ function setupAuthButtons() {
 
 }
   
+
 /* VERIFIKASI EMAIL BERHASIL */
 const verificationParams = new URLSearchParams(
   window.location.search
@@ -13382,11 +13383,30 @@ if (verificationParams.get("verified") === "email") {
       : "Verifikasi Email Berhasil!\n\nEmail kamu berhasil diverifikasi. Sekarang, silakan masuk ke akun Kerjiva kamu."
   );
 
-  window.location.replace(
-    "https://kerjiva.com/index.html"
-  );
-}
+  (async () => {
+    try {
+      if (
+        typeof supabaseAuth !== "undefined" &&
+        supabaseAuth.auth
+      ) {
+        await supabaseAuth.auth.signOut();
+      }
+    } catch (error) {
+      console.error(
+        "Verifikasi email - pembersihan sesi:",
+        error
+      );
+    }
 
+    localStorage.removeItem("kerjivaUser");
+    localStorage.removeItem("kerjivaAccessToken");
+    localStorage.removeItem("kerjivaActiveRole");
+
+    window.location.replace(
+      "https://kerjiva.com/index.html"
+    );
+  })();
+}
 
 
 if (document.readyState === "loading") {
