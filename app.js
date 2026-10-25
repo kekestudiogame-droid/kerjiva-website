@@ -13374,6 +13374,7 @@ function setupAuthButtons() {
 }
   
 
+
 /* VERIFIKASI EMAIL BERHASIL */
 const verificationParams = new URLSearchParams(
   window.location.search
@@ -13408,11 +13409,92 @@ if (verificationParams.get("verified") === "email") {
     localStorage.removeItem("kerjivaAccessToken");
     localStorage.removeItem("kerjivaActiveRole");
 
-    window.location.replace(
-      "https://kerjiva.com/index.html"
+    // Ubah alamat tanpa memuat ulang halaman
+    window.history.replaceState(
+      null,
+      document.title,
+      "/index.html"
     );
+
+    // Siapkan halaman dalam mode MASUK
+    isRegister = false;
+    isCompany = false;
+
+    const authModal =
+      document.getElementById("authModal");
+    const modalTitle =
+      document.getElementById("modalTitle");
+    const modalText =
+      document.getElementById("modalText");
+    const authForm =
+      document.getElementById("authForm");
+
+    if (modalTitle) {
+      modalTitle.textContent =
+        isEnglish ? "Log In" : "Masuk";
+    }
+
+    if (modalText) {
+      modalText.textContent = isEnglish
+        ? "Enter your email and password to log in."
+        : "Masukkan email dan password untuk masuk.";
+    }
+
+    const accountType =
+      document.getElementById("accountType");
+    if (accountType) {
+      accountType.style.display = "block";
+    }
+
+    const accountTypeLabel =
+      document.getElementById("accountTypeLabel");
+    if (accountTypeLabel) {
+      accountTypeLabel.textContent =
+        isEnglish ? "Log in as:" : "Masuk sebagai:";
+    }
+
+    [
+      "jobseekerFields",
+      "companyFields",
+      "confirmPasswordField"
+    ].forEach(id => {
+      const field = document.getElementById(id);
+      if (field) field.style.display = "none";
+    });
+
+    const submitButton =
+      authForm?.querySelector('button[type="submit"]');
+    if (submitButton) {
+      submitButton.textContent =
+        isEnglish ? "Log In" : "Masuk";
+    }
+
+    const switchAuth =
+      document.getElementById("switchAuth");
+    if (switchAuth) {
+      switchAuth.textContent =
+        isEnglish ? "Sign Up" : "Daftar";
+    }
+
+    if (authForm) {
+      authForm.classList.remove("hidden");
+    }
+
+    document.querySelector(".switch-auth")
+      ?.classList.remove("hidden");
+
+    const forgotPasswordWrapper =
+      document.getElementById("forgotPasswordWrapper");
+    if (forgotPasswordWrapper) {
+      forgotPasswordWrapper.style.display = "block";
+    }
+
+    if (authModal) {
+      authModal.classList.remove("hidden");
+    }
   })();
 }
+
 
 
 if (document.readyState === "loading") {
