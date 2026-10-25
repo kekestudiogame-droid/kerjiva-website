@@ -13366,6 +13366,27 @@ function setupAuthButtons() {
   }
 
 }
+  
+/* VERIFIKASI EMAIL BERHASIL */
+const verificationParams = new URLSearchParams(
+  window.location.search
+);
+
+if (verificationParams.get("verified") === "email") {
+  const isEnglish =
+    localStorage.getItem("siteLanguage") === "en";
+
+  alert(
+    isEnglish
+      ? "Email Verification Successful!\n\nYour email has been successfully verified. You can now log in to your Kerjiva account."
+      : "Verifikasi Email Berhasil!\n\nEmail kamu berhasil diverifikasi. Sekarang, silakan masuk ke akun Kerjiva kamu."
+  );
+
+  window.location.replace(
+    "https://kerjiva.com/index.html"
+  );
+}
+
 
 
 if (document.readyState === "loading") {
