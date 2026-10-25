@@ -5340,9 +5340,11 @@ return;
          );
 
     const response = await fetch(
-      isRegister
-        ? `${authUrl}/signup`
-        : `${authUrl}/token?grant_type=password`,
+    
+     isRegister
+      ? `${authUrl}/signup?redirect_to=${encodeURIComponent("https://kerjiva.com/")}`
+      : `${authUrl}/token?grant_type=password`,
+
       {
         method: "POST",
 
