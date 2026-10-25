@@ -40,27 +40,33 @@ const supabaseAuth =
       return;
     }
 
-   // ==================================================
-// SINKRONKAN SESSION SUPABASE KE LOCALSTORAGE KERJIVA
-// ==================================================
+  
+    // ==================================================
+    // SINKRONKAN SESSION SUPABASE KE LOCALSTORAGE KERJIVA
+    // KECUALI SAAT KEMBALI DARI VERIFIKASI EMAIL
+    // ==================================================
 
-if (
-  session &&
-  session.access_token &&
-  session.user
-) {
+    const isEmailVerificationReturn =
+      new URLSearchParams(window.location.search)
+        .get("verified") === "email";
 
-  localStorage.setItem(
-    "kerjivaAccessToken",
-    session.access_token
-  );
+    if (
+      !isEmailVerificationReturn &&
+      session &&
+      session.access_token &&
+      session.user
+    ) {
+      localStorage.setItem(
+        "kerjivaAccessToken",
+        session.access_token
+      );
 
-  localStorage.setItem(
-    "kerjivaUser",
-    JSON.stringify(session.user)
-  );
+      localStorage.setItem(
+        "kerjivaUser",
+        JSON.stringify(session.user)
+      );
+    }
 
-}
   }
 );
 
