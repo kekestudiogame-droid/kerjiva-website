@@ -5342,7 +5342,7 @@ return;
     const response = await fetch(
     
      isRegister
-      ? `${authUrl}/signup?redirect_to=${encodeURIComponent("https://kerjiva.com/")}`
+      ? `${authUrl}/signup?redirect_to=${encodeURIComponent("https://kerjiva.com/?verified=email")}`
       : `${authUrl}/token?grant_type=password`,
 
       {
