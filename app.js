@@ -13390,6 +13390,9 @@ if (verificationParams.get("verified") === "email") {
       : "Verifikasi Email Berhasil!\n\nEmail kamu berhasil diverifikasi. Sekarang, silakan masuk ke akun Kerjiva kamu."
   );
 
+  // Tutup halaman kedua setelah pengguna klik OK
+  window.close();
+
   (async () => {
     try {
       if (
