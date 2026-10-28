@@ -13986,15 +13986,23 @@ for (const app of myApplications) {
                 </p>
 
 
-                <div style="
-                  margin-top:15px;
-                  color:#123b6d;
-                  font-weight:bold;
-                ">
-               ${localStorage.getItem("siteLanguage") === "en"
-                ? "View Applicant Profile →"
-                : "Lihat Profil Pelamar →"}
-                </div>
+              
+<div
+  onclick="showApplicantDetail('${app.jobseeker?.id || app.jobseeker_id || ""}', '${app.job_id || app.jobs?.id || ""}', '${app.id || ""}')"
+  style="
+    margin-top:15px;
+    color:#123b6d;
+    font-weight:bold;
+    cursor:pointer;
+  "
+>
+  ${
+    localStorage.getItem("siteLanguage") === "en"
+      ? "View Applicant Profile →"
+      : "Lihat Profil Pelamar →"
+  }
+</div>
+
 
               </div>
 
