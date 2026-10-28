@@ -15078,6 +15078,7 @@ if (cvDisplay) {
   const saveButton = document.getElementById("saveJobseekerProfileBtn");
   if (saveButton) {
     saveButton.addEventListener("click", async () => {
+      console.log("TOMBOL SIMPAN PROFIL TERPASANG");
 
      const accessToken = localStorage.getItem("kerjivaAccessToken");
       if (!accessToken) {
