@@ -97,45 +97,73 @@ async function loadJobsFromDatabase() {
       throw new Error(errorText);
     }
 
-    const data = await response.json();
+   
+const data = await response.json();
 
-    jobs = data.map(job => ({
-      ...job,
+// Ambil logo perusahaan berdasarkan user_id
+const companiesResponse = await fetch(
+  `${SUPABASE_URL.replace("/rest/v1/", "")}/rest/v1/companies?select=user_id,logo_url`,
+  {
+    method: "GET",
+    headers: supabaseHeaders
+  }
+);
 
-      title: job.title || "",
+if (!companiesResponse.ok) {
+  throw new Error(await companiesResponse.text());
+}
 
-      company:
-        job.company ||
-        job.company_name ||
-        "Perusahaan",
+const companiesData = await companiesResponse.json();
 
-      location:
-        job.location ||
-        job.city ||
-        "",
+const companyLogos = new Map(
+  companiesData.map(company => [
+    company.user_id,
+    company.logo_url
+  ])
+);
 
-      category:
-        job.category ||
-        "",
+jobs = data.map(job => ({
+  ...job,
 
-      type:
-        job.type ||
-        job.job_type ||
-        "",
+  logo_url: companyLogos.get(job.user_id) || "",
 
-      salary:
-        job.salary ||
-        "",
+  title: job.title || "",
 
-      initials:
-        (
-          job.company ||
-          job.company_name ||
-          "P"
-        )
-          .substring(0, 2)
-          .toUpperCase()
-    }));
+  company:
+    job.company ||
+    job.company_name ||
+    "Perusahaan",
+
+  location:
+    job.location ||
+    job.city ||
+    "",
+
+  category:
+    job.category ||
+    "",
+
+  type:
+    job.type ||
+    job.job_type ||
+    "",
+
+  salary:
+    job.salary ||
+    "",
+
+  initials:
+    (
+      job.company ||
+      job.company_name ||
+      "P"
+    )
+      .substring(0, 2)
+      .toUpperCase()
+}));
+
+
+   
   
     // =====================================================
     // SATU JALUR DATA FINAL
