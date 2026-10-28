@@ -14512,18 +14512,17 @@ const accessToken = localStorage.getItem("kerjivaAccessToken");
 }
 
 
- // ================= PROFIL DIRI PENCARI KERJA =================
+// ================= PROFIL DIRI PENCARI KERJA =================
 
-window.showJobseekerProfile = async function () {
+  window.showJobseekerProfile = async function () {
   const userData = localStorage.getItem("kerjivaUser");
   const language = localStorage.getItem("siteLanguage") || "id";
   const accessToken = localStorage.getItem("kerjivaAccessToken");
-
-  if (!userData || !accessToken) {
+  if (!userData) {
     alert(
       language === "en"
-        ? "Please log in again."
-        : "Silakan masuk kembali."
+        ? "Please log in first."
+        : "Silakan login terlebih dahulu."
     );
     return;
   }
@@ -14533,701 +14532,602 @@ window.showJobseekerProfile = async function () {
   try {
     user = JSON.parse(userData);
   } catch (error) {
-    console.error("Gagal membaca data pengguna:", error);
     alert(
       language === "en"
-        ? "User data could not be read. Please log in again."
-        : "Data pengguna tidak dapat dibaca. Silakan masuk kembali."
-    );
-    return;
-  }
-
-  if (!user || !user.id) {
-    alert(
-      language === "en"
-        ? "User ID was not found. Please log in again."
-        : "ID pengguna tidak ditemukan. Silakan masuk kembali."
+        ? "Invalid account data. Please log in again."
+        : "Data akun tidak valid. Silakan login kembali."
     );
     return;
   }
 
   const dashboard = document.createElement("div");
-  dashboard.id = "jobseekerProfile";
 
-  dashboard.style.cssText = `
-    min-height:100vh;
-    padding:24px 16px;
-    box-sizing:border-box;
-    background:#f5f7fb;
-    font-family:Arial,sans-serif;
-    color:#172b4d;
-  `;
+  dashboard.id = "jobseekerProfile";
 
   dashboard.innerHTML = `
     <div style="
-      max-width:760px;
-      margin:0 auto;
-      background:#ffffff;
-      border:1px solid #e2e8f0;
-      border-radius:16px;
-      padding:24px;
-      box-sizing:border-box;
-      box-shadow:0 4px 16px rgba(0,0,0,0.05);
+      min-height:100vh;
+      background:#f4f7fb;
+      font-family:Arial,sans-serif;
+      color:#1f2937;
     ">
+
       <div style="
+        background:#123b6d;
+        color:white;
+        padding:20px 30px;
         display:flex;
-        align-items:center;
         justify-content:space-between;
-        gap:12px;
-        flex-wrap:wrap;
-        margin-bottom:24px;
+        align-items:center;
+        box-shadow:0 3px 12px rgba(0,0,0,.15);
       ">
-        <h2 style="margin:0;font-size:24px;">
-          ${language === "en" ? "My Profile" : "Profil Diri"}
-        </h2>
 
-        <button
-          type="button"
-          id="backToJobseekerDashboardBtn"
-          style="
-            padding:10px 16px;
-            border:1px solid #dbe3ec;
-            border-radius:8px;
-            background:#ffffff;
-            color:#172b4d;
-            cursor:pointer;
-            font-weight:bold;
-          "
-        >
-          ${language === "en" ? "Back" : "Kembali"}
-        </button>
-      </div>
-
-      <div style="text-align:center;margin-bottom:28px;">
-        <div
-          id="jobseekerProfilePhoto"
-          style="
-            width:120px;
-            height:120px;
-            margin:0 auto 14px;
-            border-radius:50%;
-            overflow:hidden;
-            display:flex;
-            align-items:center;
-            justify-content:center;
-            background:#eaf0f7;
-            border:2px solid #dbe3ec;
-            color:#64748b;
-            font-size:42px;
-          "
-        >
-          👤
-        </div>
-
-        <input
-          type="file"
-          id="jobseekerPhotoInput"
-          accept="image/*"
-          style="display:none;"
-        >
-
-        <button
-          type="button"
-          id="uploadJobseekerPhotoBtn"
-          style="
-            padding:10px 18px;
-            border:none;
-            border-radius:8px;
-            background:#f47721;
-            color:#ffffff;
-            cursor:pointer;
-            font-weight:bold;
-          "
-        >
-          ${language === "en" ? "Upload Photo" : "Upload Foto"}
-        </button>
-
-        <p style="margin:8px 0 0;font-size:12px;color:#64748b;">
-          ${language === "en"
-            ? "Image files only, maximum 5 MB."
-            : "Hanya file gambar, maksimal 5 MB."}
-        </p>
-      </div>
-
-      <div style="display:grid;gap:18px;">
-        <div>
-          <label for="jobseekerFullName" style="
-            display:block;
-            margin-bottom:7px;
+          <div>
+          <div style="
+            font-size:24px;
             font-weight:bold;
           ">
-            ${language === "en" ? "Full Name" : "Nama Lengkap"}
-          </label>
-          <input
-            type="text"
-            id="jobseekerFullName"
-            autocomplete="name"
-            style="
-              width:100%;
-              padding:12px;
-              box-sizing:border-box;
-              border:1px solid #cbd5e1;
-              border-radius:8px;
-              font-size:15px;
-            "
-          >
-        </div>
+         Kerjiva
+          </div>
 
-        <div>
-          <label for="jobseekerPhone" style="
-            display:block;
-            margin-bottom:7px;
-            font-weight:bold;
+          <div style="
+            font-size:13px;
+            opacity:.85;
+            margin-top:4px;
           ">
-            ${language === "en" ? "Phone Number" : "Nomor Telepon"}
-          </label>
-          <input
-            type="tel"
-            id="jobseekerPhone"
-            autocomplete="tel"
-            style="
-              width:100%;
-              padding:12px;
-              box-sizing:border-box;
-              border:1px solid #cbd5e1;
-              border-radius:8px;
-              font-size:15px;
-            "
-          >
-        </div>
-
-        <div>
-          <label for="jobseekerCity" style="
-            display:block;
-            margin-bottom:7px;
-            font-weight:bold;
-          ">
-            ${language === "en" ? "City of Residence" : "Kota Domisili"}
-          </label>
-          <input
-            type="text"
-            id="jobseekerCity"
-            autocomplete="address-level2"
-            style="
-              width:100%;
-              padding:12px;
-              box-sizing:border-box;
-              border:1px solid #cbd5e1;
-              border-radius:8px;
-              font-size:15px;
-            "
-          >
-        </div>
-
-        <div>
-          <label for="jobseekerEducation" style="
-            display:block;
-            margin-bottom:7px;
-            font-weight:bold;
-          ">
-            ${language === "en" ? "Education" : "Pendidikan"}
-          </label>
-          <input
-            type="text"
-            id="jobseekerEducation"
-            style="
-              width:100%;
-              padding:12px;
-              box-sizing:border-box;
-              border:1px solid #cbd5e1;
-              border-radius:8px;
-              font-size:15px;
-            "
-          >
-        </div>
-
-        <div>
-          <label for="jobseekerExperience" style="
-            display:block;
-            margin-bottom:7px;
-            font-weight:bold;
-          ">
-            ${language === "en" ? "Work Experience" : "Pengalaman Kerja"}
-          </label>
-          <textarea
-            id="jobseekerExperience"
-            rows="4"
-            style="
-              width:100%;
-              padding:12px;
-              box-sizing:border-box;
-              border:1px solid #cbd5e1;
-              border-radius:8px;
-              font-size:15px;
-              resize:vertical;
-            "
-          ></textarea>
-        </div>
-
-        <div>
-          <label for="jobseekerSkills" style="
-            display:block;
-            margin-bottom:7px;
-            font-weight:bold;
-          ">
-            ${language === "en" ? "Skills" : "Keahlian"}
-          </label>
-          <textarea
-            id="jobseekerSkills"
-            rows="3"
-            style="
-              width:100%;
-              padding:12px;
-              box-sizing:border-box;
-              border:1px solid #cbd5e1;
-              border-radius:8px;
-              font-size:15px;
-              resize:vertical;
-            "
-          ></textarea>
-        </div>
-
-        <div>
-          <label style="
-            display:block;
-            margin-bottom:7px;
-            font-weight:bold;
-          ">
-            ${language === "en" ? "CV / Resume" : "CV / Resume"}
-          </label>
-          <div id="jobseekerCvDisplay" style="
-            padding:12px;
-            border:1px solid #e2e8f0;
-            border-radius:8px;
-            background:#f8fafc;
-            overflow-wrap:anywhere;
-          ">
-            ${language === "en" ? "No CV available." : "CV belum tersedia."}
+            ${language === "en" ? "My Profile" : "Profil Diri"}
           </div>
         </div>
 
         <button
           type="button"
-          id="saveJobseekerProfileBtn"
+          onclick="showJobseekerDashboard()"
           style="
-            width:100%;
-            padding:14px;
+            background:white;
+            color:#123b6d;
             border:none;
+            padding:10px 18px;
             border-radius:8px;
-            background:#f47721;
-            color:#ffffff;
             cursor:pointer;
-            font-size:16px;
             font-weight:bold;
           "
         >
-          ${language === "en" ? "Save Profile" : "Simpan Profil"}
+          ← ${language === "en" ? "Back" : "Kembali"}
         </button>
+
+      </div>
+
+      <div style="
+        max-width:850px;
+        margin:auto;
+        padding:35px 25px;
+      ">
+
+        <div style="
+          background:white;
+          padding:30px;
+          border-radius:16px;
+          box-shadow:0 3px 15px rgba(15,23,42,.07);
+          border:1px solid #e5eaf1;
+        ">
+
+          <h1 style="
+            margin-top:0;
+            color:#172b4d;
+            font-size:26px;
+          ">
+            👤 ${language === "en" ? "My Profile" : "Profil Diri"}
+          </h1>
+
+          <div style="
+            text-align:center;
+            margin:25px 0 30px;
+          ">
+
+          <div
+  id="jobseekerProfilePhoto"
+  style="
+    width:120px;
+    height:120px;
+    border-radius:50%;
+    background:#e8eef6;
+    margin:auto;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    overflow:hidden;
+    border:4px solid #dbe3ec;
+  "
+>
+  👤
+</div>
+
+           <input
+  id="jobseekerPhotoInput"
+  type="file"
+  accept="image/*"
+  style="display:none;"
+>
+
+<button
+  type="button"
+  onclick="document.getElementById('jobseekerPhotoInput').click()"
+  style="
+    margin-top:15px;
+    padding:10px 18px;
+    background:#123b6d;
+    color:white;
+    border:none;
+    border-radius:8px;
+    cursor:pointer;
+    font-weight:bold;
+  "
+>
+  ${language === "en" ? "Upload Photo" : "Upload Foto"}
+</button>
+
+          </div>
+
+          <label>
+            ${language === "en" ? "Full Name" : "Nama Lengkap"}
+          </label>
+
+          <input
+            id="jobseekerFullName"
+            type="text"
+            placeholder="${language === "en" ? "Enter your full name" : "Masukkan nama lengkap"}"
+            style="
+              width:100%;
+              box-sizing:border-box;
+              padding:12px;
+              margin:8px 0 18px;
+              border:1px solid #dbe3ec;
+              border-radius:8px;
+            "
+          >
+
+          <label>
+            ${language === "en" ? "Phone Number" : "Nomor Telepon"}
+          </label>
+
+          <input
+            id="jobseekerPhone"
+            type="text"
+            placeholder="${language === "en" ? "Enter phone number" : "Masukkan nomor telepon"}"
+            style="
+              width:100%;
+              box-sizing:border-box;
+              padding:12px;
+              margin:8px 0 18px;
+              border:1px solid #dbe3ec;
+              border-radius:8px;
+            "
+          >
+
+          <label>
+            ${language === "en" ? "City / Location" : "Kota / Domisili"}
+          </label>
+
+          <input
+            id="jobseekerCity"
+            type="text"
+            placeholder="${language === "en" ? "Enter your city" : "Masukkan kota domisili"}"
+            style="
+              width:100%;
+              box-sizing:border-box;
+              padding:12px;
+              margin:8px 0 18px;
+              border:1px solid #dbe3ec;
+              border-radius:8px;
+            "
+          >
+
+          <label>
+            ${language === "en" ? "Education" : "Pendidikan"}
+          </label>
+
+          <textarea
+            id="jobseekerEducation"
+            placeholder="${language === "en" ? "Your education" : "Pendidikan kamu"}"
+            style="
+              width:100%;
+              box-sizing:border-box;
+              min-height:90px;
+              padding:12px;
+              margin:8px 0 18px;
+              border:1px solid #dbe3ec;
+              border-radius:8px;
+              resize:vertical;
+            "
+          ></textarea>
+
+          <label>
+            ${language === "en" ? "Work Experience" : "Pengalaman Kerja"}
+          </label>
+
+          <textarea
+            id="jobseekerExperience"
+            placeholder="${language === "en" ? "Your work experience" : "Pengalaman kerja kamu"}"
+            style="
+              width:100%;
+              box-sizing:border-box;
+              min-height:120px;
+              padding:12px;
+              margin:8px 0 18px;
+              border:1px solid #dbe3ec;
+              border-radius:8px;
+              resize:vertical;
+            "
+          ></textarea>
+
+          <label>
+            ${language === "en" ? "Skills" : "Keahlian"}
+          </label>
+
+          <textarea
+            id="jobseekerSkills"
+            placeholder="${language === "en" ? "Your skills" : "Keahlian kamu"}"
+            style="
+              width:100%;
+              box-sizing:border-box;
+              min-height:90px;
+              padding:12px;
+              margin:8px 0 25px;
+              border:1px solid #dbe3ec;
+              border-radius:8px;
+              resize:vertical;
+            "
+          ></textarea>
+                    <div style="
+            margin:10px 0 25px;
+            padding:18px;
+            background:#f8fafc;
+            border:1px solid #e5eaf1;
+            border-radius:10px;
+          ">
+            <div style="
+              font-weight:bold;
+              color:#172b4d;
+              margin-bottom:10px;
+            ">
+              📄 ${language === "en" ? "My CV" : "CV Saya"}
+            </div>
+
+            <div id="jobseekerCvDisplay">
+              <span style="color:#6b7280;">
+                ${language === "en"
+                  ? "Checking your CV..."
+                  : "Memeriksa CV kamu..."}
+              </span>
+            </div>
+          </div>
+
+          <button
+            id="saveJobseekerProfileBtn"
+            type="button"
+            style="
+              width:100%;
+              padding:14px;
+              background:#123b6d;
+              color:white;
+              border:none;
+              border-radius:9px;
+              cursor:pointer;
+              font-size:16px;
+              font-weight:bold;
+            "
+          >
+            ${language === "en" ? "Save Profile" : "Simpan Profil"}
+          </button>
+
+        </div>
       </div>
     </div>
   `;
 
   document.body.innerHTML = "";
   document.body.appendChild(dashboard);
-
-  // ================= TOMBOL KEMBALI =================
-
-  const backButton = dashboard.querySelector(
-    "#backToJobseekerDashboardBtn"
-  );
-
-  backButton.addEventListener("click", function () {
-    showJobseekerDashboard();
-  });
-
-  // ================= UPLOAD FOTO PROFIL =================
-
-  const photoInput = dashboard.querySelector(
-    "#jobseekerPhotoInput"
-  );
-
-  const uploadPhotoButton = dashboard.querySelector(
-    "#uploadJobseekerPhotoBtn"
-  );
-
-  const photoDisplay = dashboard.querySelector(
-    "#jobseekerProfilePhoto"
-  );
-
-  uploadPhotoButton.addEventListener("click", function () {
-    photoInput.click();
-  });
-
-  photoInput.addEventListener("change", async function () {
-    const file = photoInput.files && photoInput.files[0];
-
-    if (!file) return;
-
-    if (!file.type.startsWith("image/")) {
-      alert(
-        language === "en"
-          ? "Please select an image file."
-          : "Silakan pilih file gambar."
-      );
-      photoInput.value = "";
-      return;
-    }
-
-    if (file.size > 5 * 1024 * 1024) {
-      alert(
-        language === "en"
-          ? "Image size must not exceed 5 MB."
-          : "Ukuran foto maksimal 5 MB."
-      );
-      photoInput.value = "";
-      return;
-    }
-
-    const currentAccessToken = localStorage.getItem(
-      "kerjivaAccessToken"
-    );
-
-    if (!currentAccessToken) {
-      alert(
-        language === "en"
-          ? "Your session has expired. Please log in again."
-          : "Sesi Anda telah berakhir. Silakan masuk kembali."
-      );
-      photoInput.value = "";
-      return;
-    }
-
-    const originalButtonText = uploadPhotoButton.textContent;
-
-    uploadPhotoButton.disabled = true;
-    uploadPhotoButton.textContent =
-      language === "en" ? "Uploading..." : "Mengupload...";
-
-    try {
-      const fileExt = file.name.split(".").pop().toLowerCase();
-      const filePath = `${user.id}.${fileExt}`;
-
-      const storageBaseUrl = SUPABASE_URL.replace(
-        "/rest/v1/",
-        "/storage/v1/"
-      );
-
-      const uploadResponse = await fetch(
-        `${storageBaseUrl}object/profile-photos/${filePath}`,
-        {
-          method: "POST",
-          headers: {
-            apikey: SUPABASE_KEY,
-            Authorization: `Bearer ${currentAccessToken}`,
-            "Content-Type": file.type,
-            "x-upsert": "true"
-          },
-          body: file
-        }
-      );
-
-      if (!uploadResponse.ok) {
-        throw new Error(await uploadResponse.text());
-      }
-
-      const photoUrl =
-        `${storageBaseUrl}object/public/profile-photos/${filePath}`;
-
-      const updateResponse = await fetch(
-        `${SUPABASE_URL}jobseeker_profiles?id=eq.${encodeURIComponent(user.id)}`,
-        {
-          method: "PATCH",
-          headers: {
-            apikey: SUPABASE_KEY,
-            Authorization: `Bearer ${currentAccessToken}`,
-            "Content-Type": "application/json",
-            Prefer: "return=minimal"
-          },
-          body: JSON.stringify({
-            photo_url: photoUrl,
-            updated_at: new Date().toISOString()
-          })
-        }
-      );
-
-      if (!updateResponse.ok) {
-        throw new Error(await updateResponse.text());
-      }
-
-      photoDisplay.innerHTML = "";
-
-      const photoImage = document.createElement("img");
-      photoImage.src = photoUrl;
-      photoImage.alt =
-        language === "en" ? "Profile photo" : "Foto profil";
-      photoImage.style.cssText = `
-        width:100%;
-        height:100%;
-        object-fit:cover;
-        display:block;
-      `;
-
-      photoDisplay.appendChild(photoImage);
-
-      alert(
-        language === "en"
-          ? "Photo uploaded successfully."
-          : "Foto berhasil diupload."
-      );
-
-      console.log("PHOTO URL:", photoUrl);
-    } catch (error) {
-      console.error("Gagal upload foto:", error);
-
-      alert(
-        language === "en"
-          ? "Failed to upload photo. Please try again."
-          : "Gagal mengupload foto. Silakan coba kembali."
-      );
-    } finally {
-      uploadPhotoButton.disabled = false;
-      uploadPhotoButton.textContent = originalButtonText;
-      photoInput.value = "";
-    }
-  });
-
-  // ================= SIMPAN PROFIL =================
-
-  const saveButton = dashboard.querySelector(
-    "#saveJobseekerProfileBtn"
-  );
-
-  saveButton.addEventListener("click", async function () {
-    const currentAccessToken = localStorage.getItem(
-      "kerjivaAccessToken"
-    );
-
-    if (!currentAccessToken) {
-      alert(
-        language === "en"
-          ? "Your session has expired. Please log in again."
-          : "Sesi Anda telah berakhir. Silakan masuk kembali."
-      );
-      return;
-    }
-
-    const profileData = {
-      id: user.id,
-      full_name:
-        dashboard.querySelector("#jobseekerFullName").value.trim(),
-      phone:
-        dashboard.querySelector("#jobseekerPhone").value.trim(),
-      city:
-        dashboard.querySelector("#jobseekerCity").value.trim(),
-      education:
-        dashboard.querySelector("#jobseekerEducation").value.trim(),
-      experience:
-        dashboard.querySelector("#jobseekerExperience").value.trim(),
-      skills:
-        dashboard.querySelector("#jobseekerSkills").value.trim(),
-      updated_at: new Date().toISOString()
-    };
-
-    const originalButtonText = saveButton.textContent;
-
-    saveButton.disabled = true;
-    saveButton.textContent =
-      language === "en" ? "Saving..." : "Menyimpan...";
-
-    try {
-      const response = await fetch(
-        `${SUPABASE_URL}jobseeker_profiles`,
-        {
-          method: "POST",
-          headers: {
-            apikey: SUPABASE_KEY,
-            Authorization: `Bearer ${currentAccessToken}`,
-            "Content-Type": "application/json",
-            Prefer: "resolution=merge-duplicates,return=minimal"
-          },
-          body: JSON.stringify(profileData)
-        }
-      );
-
-      if (!response.ok) {
-        throw new Error(await response.text());
-      }
-
-      alert(
-        language === "en"
-          ? "Profile saved successfully."
-          : "Profil berhasil disimpan."
-      );
-
-      showJobseekerDashboard();
-    } catch (error) {
-      console.error("Gagal menyimpan profil:", error);
-
-      alert(
-        language === "en"
-          ? "Failed to save profile. Please try again."
-          : "Gagal menyimpan profil. Silakan coba kembali."
-      );
-    } finally {
-      saveButton.disabled = false;
-      saveButton.textContent = originalButtonText;
-    }
-  });
-
-  // ================= AMBIL DATA PROFIL =================
-
   try {
     const response = await fetch(
-      `${SUPABASE_URL}jobseeker_profiles?id=eq.${encodeURIComponent(user.id)}&select=*`,
+      ${SUPABASE_URL}jobseeker_profiles?id=eq.${user.id}&select=*,
       {
         method: "GET",
         headers: {
           apikey: SUPABASE_KEY,
-          Authorization: `Bearer ${accessToken}`
+          Authorization: Bearer ${accessToken}
         }
       }
     );
 
-    if (!response.ok) {
-      throw new Error(await response.text());
-    }
+    if (response.ok) {
+      const profiles = await response.json();
 
-    const profiles = await response.json();
+      if (profiles.length > 0) {
+        const profile = profiles[0];
+        const profilePhoto = document.getElementById("jobseekerProfilePhoto");
 
-    if (profiles.length > 0) {
-      const profile = profiles[0];
+if (profilePhoto && profile.photo_url) {
+  profilePhoto.innerHTML = `
+    <img
+      src="${profile.photo_url}"
+      alt="Profile Photo"
+      style="
+        width:100%;
+        height:100%;
+        object-fit:cover;
+        border-radius:50%;
+      "
+    >
+  `;
+}
 
-      dashboard.querySelector("#jobseekerFullName").value =
-        profile.full_name || "";
+        document.getElementById("jobseekerFullName").value =
+          profile.full_name || "";
 
-      dashboard.querySelector("#jobseekerPhone").value =
-        profile.phone || "";
+        document.getElementById("jobseekerPhone").value =
+          profile.phone || "";
 
-      dashboard.querySelector("#jobseekerCity").value =
-        profile.city || "";
+        document.getElementById("jobseekerCity").value =
+          profile.city || "";
 
-      dashboard.querySelector("#jobseekerEducation").value =
-        profile.education || "";
+        document.getElementById("jobseekerEducation").value =
+          profile.education || "";
 
-      dashboard.querySelector("#jobseekerExperience").value =
-        profile.experience || "";
+        document.getElementById("jobseekerExperience").value =
+          profile.experience || "";
 
-      dashboard.querySelector("#jobseekerSkills").value =
-        profile.skills || "";
+        document.getElementById("jobseekerSkills").value =
+          profile.skills || "";
+      const cvDisplay = document.getElementById("jobseekerCvDisplay");
 
-      if (profile.photo_url) {
-        photoDisplay.innerHTML = "";
+if (cvDisplay) {
+  if (profile.cv_url) {
+    try {
+      const cvPath = profile.cv_url.split("/object/public/cv/")[1];
 
-        const photoImage = document.createElement("img");
-        photoImage.src = profile.photo_url;
-        photoImage.alt =
-          language === "en" ? "Profile photo" : "Foto profil";
-        photoImage.style.cssText = `
-          width:100%;
-          height:100%;
-          object-fit:cover;
-          display:block;
-        `;
-
-        photoImage.onerror = function () {
-          photoDisplay.textContent = "👤";
-        };
-
-        photoDisplay.appendChild(photoImage);
-      }
-
-      // ================= TAMPILKAN CV =================
-
-      const cvDisplay = dashboard.querySelector(
-        "#jobseekerCvDisplay"
+      const signedResponse = await fetch(
+        ${SUPABASE_URL.replace("/rest/v1/", "/storage/v1/object/sign/cv/")}${cvPath},
+        {
+          method: "POST",
+          headers: {
+            apikey: SUPABASE_KEY,
+            Authorization: Bearer ${accessToken},
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify({
+            expiresIn: 31536000
+          })
+        }
       );
 
-      if (profile.cv_url) {
-        cvDisplay.textContent =
-          language === "en" ? "Loading CV..." : "Memuat CV...";
+      if (!signedResponse.ok) {
+        throw new Error(await signedResponse.text());
+      }
 
-        try {
-          const cvPath = profile.cv_url.split(
-            "/object/public/cv/"
-          )[1];
-
-          if (!cvPath) {
-            throw new Error("CV path tidak ditemukan.");
-          }
-
-          const cvStorageBaseUrl = SUPABASE_URL.replace(
-            "/rest/v1/",
-            "/storage/v1"
-          );
-
-          const signedResponse = await fetch(
-            `${cvStorageBaseUrl}/object/sign/cv/${cvPath}`,
-            {
-              method: "POST",
-              headers: {
-                apikey: SUPABASE_KEY,
-                Authorization: `Bearer ${accessToken}`,
-                "Content-Type": "application/json"
-              },
-              body: JSON.stringify({
-                expiresIn: 31536000
-              })
-            }
-          );
-
-          if (!signedResponse.ok) {
-            throw new Error(await signedResponse.text());
-          }
-
-          const signedData = await signedResponse.json();
-          const signedUrl =
-            `${cvStorageBaseUrl}${signedData.signedURL}`;
-
-          cvDisplay.innerHTML = "";
-
-          const cvLink = document.createElement("a");
-          cvLink.href = signedUrl;
-          cvLink.target = "_blank";
-          cvLink.rel = "noopener noreferrer";
-          cvLink.textContent =
-            language === "en" ? "View / Download CV" : "Lihat / Unduh CV";
-          cvLink.style.cssText = `
-            color:#f47721;
-            font-weight:bold;
+      const signedData = await signedResponse.json();
+      const signedUrl =
+        ${SUPABASE_URL.replace("/rest/v1/", "/storage/v1")}${signedData.signedURL};
+     
+      cvDisplay.innerHTML = `
+        <a
+          href="${signedUrl}"
+          target="_blank"
+          rel="noopener noreferrer"
+          style="
+            display:inline-block;
+            padding:10px 16px;
+            background:#123b6d;
+            color:white;
             text-decoration:none;
-          `;
+            border-radius:8px;
+            font-weight:bold;
+          "
+        >
+          📄 ${language === "en" ? "View My CV" : "Lihat CV Saya"}
+        </a>
+      `;
+    } catch (error) {
+      console.error("Gagal membuat URL CV:", error);
 
-          cvDisplay.appendChild(cvLink);
-        } catch (cvError) {
-          console.error("Gagal membuat tautan CV:", cvError);
-
-          cvDisplay.textContent =
-            language === "en"
-              ? "CV could not be opened. Please try again later."
-              : "CV tidak dapat dibuka. Silakan coba kembali nanti.";
-        }
-      } else {
-        cvDisplay.textContent =
-          language === "en"
-            ? "No CV available."
-            : "CV belum tersedia.";
+      cvDisplay.innerHTML = `
+        <span style="color:#dc2626;">
+          ${language === "en"
+            ? "CV could not be opened."
+            : "CV tidak dapat dibuka."}
+        </span>
+      `;
+    }
+  } else {
+    cvDisplay.innerHTML = `
+      <span style="color:#6b7280;">
+        ${language === "en"
+          ? "No CV uploaded yet."
+          : "Belum ada CV yang diupload."}
+    `;
+  }
+}
       }
     }
+
   } catch (error) {
     console.error("Gagal mengambil profil:", error);
-
-    alert(
-      language === "en"
-        ? "Failed to load profile data. You can still enter and save your profile."
-        : "Gagal mengambil data profil. Anda tetap dapat mengisi dan menyimpan profil."
-    );
   }
-};
+
+
+// ================= UPLOAD FOTO PROFIL =================
+
+
+  const photoInput = document.getElementById("jobseekerPhotoInput");
+
+  if (photoInput) {
+    photoInput.addEventListener("change", async () => {
+
+      const file = photoInput.files[0];
+
+      if (!file) return;
+
+      if (!file.type.startsWith("image/")) {
+        alert(
+          language === "en"
+            ? "Please select an image file."
+            : "Silakan pilih file gambar."
+        );
+        return;
+      }
+
+      if (file.size > 5 * 1024 * 1024) {
+        alert(
+          language === "en"
+            ? "Photo size must not exceed 5 MB."
+            : "Ukuran foto maksimal 5 MB."
+        );
+        return;
+      }
+
+      try {
+
+        const fileExt = file.name.split(".").pop().toLowerCase();
+
+        const filePath = ${user.id}.${fileExt};
+
+        const uploadResponse = await fetch(
+        ${SUPABASE_URL.replace("/rest/v1/", "/")}storage/v1/object/profile-photos/${filePath},
+          {
+            method: "POST",
+            headers: {
+              apikey: SUPABASE_KEY,
+              Authorization: Bearer ${accessToken},
+              "Content-Type": file.type,
+             
+            },
+            body: file
+          }
+        );
+
+        if (!uploadResponse.ok) {
+          throw new Error(await uploadResponse.text());
+        }
+
+       const photoUrl =
+         ${SUPABASE_URL.replace("/rest/v1/", "/")}storage/v1/object/public/profile-photos/${filePath};
+
+        const updateResponse = await fetch(
+          ${SUPABASE_URL}jobseeker_profiles?id=eq.${user.id},
+          {
+            method: "PATCH",
+            headers: {
+              apikey: SUPABASE_KEY,
+              Authorization: Bearer ${accessToken},
+              "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+              photo_url: photoUrl,
+              updated_at: new Date().toISOString()
+            })
+          }
+        );
+
+        if (!updateResponse.ok) {
+          throw new Error(await updateResponse.text());
+        }
+
+        alert(
+          language === "en"
+            ? "Photo uploaded successfully."
+            : "Foto berhasil diupload."
+        );
+
+        console.log("PHOTO URL:", photoUrl);
+
+      } catch (error) {
+
+        console.error("Gagal upload foto:", error);
+
+        alert(
+          language === "en"
+            ? "Failed to upload photo."
+            : "Gagal mengupload foto."
+        );
+      }
+    });
+  }
+
+
+  const saveButton = document.getElementById("saveJobseekerProfileBtn");
+  if (saveButton) {
+    saveButton.addEventListener("click", async () => {
+
+     const accessToken = localStorage.getItem("kerjivaAccessToken");
+      if (!accessToken) {
+        alert(
+          language === "en"
+            ? "Your session was not found. Please log in again."
+            : "Sesi Anda tidak ditemukan. Silakan login kembali."
+        );
+        return;
+      }
+
+      const profileData = {
+        id: user.id,
+        full_name: document.getElementById("jobseekerFullName")?.value.trim() || "",
+        phone: document.getElementById("jobseekerPhone")?.value.trim() || "",
+        city: document.getElementById("jobseekerCity")?.value.trim() || "",
+        education: document.getElementById("jobseekerEducation")?.value.trim() || "",
+        experience: document.getElementById("jobseekerExperience")?.value.trim() || "",
+        skills: document.getElementById("jobseekerSkills")?.value.trim() || "",
+        updated_at: new Date().toISOString()
+      };
+
+      saveButton.disabled = true;
+      saveButton.textContent =
+        language === "en" ? "Saving..." : "Menyimpan...";
+
+      try {
+        const response = await fetch(
+          ${SUPABASE_URL}jobseeker_profiles,
+          {
+            method: "POST",
+            headers: {
+              apikey: SUPABASE_KEY,
+              Authorization: Bearer ${accessToken},
+              "Content-Type": "application/json",
+              Prefer: "resolution=merge-duplicates,return=minimal"
+            },
+            body: JSON.stringify(profileData)
+          }
+        );
+
+        if (!response.ok) {
+          const errorText = await response.text();
+          throw new Error(errorText);
+        }
+
+       alert(
+           language === "en"
+          ? "Profile saved successfully."
+          : "Profil berhasil disimpan."
+        );
+
+        showJobseekerDashboard();
+      } catch (error) {
+
+        console.error("Gagal menyimpan profil:", error);
+
+        alert(
+          language === "en"
+            ? "Failed to save profile."
+            : "Gagal menyimpan profil."
+        );
+
+      } finally {
+
+        saveButton.disabled = false;
+        saveButton.textContent =
+          language === "en" ? "Save Profile" : "Simpan Profil";
+      }
+    });
+  }
+}
 
 // ================= LIHAT PASSWORD =================
 
