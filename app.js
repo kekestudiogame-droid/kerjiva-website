@@ -9291,24 +9291,29 @@ ${
     });
 }
       
-  const uploadBtn = document.querySelector("#uploadCvBtn");
-  const fileInput = document.querySelector("#cvFileInput");
-  const status = document.querySelector("#cvStatus");
-  const cvFileName = document.querySelector("#cvFileName");
 
-fileInput.addEventListener("change", () => {
-  const language = localStorage.getItem("siteLanguage") || "id";
+const uploadBtn = document.querySelector("#uploadCvBtn");
+const fileInput = document.querySelector("#cvFileInput");
+const status = document.querySelector("#cvStatus");
+const cvFileName = document.querySelector("#cvFileName");
 
-  if (fileInput.files.length > 0) {
-    cvFileName.textContent = fileInput.files[0].name;
-  } else {
-    cvFileName.textContent =
-      language === "en"
-        ? "No file chosen"
-        : "Tidak ada file yang dipilih";
-  }
-});
+if (fileInput && cvFileName) {
+  fileInput.addEventListener("change", () => {
+    const language = localStorage.getItem("siteLanguage") || "id";
 
+    if (fileInput.files.length > 0) {
+      cvFileName.textContent = fileInput.files[0].name;
+    } else {
+      cvFileName.textContent =
+        language === "en"
+          ? "No file chosen"
+          : "Tidak ada file yang dipilih";
+    }
+  });
+}
+
+
+if (uploadBtn && fileInput && status) {
   uploadBtn.addEventListener("click", async () => {
     const file = fileInput.files[0];
 
@@ -9496,6 +9501,7 @@ status.textContent = "CV berhasil diupload.";
     }
   });
 }
+   }
 // ================= LAMARAN SAYA =================
 async function showMyApplications() {
  const userData = localStorage.getItem("kerjivaUser");
