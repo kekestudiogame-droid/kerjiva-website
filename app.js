@@ -101,84 +101,78 @@ async function loadJobsFromDatabase() {
 const data = await response.json();
 
 
-    // Ambil logo perusahaan berdasarkan user_id lowongan
-    const jobUserIds = [
-      ...new Set(data.map(job => job.user_id).filter(Boolean))
-    ];
-
-    let companiesData = [];
-
-    if (jobUserIds.length > 0) {
-      const companiesResponse = await fetch(
-        `${SUPABASE_URL.replace("/rest/v1/", "")}/rest/v1/companies?user_id=in.(${jobUserIds.join(",")})&select=user_id,company_name,logo_url`,
-        {
-          method: "GET",
-          headers: supabaseHeaders
-        }
-      );
-
-      if (!companiesResponse.ok) {
-        throw new Error(await companiesResponse.text());
+   
+    // Ambil data logo dan nama perusahaan melalui RPC aman
+    const companiesResponse = await fetch(
+      `${SUPABASE_URL.replace("/rest/v1/", "")}/rest/v1/rpc/get_published_job_company_logos`,
+      {
+        method: "POST",
+        headers: {
+          ...supabaseHeaders,
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({})
       }
+    );
 
-      companiesData = await companiesResponse.json();
+    if (!companiesResponse.ok) {
+      throw new Error(await companiesResponse.text());
     }
 
-    const companyLogos = new Map(
+    const companiesData = await companiesResponse.json();
+
+    const companiesByUserId = new Map(
       companiesData.map(company => [
         company.user_id,
-        company.logo_url
+        company
       ])
     );
 
+    jobs = data.map(job => {
+      const companyData = companiesByUserId.get(job.user_id);
 
-jobs = data.map(job => ({
-  ...job,
+      const companyName =
+        job.company ||
+        job.company_name ||
+        companyData?.company_name ||
+        "Perusahaan";
 
-  logo_url: companyLogos.get(job.user_id) || "",
+      return {
+        ...job,
 
-  title: job.title || "",
+        logo_url: companyData?.logo_url || "",
 
-  company:
-    job.company ||
-    job.company_name ||
-    "Perusahaan",
+        title: job.title || "",
 
-  location:
-    job.location ||
-    job.city ||
-    "",
+        company: companyName,
 
-  category:
-    job.category ||
-    "",
+        location:
+          job.location ||
+          job.city ||
+          "",
 
-  type:
-    job.type ||
-    job.job_type ||
-    "",
+        category:
+          job.category ||
+          "",
 
-  salary:
-    job.salary ||
-    "",
+        type:
+          job.type ||
+          job.job_type ||
+          "",
 
-  initials:
-    (
-      job.company ||
-      job.company_name ||
-      "P"
-    )
-      .substring(0, 2)
-      .toUpperCase()
-}));
+        salary:
+          job.salary ||
+          "",
 
+        initials: companyName.substring(0, 2).toUpperCase()
+      };
+    });
 
-   
-  
     // =====================================================
     // SATU JALUR DATA FINAL
     // renderJobs menangani translation + tampilan
     // =====================================================
+
 
     await renderJobs(jobs);
 
