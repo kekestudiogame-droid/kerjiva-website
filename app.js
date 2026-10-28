@@ -11100,19 +11100,27 @@ const accessToken = localStorage.getItem("kerjivaAccessToken");
             border:1px solid #e5eaf1;
           ">
 
-            <div style="
-              width:80px;
-              height:80px;
-              border-radius:50%;
-              background:#eaf1f8;
-              display:flex;
-              align-items:center;
-              justify-content:center;
-              font-size:38px;
-              margin-bottom:20px;
+          <div style="
+            width:80px;
+            height:80px;
+            border-radius:50%;
+            background:#eaf1f8;
+            display:flex;
+           align-items:center;
+            justify-content:center;
+            overflow:hidden;
+           margin-bottom:20px;
             ">
-              🏢
-            </div>
+           ${
+             company.logo_url
+            ? `<img
+          src="${company.logo_url}"
+          alt="Logo Perusahaan"
+          style="width:100%;height:100%;object-fit:contain;"
+            >`
+         : `<span style="font-size:38px;">🏢</span>`
+           }
+          </div>
 
             <h1 style="
               margin:0;
