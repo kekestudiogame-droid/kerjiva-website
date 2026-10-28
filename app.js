@@ -15082,6 +15082,7 @@ if (cvDisplay) {
 
 
   const saveButton = document.getElementById("saveJobseekerProfileBtn");
+  console.log("CEK TOMBOL SIMPAN:", saveButton);
   if (saveButton) {
     saveButton.addEventListener("click", async () => {
       console.log("TOMBOL SIMPAN PROFIL TERPASANG");
