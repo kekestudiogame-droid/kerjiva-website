@@ -13265,6 +13265,8 @@ alert(
     alert("Gagal mengirim lowongan: " + error.message);
   }
 }
+  window.publishNewJob = publishNewJob;
+  
 async function submitJobPost() {
   const title = document.getElementById("jobTitle").value.trim();
   const city = document.getElementById("jobCity").value.trim();
