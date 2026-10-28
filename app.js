@@ -11427,7 +11427,54 @@ const accessToken = localStorage.getItem("kerjivaAccessToken");
               Edit Profil Perusahaan
             </h1>
 
-            <label>Nama Perusahaan</label>
+          
+            <label>Logo Perusahaan</label>
+            <div style="margin:7px 0 18px;">
+              <div style="
+                width:100px;
+                height:100px;
+                border:1px solid #dbe3ec;
+                border-radius:12px;
+                display:flex;
+                align-items:center;
+                justify-content:center;
+                overflow:hidden;
+                margin-bottom:10px;
+                background:#f8fafc;
+              ">
+                <img
+                  id="editCompanyLogoPreview"
+                  src="${company.logo_url || ""}"
+                  alt="Preview Logo Perusahaan"
+                  style="
+                    width:100%;
+                    height:100%;
+                    object-fit:contain;
+                    ${company.logo_url ? "" : "display:none;"}
+                  "
+                >
+                <span
+                  id="editCompanyLogoPlaceholder"
+                  style="
+                    font-size:32px;
+                    ${company.logo_url ? "display:none;" : ""}
+                  "
+                >🏢</span>
+              </div>
+
+              <input
+                type="file"
+                id="editCompanyLogo"
+                accept="image/png,image/jpeg,image/webp"
+                onchange="previewCompanyLogo()"
+                style="width:100%;"
+              >
+              <small style="display:block;margin-top:6px;color:#64748b;">
+                Format PNG, JPG, atau WebP. Maksimal 2 MB.
+              </small>
+            </div>
+            
+             <label>Nama Perusahaan</label>
             <input
               id="editCompanyName"
               value="${company.company_name || ""}"
@@ -11578,12 +11625,41 @@ if (editCompanyBrand) {
 }
 
 window.editCompanyProfile = editCompanyProfile;
+  
+window.previewCompanyLogo = function () {
+  const input = document.getElementById("editCompanyLogo");
+  const preview = document.getElementById("editCompanyLogoPreview");
+  const placeholder = document.getElementById("editCompanyLogoPlaceholder");
+
+  if (!input || !preview || !placeholder) return;
+
+  const file = input.files?.[0];
+
+  if (!file) return;
+
+  if (!["image/png", "image/jpeg", "image/webp"].includes(file.type)) {
+    alert("Pilih gambar berformat PNG, JPG, atau WebP.");
+    input.value = "";
+    return;
+  }
+
+  if (file.size > 2 * 1024 * 1024) {
+    alert("Ukuran logo maksimal 2 MB.");
+    input.value = "";
+    return;
+  }
+
+  preview.src = URL.createObjectURL(file);
+  preview.style.display = "block";
+  placeholder.style.display = "none";
+};
+
 
 // ================= SIMPAN PROFIL PERUSAHAAN =================
-async function saveCompanyProfile(companyId) {
 
- const userData = localStorage.getItem("kerjivaUser");
- const accessToken = localStorage.getItem("kerjivaAccessToken");
+async function saveCompanyProfile(companyId) {
+  const userData = localStorage.getItem("kerjivaUser");
+  const accessToken = localStorage.getItem("kerjivaAccessToken");
 
   if (!userData || !accessToken) {
     showNotification("companySessionNotFound");
@@ -11605,58 +11681,120 @@ async function saveCompanyProfile(companyId) {
   const address =
     document.getElementById("editCompanyAddress")?.value.trim();
 
+  const logoInput = document.getElementById("editCompanyLogo");
+  const logoFile = logoInput?.files?.[0];
+
   if (!companyName) {
     alert("Nama perusahaan wajib diisi.");
     return;
   }
 
+  if (logoFile) {
+    if (!["image/png", "image/jpeg", "image/webp"].includes(logoFile.type)) {
+      alert("Pilih gambar berformat PNG, JPG, atau WebP.");
+      return;
+    }
+
+    if (logoFile.size > 2 * 1024 * 1024) {
+      alert("Ukuran logo maksimal 2 MB.");
+      return;
+    }
+  }
+
   try {
+    const user = JSON.parse(userData);
 
-const user = JSON.parse(userData);
+    let logoUrl = null;
 
-console.log("COMPANY ID YANG DIUPDATE:", companyId);
-console.log("USER DATA:", userData);
+    // 1. Unggah logo baru jika dipilih
+    if (logoFile) {
+      const safeFileName = logoFile.name
+        .replace(/[^a-zA-Z0-9._-]/g, "_");
 
-const response = await fetch(
-  companyId
-    ? `${SUPABASE_URL}companies?id=eq.${companyId}&user_id=eq.${user.id}`
-    : `${SUPABASE_URL}companies`,
-  {
-    method: companyId ? "PATCH" : "POST",
-    headers: {
-      apikey: SUPABASE_KEY,
-      Authorization: `Bearer ${accessToken}`,
-      "Content-Type": "application/json",
-      Prefer: "return=representation"
-    },
-    body: JSON.stringify({
+      const storagePath =
+        `${user.id}/${Date.now()}-${safeFileName}`;
+
+      const storageBaseUrl =
+        SUPABASE_URL.replace("/rest/v1/", "");
+
+      const encodedPath = storagePath
+        .split("/")
+        .map(segment => encodeURIComponent(segment))
+        .join("/");
+
+      const uploadResponse = await fetch(
+        `${storageBaseUrl}/storage/v1/object/company-logos/${encodedPath}`,
+        {
+          method: "POST",
+          headers: {
+            apikey: SUPABASE_KEY,
+            Authorization: `Bearer ${accessToken}`,
+            "Content-Type": logoFile.type
+          },
+          body: logoFile
+        }
+      );
+
+      if (!uploadResponse.ok) {
+        throw new Error(
+          "Gagal mengunggah logo: " +
+          await uploadResponse.text()
+        );
+      }
+
+      logoUrl =
+        `${storageBaseUrl}/storage/v1/object/public/company-logos/${encodedPath}`;
+    }
+
+    // 2. Simpan data profil perusahaan
+    const profileData = {
       user_id: user.id,
       company_name: companyName,
       email: user.email || "",
-      phone: phone,
-      website: website,
-      city: city,
-      address: address
-    })
-  }
-);
+      phone,
+      website,
+      city,
+      address
+    };
+
+    // URL logo hanya diperbarui jika logo baru diunggah.
+    // Tanpa logo baru, logo lama tidak diubah.
+    if (logoUrl) {
+      profileData.logo_url = logoUrl;
+    }
+
+    const response = await fetch(
+      companyId
+        ? `${SUPABASE_URL}companies?id=eq.${companyId}&user_id=eq.${user.id}`
+        : `${SUPABASE_URL}companies`,
+      {
+        method: companyId ? "PATCH" : "POST",
+        headers: {
+          apikey: SUPABASE_KEY,
+          Authorization: `Bearer ${accessToken}`,
+          "Content-Type": "application/json",
+          Prefer: "return=representation"
+        },
+        body: JSON.stringify(profileData)
+      }
+    );
 
     if (!response.ok) {
-      const errorText = await response.text();
-      throw new Error(errorText);
+      throw new Error(await response.text());
     }
-      const language = localStorage.getItem("siteLanguage") || "id";
 
-      alert(
+    const language =
+      localStorage.getItem("siteLanguage") || "id";
+
+    alert(
       language === "en"
-    ? "Company profile updated successfully."
-    : "Profil perusahaan berhasil diperbarui."
-     );
+        ? "Company profile updated successfully."
+        : "Profil perusahaan berhasil diperbarui."
+    );
 
     await showCompanyProfile();
 
   } catch (error) {
-
     console.error("Gagal menyimpan profil perusahaan:", error);
 
     showNotification(
@@ -11665,6 +11803,8 @@ const response = await fetch(
     );
   }
 }
+
+  
 async function deleteCompanyProfile(companyId) {
   const userData = localStorage.getItem("kerjivaUser");
   const accessToken = localStorage.getItem("kerjivaAccessToken");
