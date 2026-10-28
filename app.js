@@ -14829,12 +14829,12 @@ const accessToken = localStorage.getItem("kerjivaAccessToken");
   document.body.appendChild(dashboard);
   try {
     const response = await fetch(
-      ${SUPABASE_URL}jobseeker_profiles?id=eq.${user.id}&select=*,
+    `${SUPABASE_URL}jobseeker_profiles?id=eq.${user.id}&select=*`,
       {
         method: "GET",
         headers: {
           apikey: SUPABASE_KEY,
-          Authorization: Bearer ${accessToken}
+         Authorization: `Bearer ${accessToken}`
         }
       }
     );
@@ -14886,7 +14886,7 @@ if (cvDisplay) {
       const cvPath = profile.cv_url.split("/object/public/cv/")[1];
 
       const signedResponse = await fetch(
-        ${SUPABASE_URL.replace("/rest/v1/", "/storage/v1/object/sign/cv/")}${cvPath},
+      `${SUPABASE_URL.replace("/rest/v1/", "/storage/v1")}/object/sign/cv/${cvPath}`,
         {
           method: "POST",
           headers: {
@@ -14906,7 +14906,7 @@ if (cvDisplay) {
 
       const signedData = await signedResponse.json();
       const signedUrl =
-        ${SUPABASE_URL.replace("/rest/v1/", "/storage/v1")}${signedData.signedURL};
+      `${SUPABASE_URL.replace("/rest/v1/", "/storage/v1")}${signedData.signedURL}`;
      
       cvDisplay.innerHTML = `
         <a
@@ -14952,7 +14952,7 @@ if (cvDisplay) {
   } catch (error) {
     console.error("Gagal mengambil profil:", error);
   }
-   );
+   
 
 // ================= UPLOAD FOTO PROFIL =================
 
@@ -14988,10 +14988,9 @@ if (cvDisplay) {
 
         const fileExt = file.name.split(".").pop().toLowerCase();
 
-        const filePath = ${user.id}.${fileExt};
-
+       const filePath = `${user.id}.${fileExt}`;
         const uploadResponse = await fetch(
-        ${SUPABASE_URL.replace("/rest/v1/", "/")}storage/v1/object/profile-photos/${filePath},
+      `${SUPABASE_URL.replace("/rest/v1/", "/")}storage/v1/object/profile-photos/${filePath}`,
           {
             method: "POST",
             headers: {
@@ -15008,16 +15007,16 @@ if (cvDisplay) {
           throw new Error(await uploadResponse.text());
         }
 
-       const photoUrl =
-         ${SUPABASE_URL.replace("/rest/v1/", "/")}storage/v1/object/public/profile-photos/${filePath};
-
+     const photoUrl =
+       `${SUPABASE_URL.replace("/rest/v1/", "/")}storage/v1/object/public/profile-photos/${filePath}`;
+    
         const updateResponse = await fetch(
-          ${SUPABASE_URL}jobseeker_profiles?id=eq.${user.id},
+        `${SUPABASE_URL}jobseeker_profiles?id=eq.${user.id}`,
           {
             method: "PATCH",
             headers: {
               apikey: SUPABASE_KEY,
-              Authorization: Bearer ${accessToken},
+             Authorization: `Bearer ${accessToken}`,
               "Content-Type": "application/json"
             },
             body: JSON.stringify({
@@ -15084,12 +15083,12 @@ if (cvDisplay) {
 
       try {
         const response = await fetch(
-          ${SUPABASE_URL}jobseeker_profiles,
+        `${SUPABASE_URL}jobseeker_profiles`,
           {
             method: "POST",
             headers: {
               apikey: SUPABASE_KEY,
-              Authorization: Bearer ${accessToken},
+             Authorization: `Bearer ${accessToken}`,
               "Content-Type": "application/json",
               Prefer: "resolution=merge-duplicates,return=minimal"
             },
