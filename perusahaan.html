@@ -426,6 +426,11 @@ if (!statsRes.ok || !jobsRes.ok || !companiesRes.ok) {
 const publicStats = await statsRes.json();
 const jobs = await jobsRes.json();
 const companyLogos = await companiesRes.json();
+    const jobseekersCount =
+  Number(publicStats.jobseekers) || 0;
+
+const applicationsCount =
+  Number(publicStats.applications) || 0;
 
 const companyByUserId = new Map(
   companyLogos.map(company => [
