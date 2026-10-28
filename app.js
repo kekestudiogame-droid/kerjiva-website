@@ -14971,8 +14971,11 @@ if (cvDisplay) {
       <span style="color:#6b7280;">
         ${language === "en"
           ? "No CV uploaded yet."
+         
           : "Belum ada CV yang diupload."}
+      </span>
     `;
+
   }
 }
       }
