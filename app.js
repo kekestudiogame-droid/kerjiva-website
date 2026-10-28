@@ -14461,6 +14461,8 @@ ${localStorage.getItem("siteLanguage") === "en" ? "Reject Applicant" : "Tolak Pe
    showNotification("applicationLoadFailed");
   }
 }
+  window.showApplicantDetail = showApplicantDetail;
+  
 async function viewApplicantDocument(filePath, documentName) {
   console.log("FILE PATH YANG DIMINTA:", filePath);
 const accessToken = localStorage.getItem("kerjivaAccessToken");
