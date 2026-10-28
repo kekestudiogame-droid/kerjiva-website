@@ -11803,6 +11803,9 @@ async function saveCompanyProfile(companyId) {
     );
   }
 }
+  
+window.saveCompanyProfile = saveCompanyProfile;
+
 
   
 async function deleteCompanyProfile(companyId) {
