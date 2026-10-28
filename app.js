@@ -11907,6 +11907,9 @@ async function deleteCompanyProfile(companyId) {
     );
   }
 }
+  
+window.deleteCompanyProfile = deleteCompanyProfile;
+
 
 // ================= LOWONGAN SAYA =================
 
