@@ -3170,9 +3170,20 @@ console.log("DOKUMEN PELAMAR:", documents);
   try {
 
 // TAMPILKAN PILIHAN DOKUMEN
- const applicationLanguage = localStorage.getItem("siteLanguage") || "id";
+
+const applicationLanguage = localStorage.getItem("siteLanguage") || "id";
+
+if (documents.length === 0) {
+  alert(
+    applicationLanguage === "en"
+      ? "No documents found. Please upload a document before applying."
+      : "Belum ada dokumen. Silakan unggah dokumen terlebih dahulu sebelum melamar."
+  );
+  return;
+}
 
 if (documents.length > 0) {
+
 
   const documentChoices = documents.map(doc => `
     <label style="
