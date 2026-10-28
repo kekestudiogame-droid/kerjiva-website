@@ -11554,24 +11554,24 @@ const accessToken = localStorage.getItem("kerjivaAccessToken");
       </div>
     `;
 
-   if (window.setLanguage) {
+if (window.setLanguage) {
   window.setLanguage(localStorage.getItem("siteLanguage") || "id");
+}
 
-  const editCompanyBrand = document.getElementById("editCompanyBrand");
+const editCompanyBrand = document.getElementById("editCompanyBrand");
 
- if (editCompanyBrand) {
+if (editCompanyBrand) {
   editCompanyBrand.textContent = "Kerjiva";
 }
+
+} catch (error) {
+  showNotification("companyProfileFailed", " " + error.message);
+}
 }
 
-  } catch (error) {
-    showNotification("companyProfileFailed", " " + error.message);
-  }
-}
-
+window.editCompanyProfile = editCompanyProfile;
 
 // ================= SIMPAN PROFIL PERUSAHAAN =================
-
 async function saveCompanyProfile(companyId) {
 
  const userData = localStorage.getItem("kerjivaUser");
