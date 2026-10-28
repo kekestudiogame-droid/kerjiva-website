@@ -1613,7 +1613,20 @@ const locationText =
               margin-bottom:15px;
             "
           >
-            ${latestJob.initials || "💼"}
+                      ${
+              latestJob.logo_url
+                ? `<img
+                    src="${latestJob.logo_url}"
+                    alt="Logo ${latestJob.company || "Perusahaan"}"
+                    style="
+                      width:100%;
+                      height:100%;
+                      object-fit:contain;
+                      border-radius:inherit;
+                    "
+                  >`
+                : (latestJob.initials || "💼")
+            }
           </div>
 
           <div
