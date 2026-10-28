@@ -10291,9 +10291,10 @@ window.showCompanyDashboard = async function () {
   
  translateCompanyDashboard();
   
+
 const companyHeaderName = document.getElementById("companyHeaderName");
-  const userDataHeader = localStorage.getItem("kerjivaUser");
-  const accessTokenHeader = localStorage.getItem("kerjivaAccessToken");
+const userDataHeader = localStorage.getItem("kerjivaUser");
+const accessTokenHeader = localStorage.getItem("kerjivaAccessToken");
 
 if (companyHeaderName && userDataHeader && accessTokenHeader) {
   try {
@@ -10301,7 +10302,7 @@ if (companyHeaderName && userDataHeader && accessTokenHeader) {
 
     if (companyUser.id) {
       const response = await fetch(
-        `${SUPABASE_URL}companies?user_id=eq.${companyUser.id}&select=company_name`,
+        `${SUPABASE_URL}companies?user_id=eq.${companyUser.id}&select=company_name,logo_url`,
         {
           method: "GET",
           headers: {
@@ -10314,15 +10315,42 @@ if (companyHeaderName && userDataHeader && accessTokenHeader) {
       if (response.ok) {
         const companies = await response.json();
 
-        if (companies.length > 0 && companies[0].company_name) {
-          companyHeaderName.textContent = companies[0].company_name;
+        if (companies.length > 0) {
+          const company = companies[0];
+
+          companyHeaderName.textContent = company.company_name || "";
+
+          const companyHeaderLogo = document.getElementById("companyHeaderLogo");
+
+          if (companyHeaderLogo) {
+            if (company.logo_url) {
+              companyHeaderLogo.innerHTML = `
+                <img
+                  src="${company.logo_url}"
+                  alt="Logo ${company.company_name || "Perusahaan"}"
+                  style="
+                    width:64px;
+                    height:64px;
+                    object-fit:contain;
+                    border-radius:12px;
+                    background:#ffffff;
+                    padding:4px;
+                    box-sizing:border-box;
+                  "
+                >
+              `;
+            } else {
+              companyHeaderLogo.innerHTML = "🏢";
+            }
+          }
         }
       }
     }
   } catch (error) {
-    console.error("Gagal mengambil nama perusahaan:", error);
+    console.error("Gagal mengambil nama dan logo perusahaan:", error);
   }
 }
+
   const userData = localStorage.getItem("kerjivaUser");
   const accessToken = localStorage.getItem("kerjivaAccessToken");
   
