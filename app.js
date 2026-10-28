@@ -1197,9 +1197,17 @@ if (
     card.innerHTML = `
       <div class="job-top">
 
-        <div class="company-logo">
-          ${job.initials || ""}
-        </div>
+       <div class="company-logo">
+  ${
+    job.logo_url
+      ? `<img
+          src="${job.logo_url}"
+          alt="Logo ${job.company || "Perusahaan"}"
+          style="width:100%;height:100%;object-fit:contain;border-radius:inherit;"
+        >`
+      : (job.initials || "")
+  }
+</div>
 
         <span class="pill">
           ${job.type || ""}
