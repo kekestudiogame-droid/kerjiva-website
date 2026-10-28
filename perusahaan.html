@@ -470,36 +470,40 @@ const companyByUserId = new Map(
     // DAFTAR PERUSAHAAN YANG MEMBUKA LOWONGAN
     // ==========================================
 
-    const companyMap = {};
+ const companyMap = {};
 
-    jobs.forEach(job => {
-      const name =
-        (job.company_name || "").trim();
+jobs.forEach(job => {
+  const companyData =
+    companyByUserId.get(job.user_id);
 
-      // Jangan tampilkan perusahaan generik
-      // jika nama perusahaan kosong
-      if (!name) {
-        return;
-      }
+  const name = (
+    job.company_name ||
+    companyData?.company_name ||
+    ""
+  ).trim();
 
-      const companyKey =
-        job.user_id
-          ? String(job.user_id)
-          : name.toLowerCase();
+  if (!name) return;
 
-      if (!companyMap[companyKey]) {
-        companyMap[companyKey] = {
-          name: name,
-          city: job.city || "",
-          jobs: 0
-        };
-      }
+  const companyKey = job.user_id
+    ? String(job.user_id)
+    : name.toLowerCase();
 
-      companyMap[companyKey].jobs++;
-    });
+  if (!companyMap[companyKey]) {
+    companyMap[companyKey] = {
+      name: name,
+      city: job.city || "",
+      logo_url: companyData?.logo_url || "",
+      jobs: 0
+    };
+  }
 
+  companyMap[companyKey].jobs++;
+});
     const companyList =
       Object.values(companyMap);
+    if (statNumbers[1]) {
+  statNumbers[1].textContent = companyList.length;
+}
 
     const companiesContainer =
       document.querySelector(".companies");
@@ -532,8 +536,16 @@ const companyByUserId = new Map(
         return `
           <div class="company-card">
 
-            <div class="company-logo">
-              ${initials}
+           <div class="company-logo">
+             ${
+             company.logo_url
+            ? `<img
+          src="${company.logo_url}"
+          alt="Logo ${company.name}"
+          style="width:100%;height:100%;object-fit:contain;border-radius:inherit;"
+           >`
+           : initials
+           }
             </div>
 
             <h3>
