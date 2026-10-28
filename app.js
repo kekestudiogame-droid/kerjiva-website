@@ -3170,20 +3170,9 @@ console.log("DOKUMEN PELAMAR:", documents);
   try {
 
 // TAMPILKAN PILIHAN DOKUMEN
-
-const applicationLanguage = localStorage.getItem("siteLanguage") || "id";
-
-if (documents.length === 0) {
-  alert(
-    applicationLanguage === "en"
-      ? "No documents found. Please upload a document before applying."
-      : "Belum ada dokumen. Silakan unggah dokumen terlebih dahulu sebelum melamar."
-  );
-  return;
-}
+ const applicationLanguage = localStorage.getItem("siteLanguage") || "id";
 
 if (documents.length > 0) {
-
 
   const documentChoices = documents.map(doc => `
     <label style="
@@ -9291,29 +9280,24 @@ ${
     });
 }
       
+  const uploadBtn = document.querySelector("#uploadCvBtn");
+  const fileInput = document.querySelector("#cvFileInput");
+  const status = document.querySelector("#cvStatus");
+  const cvFileName = document.querySelector("#cvFileName");
 
-const uploadBtn = document.querySelector("#uploadCvBtn");
-const fileInput = document.querySelector("#cvFileInput");
-const status = document.querySelector("#cvStatus");
-const cvFileName = document.querySelector("#cvFileName");
+fileInput.addEventListener("change", () => {
+  const language = localStorage.getItem("siteLanguage") || "id";
 
-if (fileInput && cvFileName) {
-  fileInput.addEventListener("change", () => {
-    const language = localStorage.getItem("siteLanguage") || "id";
+  if (fileInput.files.length > 0) {
+    cvFileName.textContent = fileInput.files[0].name;
+  } else {
+    cvFileName.textContent =
+      language === "en"
+        ? "No file chosen"
+        : "Tidak ada file yang dipilih";
+  }
+});
 
-    if (fileInput.files.length > 0) {
-      cvFileName.textContent = fileInput.files[0].name;
-    } else {
-      cvFileName.textContent =
-        language === "en"
-          ? "No file chosen"
-          : "Tidak ada file yang dipilih";
-    }
-  });
-}
-
-
-if (uploadBtn && fileInput && status) {
   uploadBtn.addEventListener("click", async () => {
     const file = fileInput.files[0];
 
@@ -9501,7 +9485,6 @@ status.textContent = "CV berhasil diupload.";
     }
   });
 }
-   }
 // ================= LAMARAN SAYA =================
 async function showMyApplications() {
  const userData = localStorage.getItem("kerjivaUser");
@@ -13041,9 +13024,7 @@ async function publishNewJob() {
 // =====================================================
 
 const companyResponse = await fetch(
-
- `${SUPABASE_URL}companies?user_id=eq.${user.id}&select=company_name`,
-
+ `${SUPABASE_URL}companies?id=eq.${user.id}&select=company_name`,
   {
     method: "GET",
     headers: {
@@ -14003,23 +13984,15 @@ for (const app of myApplications) {
                 </p>
 
 
-              
-<div
-  onclick="showApplicantDetail('${app.jobseeker?.id || app.jobseeker_id || ""}', '${app.job_id || app.jobs?.id || ""}', '${app.id || ""}')"
-  style="
-    margin-top:15px;
-    color:#123b6d;
-    font-weight:bold;
-    cursor:pointer;
-  "
->
-  ${
-    localStorage.getItem("siteLanguage") === "en"
-      ? "View Applicant Profile →"
-      : "Lihat Profil Pelamar →"
-  }
-</div>
-
+                <div style="
+                  margin-top:15px;
+                  color:#123b6d;
+                  font-weight:bold;
+                ">
+               ${localStorage.getItem("siteLanguage") === "en"
+                ? "View Applicant Profile →"
+                : "Lihat Profil Pelamar →"}
+                </div>
 
               </div>
 
@@ -14478,8 +14451,6 @@ ${localStorage.getItem("siteLanguage") === "en" ? "Reject Applicant" : "Tolak Pe
    showNotification("applicationLoadFailed");
   }
 }
-  window.showApplicantDetail = showApplicantDetail;
-  
 async function viewApplicantDocument(filePath, documentName) {
   console.log("FILE PATH YANG DIMINTA:", filePath);
 const accessToken = localStorage.getItem("kerjivaAccessToken");
@@ -14830,10 +14801,9 @@ const accessToken = localStorage.getItem("kerjivaAccessToken");
             </div>
           </div>
 
-         <button
-             id="saveJobseekerProfileBtn"
-              type="button"
-             onclick="saveJobseekerProfile()"
+          <button
+            id="saveJobseekerProfileBtn"
+            type="button"
             style="
               width:100%;
               padding:14px;
@@ -14971,11 +14941,8 @@ if (cvDisplay) {
       <span style="color:#6b7280;">
         ${language === "en"
           ? "No CV uploaded yet."
-         
           : "Belum ada CV yang diupload."}
-      </span>
     `;
-
   }
 }
       }
@@ -15085,72 +15052,81 @@ if (cvDisplay) {
   }
 
 
- window.saveJobseekerProfile = async function () {
-  const language = localStorage.getItem("siteLanguage") || "id";
-  const userData = localStorage.getItem("kerjivaUser");
-  const accessToken = localStorage.getItem("kerjivaAccessToken");
-
-  if (!userData || !accessToken) {
-    alert(
-      language === "en"
-        ? "Your session was not found. Please log in again."
-        : "Sesi Anda tidak ditemukan. Silakan login kembali."
-    );
-    return;
-  }
-
-  const user = JSON.parse(userData);
   const saveButton = document.getElementById("saveJobseekerProfileBtn");
-  if (!saveButton) return;
+  if (saveButton) {
+    saveButton.addEventListener("click", async () => {
 
-  const profileData = {
-    id: user.id,
-    full_name: document.getElementById("jobseekerFullName")?.value.trim() || "",
-    phone: document.getElementById("jobseekerPhone")?.value.trim() || "",
-    city: document.getElementById("jobseekerCity")?.value.trim() || "",
-    education: document.getElementById("jobseekerEducation")?.value.trim() || "",
-    experience: document.getElementById("jobseekerExperience")?.value.trim() || "",
-    skills: document.getElementById("jobseekerSkills")?.value.trim() || "",
-    updated_at: new Date().toISOString()
-  };
+     const accessToken = localStorage.getItem("kerjivaAccessToken");
+      if (!accessToken) {
+        alert(
+          language === "en"
+            ? "Your session was not found. Please log in again."
+            : "Sesi Anda tidak ditemukan. Silakan login kembali."
+        );
+        return;
+      }
 
-  saveButton.disabled = true;
-  saveButton.textContent = language === "en" ? "Saving..." : "Menyimpan...";
+      const profileData = {
+        id: user.id,
+        full_name: document.getElementById("jobseekerFullName")?.value.trim() || "",
+        phone: document.getElementById("jobseekerPhone")?.value.trim() || "",
+        city: document.getElementById("jobseekerCity")?.value.trim() || "",
+        education: document.getElementById("jobseekerEducation")?.value.trim() || "",
+        experience: document.getElementById("jobseekerExperience")?.value.trim() || "",
+        skills: document.getElementById("jobseekerSkills")?.value.trim() || "",
+        updated_at: new Date().toISOString()
+      };
 
-  try {
-    const response = await fetch(`${SUPABASE_URL}jobseeker_profiles`, {
-      method: "POST",
-      headers: {
-        apikey: SUPABASE_KEY,
-        Authorization: `Bearer ${accessToken}`,
-        "Content-Type": "application/json",
-        Prefer: "resolution=merge-duplicates,return=minimal"
-      },
-      body: JSON.stringify(profileData)
+      saveButton.disabled = true;
+      saveButton.textContent =
+        language === "en" ? "Saving..." : "Menyimpan...";
+
+      try {
+        const response = await fetch(
+          `${SUPABASE_URL}jobseeker_profiles`,
+          {
+            method: "POST",
+            headers: {
+              apikey: SUPABASE_KEY,
+              Authorization: `Bearer ${accessToken}`,
+              "Content-Type": "application/json",
+              Prefer: "resolution=merge-duplicates,return=minimal"
+            },
+            body: JSON.stringify(profileData)
+          }
+        );
+
+        if (!response.ok) {
+          const errorText = await response.text();
+          throw new Error(errorText);
+        }
+
+       alert(
+           language === "en"
+          ? "Profile saved successfully."
+          : "Profil berhasil disimpan."
+        );
+
+        showJobseekerDashboard();
+      } catch (error) {
+
+        console.error("Gagal menyimpan profil:", error);
+
+        alert(
+          language === "en"
+            ? "Failed to save profile."
+            : "Gagal menyimpan profil."
+        );
+
+      } finally {
+
+        saveButton.disabled = false;
+        saveButton.textContent =
+          language === "en" ? "Save Profile" : "Simpan Profil";
+      }
     });
-
-    if (!response.ok) throw new Error(await response.text());
-
-    alert(
-      language === "en"
-        ? "Profile saved successfully."
-        : "Profil berhasil disimpan."
-    );
-
-    await window.showJobseekerProfile();
-  } catch (error) {
-    console.error("Gagal menyimpan profil:", error);
-    alert(
-      language === "en"
-        ? "Failed to save profile."
-        : "Gagal menyimpan profil."
-    );
-  } finally {
-    saveButton.disabled = false;
-    saveButton.textContent =
-      language === "en" ? "Save Profile" : "Simpan Profil";
   }
-};
+}
 // ================= LIHAT PASSWORD =================
 
 const togglePassword =
@@ -15456,4 +15432,4 @@ if (resetPasswordParam === "password") {
       "Menunggu sesi pemulihan password dari Supabase."
     );
   }
-  }
+}
