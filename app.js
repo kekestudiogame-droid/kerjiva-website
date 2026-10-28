@@ -100,27 +100,37 @@ async function loadJobsFromDatabase() {
    
 const data = await response.json();
 
-// Ambil logo perusahaan berdasarkan user_id
-const companiesResponse = await fetch(
-  `${SUPABASE_URL.replace("/rest/v1/", "")}/rest/v1/companies?select=user_id,logo_url`,
-  {
-    method: "GET",
-    headers: supabaseHeaders
-  }
-);
 
-if (!companiesResponse.ok) {
-  throw new Error(await companiesResponse.text());
-}
+    // Ambil logo perusahaan berdasarkan user_id lowongan
+    const jobUserIds = [
+      ...new Set(data.map(job => job.user_id).filter(Boolean))
+    ];
 
-const companiesData = await companiesResponse.json();
+    let companiesData = [];
 
-const companyLogos = new Map(
-  companiesData.map(company => [
-    company.user_id,
-    company.logo_url
-  ])
-);
+    if (jobUserIds.length > 0) {
+      const companiesResponse = await fetch(
+        `${SUPABASE_URL.replace("/rest/v1/", "")}/rest/v1/companies?user_id=in.(${jobUserIds.join(",")})&select=user_id,company_name,logo_url`,
+        {
+          method: "GET",
+          headers: supabaseHeaders
+        }
+      );
+
+      if (!companiesResponse.ok) {
+        throw new Error(await companiesResponse.text());
+      }
+
+      companiesData = await companiesResponse.json();
+    }
+
+    const companyLogos = new Map(
+      companiesData.map(company => [
+        company.user_id,
+        company.logo_url
+      ])
+    );
+
 
 jobs = data.map(job => ({
   ...job,
