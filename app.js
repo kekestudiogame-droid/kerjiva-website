@@ -14891,7 +14891,7 @@ if (cvDisplay) {
           method: "POST",
           headers: {
             apikey: SUPABASE_KEY,
-            Authorization: Bearer ${accessToken},
+          Authorization: `Bearer ${accessToken}`,
             "Content-Type": "application/json"
           },
           body: JSON.stringify({
@@ -14995,7 +14995,7 @@ if (cvDisplay) {
             method: "POST",
             headers: {
               apikey: SUPABASE_KEY,
-              Authorization: Bearer ${accessToken},
+             Authorization: `Bearer ${accessToken}`,
               "Content-Type": file.type,
              
             },
