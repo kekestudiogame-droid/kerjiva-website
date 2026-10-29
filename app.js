@@ -9015,11 +9015,10 @@ if (resumeDisplay && userData && accessToken) {
         </a>
       `;
 
-      document
-        .querySelector("#viewResumeBtn")
-        .addEventListener("click", async (event) => {
-
-          event.preventDefault();
+             document
+             .querySelector("#viewResumeBtn")
+              ?.addEventListener("click", async (event) => {
+              event.preventDefault();
 
           try {
 
@@ -9285,7 +9284,7 @@ ${
   const status = document.querySelector("#cvStatus");
   const cvFileName = document.querySelector("#cvFileName");
 
-fileInput.addEventListener("change", () => {
+  fileInput?.addEventListener("change", () => {
   const language = localStorage.getItem("siteLanguage") || "id";
 
   if (fileInput.files.length > 0) {
