@@ -2542,6 +2542,7 @@ function updateRegistrationRequiredFields() {
     if (!isRegister) {
 
       isCompany = true;
+      updateRegistrationRequiredFields();
 
       // Tetap tampilkan pilihan jenis akun
       const accountType =
@@ -2587,6 +2588,7 @@ function updateRegistrationRequiredFields() {
     // ==================================================
 
     isCompany = true;
+    updateRegistrationRequiredFields();
 
     if (companyFields) {
       companyFields.style.display = "block";
@@ -2613,6 +2615,7 @@ function updateRegistrationRequiredFields() {
       isEnglish
         ? "Create a company account to post job vacancies."
         : "Buat akun perusahaan untuk memasang lowongan.";
+    updateRegistrationRequiredFields();
 
   });
 }
@@ -2632,6 +2635,7 @@ jobseekerAccountBtn.addEventListener("click", () => {
   if (!isRegister) {
 
     isCompany = false;
+    updateRegistrationRequiredFields();
 
     // Tetap tampilkan pilihan jenis akun
     const accountType =
@@ -2677,6 +2681,7 @@ jobseekerAccountBtn.addEventListener("click", () => {
   // ==================================================
 
   isCompany = false;
+  updateRegistrationRequiredFields();
 
   if (companyFields) {
     companyFields.style.display = "none";
@@ -2702,6 +2707,7 @@ jobseekerAccountBtn.addEventListener("click", () => {
     isEnglish
       ? "Create a job seeker account to find and apply for jobs."
       : "Buat akun pencari kerja untuk menemukan dan melamar pekerjaan.";
+  updateRegistrationRequiredFields();
 
 });
 function openModal(title, text){
