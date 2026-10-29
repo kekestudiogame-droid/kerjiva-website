@@ -3465,8 +3465,15 @@ async function submitApplicationWithDocuments(
       application.id
     );
 
+  
     // SIMPAN DOKUMEN YANG DIPILIH
-    for (const documentId of selectedDocuments) {
+    console.log("DOKUMEN TERPILIH:", selectedDocuments);
+
+    if (selectedDocuments.length > 0) {
+      const documentRows = selectedDocuments.map(documentId => ({
+        application_id: application.id,
+        document_id: documentId
+      }));
 
       const documentResponse = await fetch(
         `${SUPABASE_URL}application_documents`,
@@ -3476,18 +3483,27 @@ async function submitApplicationWithDocuments(
             apikey: SUPABASE_KEY,
             Authorization: `Bearer ${accessToken}`,
             "Content-Type": "application/json",
-            Prefer: "return=minimal"
+            Prefer: "return=representation"
           },
-          body: JSON.stringify({
-            application_id: application.id,
-            document_id: documentId
-          })
+          body: JSON.stringify(documentRows)
         }
+      );
+
+      const responseText = await documentResponse.text();
+
+      console.log(
+        "STATUS SIMPAN DOKUMEN:",
+        documentResponse.status
+      );
+
+      console.log(
+        "RESPONS SIMPAN DOKUMEN:",
+        responseText
       );
 
       if (!documentResponse.ok) {
         throw new Error(
-          await documentResponse.text()
+          "Gagal menyimpan dokumen lamaran: " + responseText
         );
       }
     }
