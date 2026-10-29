@@ -10699,6 +10699,7 @@ function openInterviewForm(userId) {
           
   document.body.appendChild(form);
 }
+  window.openInterviewForm = openInterviewForm;
 
 function confirmAcceptApplicant(userId) {
     const confirmAccept = confirm(
