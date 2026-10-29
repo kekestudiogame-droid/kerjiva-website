@@ -9297,9 +9297,10 @@ ${
   }
 });
 
-  uploadBtn.addEventListener("click", async () => {
-    const file = fileInput.files[0];
+  uploadBtn?.addEventListener("click", async () => {
+    if (!fileInput || !status) return;
 
+    const file = fileInput.files[0];
   if (!file) {
        status.textContent =
        currentLanguage === "en"
