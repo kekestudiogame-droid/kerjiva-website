@@ -14047,33 +14047,41 @@ for (const app of myApplications) {
     const profiles = await response.json();
     const profile = profiles[0];
     
-    // AMBIL DOKUMEN YANG DIPILIH UNTUK LAMARAN INI
-    const documentsResponse = await fetch(
-  `${SUPABASE_URL}application_documents?application_id=eq.${applicationId}&select=document_id,jobseeker_documents(id,document_name,document_type,file_path,created_at)`,
-  {
-    method: "GET",
-    headers: {
-      apikey: SUPABASE_KEY,
-      Authorization: `Bearer ${accessToken}`,
-      "Content-Type": "application/json"
-    }
-  }
-);
-
-if (!documentsResponse.ok) {
-  throw new Error(await documentsResponse.text());
-}
-
-const applicationDocuments = await documentsResponse.json();
-
-console.log(
-  "DOKUMEN TERPILIH UNTUK LAMARAN:",
-  applicationDocuments
-);
-
+   
     if (!profile) {
       alert("Profil pelamar belum tersedia.");
       return;
+    }
+
+    // Ambil dokumen secara terpisah agar kegagalan dokumen
+    // tidak langsung menghentikan pemeriksaan profil.
+    let applicationDocuments = [];
+
+    try {
+      const documentsResponse = await fetch(
+        `${SUPABASE_URL}application_documents?application_id=eq.${applicationId}&select=document_id,jobseeker_documents(id,document_name,document_type,file_path,created_at)`,
+        {
+          method: "GET",
+          headers: {
+            apikey: SUPABASE_KEY,
+            Authorization: `Bearer ${accessToken}`,
+            "Content-Type": "application/json"
+          }
+        }
+      );
+
+      if (!documentsResponse.ok) {
+        throw new Error(await documentsResponse.text());
+      }
+
+      applicationDocuments = await documentsResponse.json();
+
+      console.log(
+        "DOKUMEN TERPILIH UNTUK LAMARAN:",
+        applicationDocuments
+      );
+    } catch (documentError) {
+      console.error("Gagal mengambil dokumen lamaran:", documentError);
     }
 
     const dashboard = document.createElement("div");
