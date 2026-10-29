@@ -15056,6 +15056,7 @@ if (cvDisplay) {
   const saveButton = document.getElementById("saveJobseekerProfileBtn");
   if (saveButton) {
     saveButton.addEventListener("click", async () => {
+      console.log("TOMBOL SIMPAN PROFIL DIKLIK");
 
      const accessToken = localStorage.getItem("kerjivaAccessToken");
       if (!accessToken) {
