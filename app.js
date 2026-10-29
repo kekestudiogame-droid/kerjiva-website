@@ -2489,6 +2489,43 @@ const jobseekerAccountBtn = document.querySelector("#jobseekerAccount");
 const companyFields = document.querySelector("#companyFields");
 const jobseekerFields = document.querySelector("#jobseekerFields");
 
+function updateRegistrationRequiredFields() {
+  const jobseekerIds = [
+    "firstName",
+    "lastName",
+    "jobseekerPhone",
+    "jobseekerCity"
+  ];
+
+  const companyIds = [
+    "companyName",
+    "companyPhone",
+    "companyAddress",
+    "companyCity"
+  ];
+
+  const jobseekerVisible =
+    isRegister &&
+    jobseekerFields &&
+    jobseekerFields.style.display !== "none";
+
+  const companyVisible =
+    isRegister &&
+    companyFields &&
+    companyFields.style.display !== "none";
+
+  jobseekerIds.forEach(id => {
+    const field = document.getElementById(id);
+    if (field) field.required = Boolean(jobseekerVisible);
+  });
+
+  companyIds.forEach(id => {
+    const field = document.getElementById(id);
+    if (field) field.required = Boolean(companyVisible);
+  });
+}
+
+
   if (companyAccountBtn) {
   companyAccountBtn.addEventListener("click", () => {
 
