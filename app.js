@@ -14937,14 +14937,15 @@ if (cvDisplay) {
         </span>
       `;
     }
-  } else {
-    cvDisplay.innerHTML = `
-      <span style="color:#6b7280;">
-        ${language === "en"
-          ? "No CV uploaded yet."
-          : "Belum ada CV yang diupload."}
-    `;
-  }
+ } else {
+  cvDisplay.innerHTML = `
+    <span style="color:#6b7280;">
+      ${language === "en"
+        ? "No CV uploaded yet."
+        : "Belum ada CV yang diupload."}
+    </span>
+  `;
+}
 }
       }
     }
