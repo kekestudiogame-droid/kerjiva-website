@@ -15119,15 +15119,14 @@ if (cvDisplay) {
             : "Gagal menyimpan profil."
         );
 
-      } finally {
-
+         } finally {
         saveButton.disabled = false;
         saveButton.textContent =
           language === "en" ? "Save Profile" : "Simpan Profil";
       }
     });
   }
-}
+};
 
 // ================= LIHAT PASSWORD =================
 
