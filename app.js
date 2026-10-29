@@ -10826,6 +10826,7 @@ function confirmAcceptApplicant(userId) {
 );
   }
 }
+  window.rejectApplicant = rejectApplicant;
 // ================= PROFIL PERUSAHAAN =================
 
 window.showCompanyProfile = async function () {
