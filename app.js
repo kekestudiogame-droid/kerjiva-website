@@ -15053,6 +15053,7 @@ if (cvDisplay) {
 
 
   const saveButton = document.getElementById("saveJobseekerProfileBtn");
+  console.log("SAVE BUTTON DITEMUKAN:", saveButton);
   if (saveButton) {
     saveButton.addEventListener("click", async () => {
       console.log("TOMBOL SIMPAN PROFIL DIKLIK");
