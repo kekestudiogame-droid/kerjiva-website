@@ -14537,6 +14537,9 @@ const accessToken = localStorage.getItem("kerjivaAccessToken");
     );
   }
 }
+  
+window.viewApplicantDocument = viewApplicantDocument;
+
 
 
 // ================= PROFIL DIRI PENCARI KERJA =================
