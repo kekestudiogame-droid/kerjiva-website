@@ -15055,82 +15055,78 @@ if (cvDisplay) {
   }
 
 
-const saveButton = document.getElementById("saveJobseekerProfileBtn");
-  console.log("SAVE BUTTON DITEMUKAN:", saveButton);
-  if (saveButton) {
-    saveButton.addEventListener("click", async () => {
-      console.log("TOMBOL SIMPAN PROFIL DIKLIK");
 
-     const accessToken = localStorage.getItem("kerjivaAccessToken");
-      if (!accessToken) {
-        alert(
-          language === "en"
-            ? "Your session was not found. Please log in again."
-            : "Sesi Anda tidak ditemukan. Silakan login kembali."
-        );
-        return;
+window.saveJobseekerProfile = async function () {
+  const language = localStorage.getItem("siteLanguage") || "id";
+  const accessToken = localStorage.getItem("kerjivaAccessToken");
+  const userData = localStorage.getItem("kerjivaUser");
+
+  if (!accessToken || !userData) {
+    alert(language === "en"
+      ? "Your session was not found. Please log in again."
+      : "Sesi Anda tidak ditemukan. Silakan login kembali.");
+    return;
+  }
+
+  const user = JSON.parse(userData);
+  const saveButton = document.getElementById("saveJobseekerProfileBtn");
+
+  if (!saveButton) {
+    console.error("Tombol Simpan Profil tidak ditemukan.");
+    return;
+  }
+
+  const profileData = {
+    id: user.id,
+    full_name: document.getElementById("jobseekerFullName")?.value.trim() || "",
+    phone: document.getElementById("jobseekerPhone")?.value.trim() || "",
+    city: document.getElementById("jobseekerCity")?.value.trim() || "",
+    education: document.getElementById("jobseekerEducation")?.value.trim() || "",
+    experience: document.getElementById("jobseekerExperience")?.value.trim() || "",
+    skills: document.getElementById("jobseekerSkills")?.value.trim() || "",
+    updated_at: new Date().toISOString()
+  };
+
+  saveButton.disabled = true;
+  saveButton.textContent = language === "en" ? "Saving..." : "Menyimpan...";
+
+  try {
+    const response = await fetch(
+      `${SUPABASE_URL}jobseeker_profiles`,
+      {
+        method: "POST",
+        headers: {
+          apikey: SUPABASE_KEY,
+          Authorization: `Bearer ${accessToken}`,
+          "Content-Type": "application/json",
+          Prefer: "resolution=merge-duplicates,return=minimal"
+        },
+        body: JSON.stringify(profileData)
       }
+    );
 
-      const profileData = {
-        id: user.id,
-        full_name: document.getElementById("jobseekerFullName")?.value.trim() || "",
-        phone: document.getElementById("jobseekerPhone")?.value.trim() || "",
-        city: document.getElementById("jobseekerCity")?.value.trim() || "",
-        education: document.getElementById("jobseekerEducation")?.value.trim() || "",
-        experience: document.getElementById("jobseekerExperience")?.value.trim() || "",
-        skills: document.getElementById("jobseekerSkills")?.value.trim() || "",
-        updated_at: new Date().toISOString()
-      };
+    if (!response.ok) {
+      throw new Error(await response.text());
+    }
 
-      saveButton.disabled = true;
-      saveButton.textContent =
-        language === "en" ? "Saving..." : "Menyimpan...";
+    alert(language === "en"
+      ? "Profile saved successfully."
+      : "Profil berhasil disimpan.");
 
-      try {
-        const response = await fetch(
-        `${SUPABASE_URL}jobseeker_profiles`,
-          {
-            method: "POST",
-            headers: {
-              apikey: SUPABASE_KEY,
-             Authorization: `Bearer ${accessToken}`,
-              "Content-Type": "application/json",
-              Prefer: "resolution=merge-duplicates,return=minimal"
-            },
-            body: JSON.stringify(profileData)
-          }
-        );
-
-        if (!response.ok) {
-          const errorText = await response.text();
-          throw new Error(errorText);
-        }
-
-       alert(
-           language === "en"
-          ? "Profile saved successfully."
-          : "Profil berhasil disimpan."
-        );
-
-        showJobseekerDashboard();
-      } catch (error) {
-
-        console.error("Gagal menyimpan profil:", error);
-
-        alert(
-          language === "en"
-            ? "Failed to save profile."
-            : "Gagal menyimpan profil."
-        );
-
-         } finally {
-        saveButton.disabled = false;
-        saveButton.textContent =
-          language === "en" ? "Save Profile" : "Simpan Profil";
-      }
-    });
+    showJobseekerDashboard();
+  } catch (error) {
+    console.error("Gagal menyimpan profil:", error);
+    alert(language === "en"
+      ? "Failed to save profile."
+      : "Gagal menyimpan profil.");
+  } finally {
+    saveButton.disabled = false;
+    saveButton.textContent = language === "en"
+      ? "Save Profile"
+      : "Simpan Profil";
   }
 };
+
 
 // ================= LIHAT PASSWORD =================
 
