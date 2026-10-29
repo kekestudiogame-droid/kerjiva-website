@@ -10536,6 +10536,7 @@ const accessToken = localStorage.getItem("kerjivaAccessToken");
     alert("Gagal mengirim undangan interview.");
   }
 }
+  window.sendInterviewInvitation = sendInterviewInvitation;
 function openInterviewForm(userId) {
   const form = document.createElement("div");
 
