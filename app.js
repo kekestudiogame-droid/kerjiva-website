@@ -14091,7 +14091,20 @@ for (const app of myApplications) {
         throw new Error(await documentsResponse.text());
       }
 
-      applicationDocuments = await documentsResponse.json();
+    
+const rawDocuments = await documentsResponse.json();
+
+applicationDocuments = rawDocuments.map(item => {
+  const documentData = Array.isArray(item.jobseeker_documents)
+    ? item.jobseeker_documents[0]
+    : item.jobseeker_documents;
+
+  return {
+    ...item,
+    jobseeker_documents: documentData || null
+  };
+});
+
 
       console.log(
         "DOKUMEN TERPILIH UNTUK LAMARAN:",
