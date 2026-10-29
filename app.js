@@ -14092,7 +14092,8 @@ for (const app of myApplications) {
       }
 
     
-const rawDocuments = await documentsResponse.json();
+const rawDocuments = await documentsResponse.json(); 
+      console.log("DATA ASLI DOKUMEN:", JSON.stringify(rawDocuments, null, 2));
 
 applicationDocuments = rawDocuments.map(item => {
   const documentData = Array.isArray(item.jobseeker_documents)
