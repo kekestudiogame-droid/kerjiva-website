@@ -15125,11 +15125,14 @@ window.saveJobseekerProfile = async function () {
     saveButton.textContent = language === "en"
       ? "Save Profile"
       : "Simpan Profil";
+
   }
 };
 
+};
 
 // ================= LIHAT PASSWORD =================
+
 
 const togglePassword =
   document.querySelector("#togglePassword");
