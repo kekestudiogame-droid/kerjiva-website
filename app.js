@@ -14802,10 +14802,13 @@ const accessToken = localStorage.getItem("kerjivaAccessToken");
             </div>
           </div>
 
-          <button
-            id="saveJobseekerProfileBtn"
-            type="button"
-            style="
+         
+               <button
+               id="saveJobseekerProfileBtn"
+               type="button"
+               onclick="window.saveJobseekerProfile()"
+              style="
+
               width:100%;
               padding:14px;
               background:#123b6d;
