@@ -15053,7 +15053,7 @@ if (cvDisplay) {
   }
 
 
-const saveButton = dashboard.querySelector("#saveJobseekerProfileBtn");
+const saveButton = document.getElementById("saveJobseekerProfileBtn");
   console.log("SAVE BUTTON DITEMUKAN:", saveButton);
   if (saveButton) {
     saveButton.addEventListener("click", async () => {
