@@ -4386,11 +4386,11 @@ if (jobseekerFields) {
 
     // ================= LUPA PASSWORD =================
 
-const forgotPasswordWrapper =
+const loginForgotPasswordWrapper =
   document.querySelector("#forgotPasswordWrapper");
 
-if (forgotPasswordWrapper) {
-  forgotPasswordWrapper.style.display = "block";
+if (loginForgotPasswordWrapper) {
+  loginForgotPasswordWrapper.style.display = "block";
 }
      if (modal) {
       modal.classList.remove("hidden");
@@ -4547,80 +4547,6 @@ function updateForgotPasswordText() {
 
     updateForgotPasswordText();
 
-// ================= LUPA PASSWORD =================
-
-const forgotPasswordBtn =
-  document.querySelector("#forgotPasswordBtn");
-
-const forgotPasswordForm =
-  document.querySelector("#forgotPasswordForm");
-
-const forgotConfirmPasswordField =
-  document.querySelector("#confirmPasswordField");
-
-if (forgotPasswordBtn && forgotPasswordForm) {
-
-  forgotPasswordBtn.addEventListener("click", () => {
-
-    const forgotAccountType =
-      document.querySelector("#accountType");
-
-    const forgotJobseekerFields =
-      document.querySelector("#jobseekerFields");
-
-    const forgotCompanyFields =
-      document.querySelector("#companyFields");
-
-    const forgotSwitchAuth =
-      document.querySelector("#switchAuth");
-
-    if (forgotAccountType) {
-      forgotAccountType.style.display = "none";
-    }
-
-    if (forgotJobseekerFields) {
-      forgotJobseekerFields.style.display = "none";
-    }
-
-    if (forgotCompanyFields) {
-      forgotCompanyFields.style.display = "none";
-    }
-
-    if (forgotConfirmPasswordField) {
-      forgotConfirmPasswordField.style.display = "none";
-    }
-
-    if (forgotSwitchAuth) {
-      forgotSwitchAuth.parentElement.style.display = "none";
-    }
-
-    const forgotSubmitButton =
-      authForm?.querySelector('button[type="submit"]');
-
-    if (forgotSubmitButton) {
-      forgotSubmitButton.style.display = "none";
-    }
-
-    forgotPasswordForm.style.display = "block";
-
-    const loginEmail =
-      document.querySelector("#email");
-
-    const forgotEmail =
-      document.querySelector("#forgotPasswordEmail");
-
-    if (
-      loginEmail &&
-      forgotEmail &&
-      loginEmail.value.trim()
-    ) {
-      forgotEmail.value =
-        loginEmail.value.trim();
-    }
-
-  });
-
-}
 
 // ================= MODE DAFTAR =================
 
@@ -4770,6 +4696,9 @@ if (switchAuthButton) {
 
     const isEnglish =
       localStorage.getItem("siteLanguage") === "en";
+    
+        const switchForgotPasswordWrapper =
+      document.querySelector("#forgotPasswordWrapper");
 
     // ================= KE MODE DAFTAR =================
 
@@ -4829,8 +4758,8 @@ if (switchAuthButton) {
       switchAuthButton.textContent =
         isEnglish ? "Log In" : "Masuk";
 
-      if (forgotPasswordWrapper) {
-        forgotPasswordWrapper.style.display = "none";
+    if (switchForgotPasswordWrapper) {
+        switchForgotPasswordWrapper.style.display = "none";
       }
 
       return;
@@ -4892,9 +4821,9 @@ if (switchAuthButton) {
     switchAuthButton.textContent =
       isEnglish ? "Sign Up" : "Daftar";
 
-    if (forgotPasswordWrapper) {
-      forgotPasswordWrapper.style.display = "block";
-    }
+   if (switchForgotPasswordWrapper) {
+      switchForgotPasswordWrapper.style.display = "block";
+     }
 
   });
 
@@ -4982,6 +4911,67 @@ if (forgotBtn && forgotForm) {
 
   });
 
+}
+
+  // ================= KEMBALI KE LOGIN =================
+
+const backToLoginBtn =
+  document.querySelector("#backToLoginBtn");
+
+if (backToLoginBtn) {
+  backToLoginBtn.addEventListener("click", () => {
+
+    const isEnglish =
+      localStorage.getItem("siteLanguage") === "en";
+
+    isRegister = false;
+    isCompany = false;
+
+    const forgotForm =
+      document.querySelector("#forgotPasswordForm");
+
+    if (forgotForm) {
+      forgotForm.style.display = "none";
+    }
+
+    const submitButton =
+      authForm?.querySelector('button[type="submit"]');
+
+    if (submitButton) {
+      submitButton.style.display = "";
+      submitButton.textContent =
+        isEnglish ? "Log In" : "Masuk";
+    }
+
+    const switchButton =
+      document.querySelector("#switchAuth");
+
+    if (switchButton) {
+      switchButton.textContent =
+        isEnglish ? "Sign Up" : "Daftar";
+
+      switchButton.parentElement.style.display = "";
+    }
+
+    const wrapper =
+      document.querySelector("#forgotPasswordWrapper");
+
+    if (wrapper) {
+      wrapper.style.display = "block";
+    }
+
+    if (modalTitle) {
+      modalTitle.textContent =
+        isEnglish ? "Log In" : "Masuk";
+    }
+
+    if (modalText) {
+      modalText.textContent = isEnglish
+        ? "Enter your email and password to log in."
+        : "Masukkan email dan password untuk masuk.";
+    }
+
+  });
 }
   // ================= KIRIM LINK RESET PASSWORD =================
 
