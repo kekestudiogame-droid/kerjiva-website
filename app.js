@@ -12408,7 +12408,7 @@ async function publishMyJob(jobId) {
     // Terjemahkan hanya jika masih ada kolom Inggris yang kosong
     if (needsTranslation) {
       const translateResponse = await fetch(
-        `${SUPABASE_URL}functions/v1/translate-job`,
+      "https://ksqrimmecpriyepsuclc.supabase.co/functions/v1/translate-job",
         {
           method: "POST",
           headers: {
