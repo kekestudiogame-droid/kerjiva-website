@@ -3881,48 +3881,83 @@ if (menuJobseeker) {
 
     const activeRole =
       localStorage.getItem("kerjivaActiveRole");
-
+    
     // BELUM LOGIN
-    if (!userData || !activeRole) {
-      isRegister = false;
-      isCompany = false;
+if (!userData || !activeRole) {
+  isRegister = false;
+  isCompany = false;
 
-      const authModal =
-        document.getElementById("authModal");
+  const isEnglish =
+    localStorage.getItem("siteLanguage") === "en";
 
-      const modalTitle =
-        document.getElementById("modalTitle");
+  const authModal = document.getElementById("authModal");
+  const modalTitle = document.getElementById("modalTitle");
+  const modalText = document.getElementById("modalText");
+  const authForm = document.getElementById("authForm");
 
-      const modalText =
-        document.getElementById("modalText");
+  if (modalTitle) {
+    modalTitle.textContent = isEnglish ? "Log In" : "Masuk";
+  }
 
-      const authForm =
-        document.getElementById("authForm");
+  if (modalText) {
+    modalText.textContent = isEnglish
+      ? "Enter your email and password to log in."
+      : "Masukkan email dan password untuk masuk.";
+  }
 
-      if (authModal) {
-        authModal.classList.remove("hidden");
-      }
+  const accountType = document.getElementById("accountType");
+  if (accountType) accountType.style.display = "block";
 
-      if (modalTitle) {
-        modalTitle.textContent =
-          localStorage.getItem("siteLanguage") === "en"
-            ? "Log in"
-            : "Masuk";
-      }
+  const accountTypeLabel = document.getElementById("accountTypeLabel");
+  if (accountTypeLabel) {
+    accountTypeLabel.textContent = isEnglish
+      ? "Log in as:"
+      : "Masuk sebagai:";
+  }
 
-      if (modalText) {
-        modalText.textContent =
-          localStorage.getItem("siteLanguage") === "en"
-            ? "Log in to your account"
-            : "Masuk ke akun Anda";
-      }
+  const jobseekerFields = document.getElementById("jobseekerFields");
+  const companyFields = document.getElementById("companyFields");
+  const confirmPasswordField = document.getElementById("confirmPasswordField");
 
-      if (authForm) {
-        authForm.dataset.mode = "login";
-      }
+  if (jobseekerFields) jobseekerFields.style.display = "none";
+  if (companyFields) companyFields.style.display = "none";
+  if (confirmPasswordField) confirmPasswordField.style.display = "none";
 
-      return;
-    }
+  if (typeof updateRegistrationRequiredFields === "function") {
+    updateRegistrationRequiredFields();
+  }
+
+  const submitButton = authForm?.querySelector('button[type="submit"]');
+  if (submitButton) {
+    submitButton.textContent = isEnglish ? "Log In" : "Masuk";
+  }
+
+  const switchAuth = document.getElementById("switchAuth");
+  if (switchAuth) {
+    switchAuth.textContent = isEnglish ? "Sign Up" : "Daftar";
+  }
+
+  if (authForm) {
+    authForm.dataset.mode = "login";
+    authForm.classList.remove("hidden");
+  }
+
+  const switchAuthContainer = document.querySelector(".switch-auth");
+  if (switchAuthContainer) {
+    switchAuthContainer.classList.remove("hidden");
+  }
+
+  const forgotPasswordWrapper =
+    document.getElementById("forgotPasswordWrapper");
+
+  if (forgotPasswordWrapper) {
+    forgotPasswordWrapper.style.display = "block";
+  }
+
+  if (authModal) authModal.classList.remove("hidden");
+
+  return;
+}
 
     // SUDAH LOGIN SEBAGAI PENCAri KERJA
     if (activeRole === "jobseeker") {
@@ -4000,48 +4035,82 @@ if (menuCompany) {
     const activeRole =
       localStorage.getItem("kerjivaActiveRole");
 
-    // BELUM LOGIN
-    if (!userData || !activeRole) {
-      isRegister = false;
-      isCompany = true;
+   // BELUM LOGIN
+if (!userData || !activeRole) {
+  isRegister = false;
+  isCompany = true;
 
-      const authModal =
-        document.getElementById("authModal");
+  const isEnglish =
+    localStorage.getItem("siteLanguage") === "en";
 
-      const modalTitle =
-        document.getElementById("modalTitle");
+  const authModal = document.getElementById("authModal");
+  const modalTitle = document.getElementById("modalTitle");
+  const modalText = document.getElementById("modalText");
+  const authForm = document.getElementById("authForm");
 
-      const modalText =
-        document.getElementById("modalText");
+  if (modalTitle) {
+    modalTitle.textContent = isEnglish ? "Log In" : "Masuk";
+  }
 
-      const authForm =
-        document.getElementById("authForm");
+  if (modalText) {
+    modalText.textContent = isEnglish
+      ? "Enter your email and password to log in."
+      : "Masukkan email dan password untuk masuk.";
+  }
 
-      if (authModal) {
-        authModal.classList.remove("hidden");
-      }
+  const accountType = document.getElementById("accountType");
+  if (accountType) accountType.style.display = "block";
 
-      if (modalTitle) {
-        modalTitle.textContent =
-          localStorage.getItem("siteLanguage") === "en"
-            ? "Log in"
-            : "Masuk";
-      }
+  const accountTypeLabel = document.getElementById("accountTypeLabel");
+  if (accountTypeLabel) {
+    accountTypeLabel.textContent = isEnglish
+      ? "Log in as:"
+      : "Masuk sebagai:";
+  }
 
-      if (modalText) {
-        modalText.textContent =
-          localStorage.getItem("siteLanguage") === "en"
-            ? "Log in to your account"
-            : "Masuk ke akun Anda";
-      }
+  const jobseekerFields = document.getElementById("jobseekerFields");
+  const companyFields = document.getElementById("companyFields");
+  const confirmPasswordField = document.getElementById("confirmPasswordField");
 
-      if (authForm) {
-        authForm.dataset.mode = "login";
-      }
+  if (jobseekerFields) jobseekerFields.style.display = "none";
+  if (companyFields) companyFields.style.display = "none";
+  if (confirmPasswordField) confirmPasswordField.style.display = "none";
 
-      return;
-    }
+  if (typeof updateRegistrationRequiredFields === "function") {
+    updateRegistrationRequiredFields();
+  }
 
+  const submitButton = authForm?.querySelector('button[type="submit"]');
+  if (submitButton) {
+    submitButton.textContent = isEnglish ? "Log In" : "Masuk";
+  }
+
+  const switchAuth = document.getElementById("switchAuth");
+  if (switchAuth) {
+    switchAuth.textContent = isEnglish ? "Sign Up" : "Daftar";
+  }
+
+  if (authForm) {
+    authForm.dataset.mode = "login";
+    authForm.classList.remove("hidden");
+  }
+
+  const switchAuthContainer = document.querySelector(".switch-auth");
+  if (switchAuthContainer) {
+    switchAuthContainer.classList.remove("hidden");
+  }
+
+  const forgotPasswordWrapper =
+    document.getElementById("forgotPasswordWrapper");
+
+  if (forgotPasswordWrapper) {
+    forgotPasswordWrapper.style.display = "block";
+  }
+
+  if (authModal) authModal.classList.remove("hidden");
+
+  return;
+}
     // SUDAH LOGIN SEBAGAI PERUSAHAAN
     
   if (activeRole === "company") {
