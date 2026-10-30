@@ -13366,9 +13366,16 @@ try {
               category:
                 newJob.category ||
                 category,
+             
               salary:
                 newJob.salary ||
                 salary,
+              experience:
+                newJob.experience ||
+                experience,
+              education:
+                newJob.education ||
+                education,
               description:
                 newJob.description ||
                 description,
