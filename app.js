@@ -12342,6 +12342,7 @@ if (myJobsBrand) {
   }
 }
 
+
 async function publishMyJob(jobId) {
   const accessToken = localStorage.getItem("kerjivaAccessToken");
 
@@ -12354,14 +12355,124 @@ async function publishMyJob(jobId) {
 
   const confirmPublish = confirm(
     language === "en"
-    ? "Are you sure you want to submit this job posting and display it on Kerjiva?"
-    : "Yakin ingin mengirim lowongan ini agar tampil di Kerjiva?"
+      ? "Are you sure you want to submit this job posting and display it on Kerjiva?"
+      : "Yakin ingin mengirim lowongan ini agar tampil di Kerjiva?"
   );
 
   if (!confirmPublish) return;
 
   try {
-    const response = await fetch(
+    // Ambil data lowongan dari Supabase
+    const getResponse = await fetch(
+      `${SUPABASE_URL}jobs?id=eq.${jobId}&select=*`,
+      {
+        method: "GET",
+        headers: {
+          apikey: SUPABASE_KEY,
+          Authorization: `Bearer ${accessToken}`
+        }
+      }
+    );
+
+    if (!getResponse.ok) {
+      throw new Error(await getResponse.text());
+    }
+
+    const jobs = await getResponse.json();
+
+    if (!jobs.length) {
+      throw new Error("Lowongan tidak ditemukan.");
+    }
+
+    const job = jobs[0];
+
+    const englishFields = [
+      "title_en",
+      "description_en",
+      "requirements_en",
+      "job_type_en",
+      "category_en",
+      "salary_en",
+      "experience_en",
+      "education_en"
+    ];
+
+    const needsTranslation = englishFields.some(
+      field => !job[field]
+    );
+
+    let updateData = {
+      status: "published"
+    };
+
+    // Terjemahkan hanya jika masih ada kolom Inggris yang kosong
+    if (needsTranslation) {
+      const translateResponse = await fetch(
+        `${SUPABASE_URL}functions/v1/translate-job`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${accessToken}`,
+            apikey: SUPABASE_KEY
+          },
+          body: JSON.stringify({
+            job: {
+              title: job.title || "",
+              company: job.company_name || job.company || "Perusahaan",
+              location: job.city || job.location || "",
+              type: job.job_type || job.type || "",
+              category: job.category || "",
+              salary: job.salary || "",
+              experience: job.experience || "",
+              education: job.education || "",
+              description: job.description || "",
+              requirements: job.requirements || job.requirement || ""
+            }
+          })
+        }
+      );
+
+      if (!translateResponse.ok) {
+        throw new Error(
+          "Gagal menerjemahkan lowongan: " +
+          await translateResponse.text()
+        );
+      }
+
+      const translationResult = await translateResponse.json();
+
+      if (
+        !translationResult.success ||
+        !translationResult.jobs ||
+        !translationResult.jobs.length
+      ) {
+        throw new Error("Hasil terjemahan tidak valid.");
+      }
+
+      const translated = translationResult.jobs[0];
+
+      updateData = {
+        status: "published",
+        title_en: translated.title || "",
+        job_type_en: translated.type || "",
+        category_en: translated.category || "",
+        salary_en: translated.salary || "",
+        experience_en: translated.experience || "",
+        education_en: translated.education || "",
+        description_en: translated.description || "",
+        requirements_en: translated.requirements || ""
+      };
+
+      if (
+        englishFields.some(field => !updateData[field])
+      ) {
+        throw new Error("Ada hasil terjemahan yang masih kosong.");
+      }
+    }
+
+    // Simpan hasil terjemahan dan publikasikan lowongan
+    const updateResponse = await fetch(
       `${SUPABASE_URL}jobs?id=eq.${jobId}`,
       {
         method: "PATCH",
@@ -12369,17 +12480,14 @@ async function publishMyJob(jobId) {
           apikey: SUPABASE_KEY,
           Authorization: `Bearer ${accessToken}`,
           "Content-Type": "application/json",
-          "Prefer": "return=minimal"
+          Prefer: "return=minimal"
         },
-        body: JSON.stringify({
-          status: "published"
-        })
+        body: JSON.stringify(updateData)
       }
     );
 
-    if (!response.ok) {
-      const errorText = await response.text();
-      throw new Error(errorText);
+    if (!updateResponse.ok) {
+      throw new Error(await updateResponse.text());
     }
 
     showNotification("jobPublished");
@@ -12388,12 +12496,12 @@ async function publishMyJob(jobId) {
 
   } catch (error) {
     console.error("Gagal mengirim lowongan:", error);
-
-  showNotification("jobsFailed");
+    showNotification("jobsFailed");
   }
 }
 
 window.publishMyJob = publishMyJob;
+
 async function editMyJob(jobId) {
   const accessToken = localStorage.getItem("kerjivaAccessToken");
 
