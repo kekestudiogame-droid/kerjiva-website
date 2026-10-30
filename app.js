@@ -13233,10 +13233,11 @@ try {
       "https://ksqrimmecpriyepsuclc.supabase.co/functions/v1/translate-job",
       {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          apikey: SUPABASE_KEY
-        },
+       headers: {
+       "Content-Type": "application/json",
+       "Authorization": `Bearer ${accessToken}`,
+        apikey: SUPABASE_KEY
+     },
         body: JSON.stringify({
           jobs: [
             {
