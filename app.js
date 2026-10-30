@@ -13253,7 +13253,9 @@ async function publishNewJob() {
 // =====================================================
 
 const companyResponse = await fetch(
- `${SUPABASE_URL}companies?id=eq.${user.id}&select=company_name`,
+
+`${SUPABASE_URL}companies?user_id=eq.${user.id}&select=company_name`,
+
   {
     method: "GET",
     headers: {
