@@ -12342,7 +12342,6 @@ if (myJobsBrand) {
   }
 }
 
-
 async function publishMyJob(jobId) {
   const accessToken = localStorage.getItem("kerjivaAccessToken");
 
@@ -12386,6 +12385,33 @@ async function publishMyJob(jobId) {
 
     const job = jobs[0];
 
+    // Ambil nama perusahaan dari profil perusahaan
+    const companyResponse = await fetch(
+      `${SUPABASE_URL}companies?user_id=eq.${job.user_id}&select=company_name`,
+      {
+        method: "GET",
+        headers: {
+          apikey: SUPABASE_KEY,
+          Authorization: `Bearer ${accessToken}`
+        }
+      }
+    );
+
+    if (!companyResponse.ok) {
+      throw new Error(await companyResponse.text());
+    }
+
+    const companyProfiles = await companyResponse.json();
+
+    const companyName =
+      companyProfiles.length
+        ? (companyProfiles[0].company_name || "").trim()
+        : "";
+
+    if (!companyName) {
+      throw new Error("Nama perusahaan belum tersedia di Profil Perusahaan.");
+    }
+
     const englishFields = [
       "title_en",
       "description_en",
@@ -12402,13 +12428,14 @@ async function publishMyJob(jobId) {
     );
 
     let updateData = {
-      status: "published"
+      status: "published",
+      company_name: companyName
     };
 
     // Terjemahkan hanya jika masih ada kolom Inggris yang kosong
     if (needsTranslation) {
       const translateResponse = await fetch(
-      "https://ksqrimmecpriyepsuclc.supabase.co/functions/v1/translate-job",
+        "https://ksqrimmecpriyepsuclc.supabase.co/functions/v1/translate-job",
         {
           method: "POST",
           headers: {
@@ -12419,7 +12446,7 @@ async function publishMyJob(jobId) {
           body: JSON.stringify({
             job: {
               title: job.title || "",
-              company: job.company_name || job.company || "Perusahaan",
+              company: companyName,
               location: job.city || job.location || "",
               type: job.job_type || job.type || "",
               category: job.category || "",
@@ -12454,6 +12481,7 @@ async function publishMyJob(jobId) {
 
       updateData = {
         status: "published",
+        company_name: companyName,
         title_en: translated.title || "",
         job_type_en: translated.type || "",
         category_en: translated.category || "",
@@ -12471,7 +12499,7 @@ async function publishMyJob(jobId) {
       }
     }
 
-    // Simpan hasil terjemahan dan publikasikan lowongan
+    // Simpan nama perusahaan, hasil terjemahan, dan status publish
     const updateResponse = await fetch(
       `${SUPABASE_URL}jobs?id=eq.${jobId}`,
       {
