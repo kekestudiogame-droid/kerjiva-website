@@ -12342,7 +12342,8 @@ if (myJobsBrand) {
   }
 }
 
-async function publishMyJob(jobId) {
+
+async function publishMyJob(jobId, skipConfirmation = false) {
   const accessToken = localStorage.getItem("kerjivaAccessToken");
 
   if (!accessToken) {
@@ -12352,16 +12353,18 @@ async function publishMyJob(jobId) {
 
   const language = localStorage.getItem("siteLanguage") || "id";
 
-  const confirmPublish = confirm(
-    language === "en"
-      ? "Are you sure you want to submit this job posting and display it on Kerjiva?"
-      : "Yakin ingin mengirim lowongan ini agar tampil di Kerjiva?"
-  );
+  if (!skipConfirmation) {
+    const confirmPublish = confirm(
+      language === "en"
+        ? "Are you sure you want to submit this job posting and display it on Kerjiva?"
+        : "Yakin ingin mengirim lowongan ini agar tampil di Kerjiva?"
+    );
 
-  if (!confirmPublish) return;
+    if (!confirmPublish) return;
+  }
 
   try {
-    // Ambil data lowongan dari Supabase
+    // Ambil data lowongan
     const getResponse = await fetch(
       `${SUPABASE_URL}jobs?id=eq.${jobId}&select=*`,
       {
@@ -12385,7 +12388,7 @@ async function publishMyJob(jobId) {
 
     const job = jobs[0];
 
-    // Ambil nama perusahaan dari profil perusahaan
+    // Ambil profil perusahaan
     const companyResponse = await fetch(
       `${SUPABASE_URL}companies?user_id=eq.${job.user_id}&select=company_name`,
       {
@@ -12403,10 +12406,9 @@ async function publishMyJob(jobId) {
 
     const companyProfiles = await companyResponse.json();
 
-    const companyName =
-      companyProfiles.length
-        ? (companyProfiles[0].company_name || "").trim()
-        : "";
+    const companyName = companyProfiles.length
+      ? (companyProfiles[0].company_name || "").trim()
+      : "";
 
     if (!companyName) {
       throw new Error("Nama perusahaan belum tersedia di Profil Perusahaan.");
@@ -12424,7 +12426,7 @@ async function publishMyJob(jobId) {
     ];
 
     const needsTranslation = englishFields.some(
-      field => !job[field]
+      field => !String(job[field] || "").trim()
     );
 
     let updateData = {
@@ -12432,7 +12434,7 @@ async function publishMyJob(jobId) {
       company_name: companyName
     };
 
-    // Terjemahkan hanya jika masih ada kolom Inggris yang kosong
+    // Terjemahkan jika ada kolom Inggris yang kosong
     if (needsTranslation) {
       const translateResponse = await fetch(
         "https://ksqrimmecpriyepsuclc.supabase.co/functions/v1/translate-job",
@@ -12471,7 +12473,7 @@ async function publishMyJob(jobId) {
 
       if (
         !translationResult.success ||
-        !translationResult.jobs ||
+        !Array.isArray(translationResult.jobs) ||
         !translationResult.jobs.length
       ) {
         throw new Error("Hasil terjemahan tidak valid.");
@@ -12493,13 +12495,15 @@ async function publishMyJob(jobId) {
       };
 
       if (
-        englishFields.some(field => !updateData[field])
+        englishFields.some(
+          field => !String(updateData[field] || "").trim()
+        )
       ) {
         throw new Error("Ada hasil terjemahan yang masih kosong.");
       }
     }
 
-    // Simpan nama perusahaan, hasil terjemahan, dan status publish
+    // Simpan terjemahan dan status publikasi sekaligus
     const updateResponse = await fetch(
       `${SUPABASE_URL}jobs?id=eq.${jobId}`,
       {
@@ -13250,6 +13254,7 @@ if (window.setLanguage) {
 }
 }
 
+
 async function publishNewJob() {
   const title = document.getElementById("jobTitle").value.trim();
   const city = document.getElementById("jobCity").value.trim();
@@ -13263,78 +13268,53 @@ async function publishNewJob() {
   const requirements = document.getElementById("jobRequirements").value.trim();
 
   if (!title || !city || !description) {
-  showNotification("jobRequired");
+    showNotification("jobRequired");
     return;
   }
 
- const userData = localStorage.getItem("kerjivaUser");
- const accessToken = localStorage.getItem("kerjivaAccessToken");
+  const userData = localStorage.getItem("kerjivaUser");
+  const accessToken = localStorage.getItem("kerjivaAccessToken");
 
   if (!userData || !accessToken) {
     showNotification("companySessionNotFound");
     return;
   }
 
-  const user = JSON.parse(userData);
-  // =====================================================
-// AMBIL NAMA PERUSAHAAN DARI PROFIL PERUSAHAAN
-// =====================================================
-
-const companyResponse = await fetch(
-
-`${SUPABASE_URL}companies?user_id=eq.${user.id}&select=company_name`,
-
-  {
-    method: "GET",
-    headers: {
-      apikey: SUPABASE_KEY,
-      Authorization: `Bearer ${accessToken}`
-    }
-  }
-);
-
-if (!companyResponse.ok) {
-  throw new Error("Gagal mengambil profil perusahaan.");
-}
-
-const companyData = await companyResponse.json();
-
-const companyName =
-  companyData[0]?.company_name?.trim() || "";
-
-if (!companyName) {
-  throw new Error(
-    "Nama perusahaan belum tersedia di Profil Perusahaan."
-  );
-}
-
-  const language = localStorage.getItem("siteLanguage") || "id";
-
-  const confirmPublish = confirm(
-  language === "en"
-   ? "Are you sure you want to submit this job posting and display it on Kerjiva?"
-   : "Apakah Anda yakin ingin mengirim lowongan ini dan menampilkannya di Kerjiva?"
-   );
-
-  if (!confirmPublish) return;
+  let user;
 
   try {
+    user = JSON.parse(userData);
+
+    if (!user.id) {
+      throw new Error("ID akun tidak ditemukan.");
+    }
+
+    const language = localStorage.getItem("siteLanguage") || "id";
+
+    const confirmPublish = confirm(
+      language === "en"
+        ? "Are you sure you want to submit this job posting and display it on Kerjiva?"
+        : "Apakah Anda yakin ingin mengirim lowongan ini dan menampilkannya di Kerjiva?"
+    );
+
+    if (!confirmPublish) return;
+
+    // Simpan sebagai draft sementara sebelum proses publikasi
     const response = await fetch(
-      "https://ksqrimmecpriyepsuclc.supabase.co/rest/v1/jobs",
+      `${SUPABASE_URL}jobs`,
       {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          "Authorization": `Bearer ${accessToken}`,
-          "apikey": SUPABASE_KEY,
-          "Prefer": "return=representation"
+          Authorization: `Bearer ${accessToken}`,
+          apikey: SUPABASE_KEY,
+          Prefer: "return=representation"
         },
         body: JSON.stringify({
           title,
           city,
           description,
           user_id: user.id,
-          company_name: companyName,
           category,
           job_type: jobType,
           salary,
@@ -13342,198 +13322,36 @@ if (!companyName) {
           education,
           application_deadline: applicationDeadline || null,
           requirements,
-          status: "published"
+          status: "draft"
         })
       }
     );
 
-   const result = await response.json();
-
-if (!response.ok) {
-  throw new Error(
-    result.message || result.error || "Gagal mengirim lowongan."
-  );
-}
-
-// =====================================================
-// TERJEMAHAN ENGLISH — SATU KALI SAAT LOWONGAN DIBUAT
-// Hasil disimpan permanen di tabel jobs
-// =====================================================
-
-try {
-  const newJob = Array.isArray(result)
-    ? result[0]
-    : result;
-
-  if (newJob?.id) {
-
-    const translationResponse = await fetch(
-      "https://ksqrimmecpriyepsuclc.supabase.co/functions/v1/translate-job",
-      {
-        method: "POST",
-       headers: {
-       "Content-Type": "application/json",
-       "Authorization": `Bearer ${accessToken}`,
-        apikey: SUPABASE_KEY
-     },
-        body: JSON.stringify({
-          jobs: [
-            {
-              id: newJob.id,
-              title: newJob.title || title,
-              company:
-                newJob.company ||
-                newJob.company_name ||
-                "Perusahaan",
-              location:
-                newJob.city ||
-                city,
-              type:
-                newJob.job_type ||
-                jobType,
-              category:
-                newJob.category ||
-                category,
-             
-              salary:
-                newJob.salary ||
-                salary,
-              experience:
-                newJob.experience ||
-                experience,
-              education:
-                newJob.education ||
-                education,
-              description:
-                newJob.description ||
-                description,
-              requirements:
-                newJob.requirements ||
-                requirements
-            }
-          ]
-        })
-      }
-    );
-
-    const translationResult =
-      await translationResponse.json();
-
-    if (
-      translationResponse.ok &&
-      translationResult?.success &&
-      Array.isArray(translationResult.jobs) &&
-      translationResult.jobs[0]
-    ) {
-
-      const translated =
-        translationResult.jobs[0];
-
-          const saveTranslationResponse = await fetch(
-        `${SUPABASE_URL}jobs?id=eq.${newJob.id}`,
-        {
-          method: "PATCH",
-          headers: {
-            "Content-Type": "application/json",
-            "Authorization": `Bearer ${accessToken}`,
-            "apikey": SUPABASE_KEY,
-            "Prefer": "return=minimal"
-          },
-          body: JSON.stringify({
-            title_en:
-              translated.title_en ||
-              translated.title ||
-              null,
-
-            description_en:
-              translated.description_en ||
-              translated.description ||
-              null,
-
-            requirements_en:
-              translated.requirements_en ||
-              translated.requirements ||
-              null,
-
-            job_type_en:
-              translated.job_type_en ||
-              translated.type ||
-              null,
-
-            category_en:
-              translated.category_en ||
-              translated.category ||
-              null,
-
-            salary_en:
-              translated.salary_en ||
-              translated.salary ||
-              null,
-
-            experience_en:
-              translated.experience_en ||
-              translated.experience ||
-              null,
-
-            education_en:
-              translated.education_en ||
-              translated.education ||
-              null
-          })
-        }
-      );
-
-      if (!saveTranslationResponse.ok) {
-        const saveError =
-          await saveTranslationResponse.text();
-
-        throw new Error(
-          `Gagal menyimpan terjemahan ke database: ${saveError}`
-        );
-      }
-
-      console.log(
-        "Terjemahan English berhasil disimpan ke database:",
-        newJob.id
-      );
-    } else {
-
-      console.warn(
-        "Terjemahan English gagal. Lowongan tetap tersimpan.",
-        translationResult
-      );
-
+    if (!response.ok) {
+      throw new Error(await response.text());
     }
 
-  }
+    const result = await response.json();
 
-} catch (translationError) {
+    const newJob = Array.isArray(result)
+      ? result[0]
+      : result;
 
-  console.warn(
-    "Gagal menyimpan terjemahan English:",
-    translationError
-  );
+    if (!newJob || !newJob.id) {
+      throw new Error("Lowongan tersimpan tetapi ID tidak ditemukan.");
+    }
 
-}
-
-alert(
-  language === "en"
-    ? "✅ Job posting has been submitted and is now live on Kerjiva."
-    : "✅ Lowongan berhasil dikirim dan sudah tampil di Kerjiva."
-);
-
-    document
-      .getElementById("postJobFormContainer")
-      ?.remove();
-
-    showMyJobs();
+    // Gunakan mesin publikasi yang sama dengan jalur draft
+    await publishMyJob(newJob.id, true);
 
   } catch (error) {
-    alert("Gagal mengirim lowongan: " + error.message);
+    console.error("Gagal mengirim lowongan:", error);
+    showNotification("jobsFailed", " " + error.message);
   }
 }
-  window.publishNewJob = publishNewJob;
-  
+
+window.publishNewJob = publishNewJob;
+
 async function submitJobPost() {
   const title = document.getElementById("jobTitle").value.trim();
   const city = document.getElementById("jobCity").value.trim();
