@@ -1394,6 +1394,134 @@
 
     "Kerjiva — Temukan peluang karier dengan lebih mudah dan bijak.":
       "Kerjiva — Discover career opportunities more easily and wisely.",
+     
+         /* =====================================================
+       PUSAT INFORMASI KERJIVA
+       ARTIKEL 4 — PANDUAN PERUSAHAAN
+       ===================================================== */
+
+    "Panduan Perusahaan: Pasang Lowongan di Kerjiva | Kerjiva":
+      "Company Guide: Post a Job Vacancy on Kerjiva | Kerjiva",
+
+    "Panduan bagi perusahaan untuk mendaftar, melengkapi profil, memasang lowongan kerja, dan mengelola lamaran kandidat melalui Kerjiva.":
+      "A guide for companies to register, complete their profiles, post job vacancies, and manage candidate applications through Kerjiva.",
+
+    "Panduan Perusahaan: Pasang Lowongan di Kerjiva":
+      "Company Guide: Posting Job Vacancies on Kerjiva",
+
+    "PANDUAN PERUSAHAAN":
+      "COMPANY GUIDE",
+
+    "Mudah, gratis, dan menjangkau lebih banyak talenta bersama Kerjiva.":
+      "Easy, free, and reach more talent with Kerjiva.",
+
+    "Kerjiva membantu perusahaan menemukan kandidat yang sesuai dengan kebutuhan rekrutmen. Melalui platform Kerjiva, perusahaan dapat memasang informasi lowongan kerja dan mengelola lamaran kandidat dengan lebih mudah.":
+      "Kerjiva helps companies find candidates who match their recruitment needs. Through the Kerjiva platform, companies can post job vacancies and manage candidate applications more easily.",
+
+    "1. Daftar sebagai Perusahaan":
+      "1. Register as a Company",
+
+    "Buka website Kerjiva di":
+      "Visit the Kerjiva website at",
+
+    "kemudian pilih menu":
+      "then select the",
+
+    "Daftar":
+      "Sign Up",
+
+    "Pilih jenis akun":
+      "Select the account type",
+
+    "Perusahaan":
+      "Company",
+
+    "dan lengkapi informasi pendaftaran yang diminta.":
+      "and complete the required registration information.",
+
+    "Pastikan menggunakan alamat email yang aktif untuk proses verifikasi akun.":
+      "Make sure to use an active email address for account verification.",
+
+    "2. Lengkapi Profil Perusahaan":
+      "2. Complete Your Company Profile",
+
+    "Setelah berhasil masuk, lengkapi profil perusahaan agar pencari kerja dapat mengenal perusahaan dengan lebih baik.":
+      "After logging in, complete your company profile so job seekers can learn more about your company.",
+
+    "Gunakan informasi perusahaan yang benar dan jelas, termasuk nama perusahaan serta informasi pendukung lainnya.":
+      "Provide accurate and clear company information, including the company name and other supporting details.",
+
+    "3. Pasang Lowongan Kerja":
+      "3. Post a Job Vacancy",
+
+    "Buka dashboard perusahaan, kemudian pilih fitur untuk memasang lowongan kerja.":
+      "Open the company dashboard, then select the feature to post a job vacancy.",
+
+    "Isi informasi lowongan secara lengkap, seperti:":
+      "Complete the job vacancy information, including:",
+
+    "Nama atau posisi pekerjaan.":
+      "Job title or position.",
+
+    "Lokasi pekerjaan.":
+      "Job location.",
+
+    "Jenis pekerjaan.":
+      "Employment type.",
+
+    "Kisaran gaji, jika tersedia.":
+      "Salary range, if available.",
+
+    "Deskripsi dan persyaratan pekerjaan.":
+      "Job description and requirements.",
+
+    "Pastikan informasi yang ditampilkan jelas dan sesuai dengan kebutuhan perusahaan.":
+      "Make sure the information displayed is clear and matches your company's needs.",
+
+    "4. Publikasikan Lowongan":
+      "4. Publish the Job Vacancy",
+
+    "Periksa kembali seluruh informasi sebelum memublikasikan lowongan. Jika sudah sesuai, lanjutkan proses publikasi agar lowongan dapat ditampilkan kepada pencari kerja di Kerjiva.":
+      "Review all information before publishing the job vacancy. Once everything is correct, proceed with publishing so the vacancy can be displayed to job seekers on Kerjiva.",
+
+    "5. Kelola Lamaran Kandidat":
+      "5. Manage Candidate Applications",
+
+    "Perusahaan dapat memantau lamaran yang masuk melalui dashboard perusahaan. Periksa profil dan dokumen kandidat untuk membantu proses seleksi sesuai kebutuhan rekrutmen.":
+      "Companies can monitor incoming applications through the company dashboard. Review candidate profiles and documents to support the selection process according to your recruitment needs.",
+
+    "Tips Memasang Lowongan yang Baik":
+      "Tips for Posting an Effective Job Vacancy",
+
+    "Gunakan judul pekerjaan yang jelas.":
+      "Use a clear job title.",
+
+    "Tuliskan deskripsi pekerjaan secara lengkap.":
+      "Write a complete job description.",
+
+    "Cantumkan persyaratan yang relevan.":
+      "Include relevant requirements.",
+
+    "Berikan informasi gaji dan lokasi jika tersedia.":
+      "Provide salary and location information if available.",
+
+    "Pastikan informasi lowongan selalu akurat.":
+      "Make sure the job vacancy information is always accurate.",
+
+    "Mulai Rekrutmen Bersama Kerjiva":
+      "Start Recruiting with Kerjiva",
+
+    "Temukan kandidat potensial dan permudah proses rekrutmen perusahaan melalui Kerjiva.":
+      "Find potential candidates and simplify your company's recruitment process through Kerjiva.",
+
+    "Kerjiva — Solusi Rekrutmen Terpercaya untuk Perusahaan Anda.":
+      "Kerjiva — Your Trusted Recruitment Solution for Your Company.",
+
+    "← Kembali ke Beranda":
+      "← Back to Home",
+
+    "© Kerjiva - Platform Karier Indonesia":
+      "© Kerjiva - Indonesia Career Platform",
 
 
 
