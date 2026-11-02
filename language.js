@@ -1766,43 +1766,42 @@
     "Berhati-hati dalam memilih lowongan kerja merupakan langkah penting untuk melindungi diri dari penipuan. Jangan terburu-buru mengambil keputusan dan selalu periksa informasi sebelum melamar pekerjaan.":
       "Being careful when choosing job vacancies is an important step in protecting yourself from scams. Do not rush into making decisions, and always verify information before applying for a job.",
      
-    /* =====================================================
-       KOMUNITAS KERJIVA
-       ===================================================== */       
-     
-    "KOMUNITAS KERJIVA":
-      "KERJIVA COMMUNITY",
-     
-    "Berbagi pendapat, pengalaman, pertanyaan, dan masukan. Mari saling mendukung dan bertumbuh bersama untuk membangun perjalanan karier yang lebih baik.":
-      "Share opinions, experiences, questions, and feedback. Let's support one another and grow together to build a better career journey.",
+ /* =====================================================
+   KOMUNITAS KERJIVA
+   ===================================================== */
 
-    "Apa yang ingin kamu bagikan?":
-      "What would you like to share?",
+"Komunitas Kerjiva":
+  "Kerjiva Community",
 
-    "Sampaikan pengalaman, pendapat, pertanyaan, kritik, saran, atau ide kamu seputar dunia kerja dan Kerjiva.":
-      "Share your experiences, opinions, questions, criticism, suggestions, or ideas about the world of work and Kerjiva.",
+"Berbagi pendapat, pengalaman, pertanyaan, dan masukan. Mari saling mendukung dan bertumbuh bersama untuk membangun perjalanan karier yang lebih baik.":
+  "Share opinions, experiences, questions, and feedback. Let's support one another and grow together to build a better career journey.",
 
-    "Tulis sesuatu yang ingin kamu bagikan...":
-      "Write something you'd like to share...",
+"Apa yang ingin kamu bagikan?":
+  "What would you like to share?",
 
-    "Untuk membuat postingan dan memberikan komentar, silakan masuk ke akun Kerjiva terlebih dahulu.":
-      "Please log in to your Kerjiva account to create posts and leave comments.",
+"Sampaikan pengalaman, pendapat, pertanyaan, kritik, saran, atau ide kamu seputar dunia kerja dan Kerjiva.":
+  "Share your experiences, opinions, questions, criticism, suggestions, or ideas about the world of work and Kerjiva.",
 
-    "Masuk ke Kerjiva":
-      "Log in to Kerjiva",
+"Tulis sesuatu yang ingin kamu bagikan...":
+  "Write something you'd like to share...",
 
-    "Postingan Komunitas":
-      "Community Posts",
+"Untuk membuat postingan dan memberikan komentar, silakan masuk ke akun Kerjiva terlebih dahulu.":
+  "Please log in to your Kerjiva account to create posts and leave comments.",
 
-    "Selamat Datang di Komunitas Kerjiva":
-      "Welcome to the Kerjiva Community",
+"Masuk ke Kerjiva":
+  "Log in to Kerjiva",
 
-    "Ruang berbagi dan berdiskusi bersama akan segera hadir. Nantikan perkembangan Komunitas Kerjiva!":
-      "A space for sharing and discussion is coming soon. Stay tuned for updates on the Kerjiva Community!"
+"Postingan Komunitas":
+  "Community Posts",
 
-  };
+"Selamat Datang di Komunitas Kerjiva":
+  "Welcome to the Kerjiva Community",
 
+"Ruang berbagi dan berdiskusi bersama akan segera hadir. Nantikan perkembangan Komunitas Kerjiva!":
+  "A space for sharing and discussion is coming soon. Stay tuned for updates on the Kerjiva Community!"
 
+};
+   
   /* =========================================================
      BUILD EN → ID
      ========================================================= */
