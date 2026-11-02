@@ -1649,6 +1649,124 @@
     "© Kerjiva - Platform Karier Indonesia":
       "© Kerjiva - Indonesia Career Platform",
 
+     
+    /* =====================================================
+       PUSAT INFORMASI KERJIVA
+       ARTIKEL 6 — PANDUAN MENGHINDARI PENIPUAN LOWONGAN KERJA
+       ===================================================== */
+
+    "Panduan Menghindari Penipuan Lowongan Kerja | Kerjiva":
+      "Guide to Avoiding Job Scams | Kerjiva",
+
+    "Panduan mengenali dan menghindari penipuan lowongan kerja agar pencarian pekerjaan lebih aman bersama Kerjiva.":
+      "A guide to recognizing and avoiding job scams for a safer job search with Kerjiva.",
+
+    "PANDUAN PENCARI KERJA":
+      "JOB SEEKER GUIDE",
+
+    "Panduan Menghindari Penipuan Lowongan Kerja":
+      "Guide to Avoiding Job Scams",
+
+    "Kenali ciri-ciri lowongan kerja palsu dan lindungi diri Anda selama proses mencari pekerjaan.":
+      "Recognize the signs of fake job vacancies and protect yourself throughout your job search.",
+
+    "Mencari pekerjaan membutuhkan ketelitian. Di tengah banyaknya informasi lowongan kerja, pencari kerja perlu berhati-hati terhadap tawaran pekerjaan yang tidak jelas atau berpotensi penipuan. Dengan mengenali tanda-tandanya, Anda dapat melindungi diri dan mencari peluang karier dengan lebih aman.":
+      "Finding a job requires careful consideration. With so many job vacancy listings available, job seekers need to be cautious of unclear or potentially fraudulent job offers. By recognizing the warning signs, you can protect yourself and search for career opportunities more safely.",
+
+    "1. Kenali Ciri-Ciri Lowongan Kerja Palsu":
+      "1. Recognize the Signs of Fake Job Vacancies",
+
+    "Perhatikan beberapa tanda yang perlu diwaspadai sebelum melamar pekerjaan:":
+      "Look out for these warning signs before applying for a job:",
+
+    "Informasi perusahaan dan identitas perekrut tidak jelas.":
+      "The company information and recruiter's identity are unclear.",
+
+    "Deskripsi pekerjaan dan persyaratan tidak dijelaskan secara lengkap.":
+      "The job description and requirements are not explained clearly.",
+
+    "Menawarkan gaji atau keuntungan yang tidak masuk akal tanpa penjelasan pekerjaan yang jelas.":
+      "The job offer promises unreasonable salaries or benefits without a clear explanation of the work.",
+
+    "Proses penerimaan kerja terlalu mudah dan menjanjikan pasti diterima.":
+      "The recruitment process seems too easy and guarantees that applicants will be hired.",
+
+    "Menggunakan alamat email atau kontak yang tidak dapat diverifikasi sebagai kontak resmi perusahaan.":
+      "The recruiter uses an email address or contact that cannot be verified as an official company contact.",
+
+    "2. Waspadai Permintaan Uang":
+      "2. Beware of Requests for Money",
+
+    "Berhati-hatilah jika ada pihak yang meminta pembayaran dengan alasan biaya administrasi, pelatihan, seragam, perjalanan, atau jaminan penerimaan kerja.":
+      "Be cautious if someone requests payment for administrative fees, training, uniforms, travel, or a job placement guarantee.",
+
+    "Jangan terburu-buru melakukan pembayaran. Periksa terlebih dahulu identitas perusahaan dan kebenaran informasi rekrutmen sebelum mengambil keputusan.":
+      "Do not rush into making any payments. First verify the company's identity and the authenticity of the recruitment information before making a decision.",
+
+    "3. Lindungi Data Pribadi":
+      "3. Protect Your Personal Data",
+
+    "Data pribadi dan dokumen penting harus dijaga selama proses melamar pekerjaan. Perhatikan beberapa hal berikut:":
+      "Your personal data and important documents must be protected throughout the job application process. Keep the following points in mind:",
+
+    "Jangan pernah membagikan kata sandi atau kode OTP kepada siapa pun.":
+      "Never share your password or OTP code with anyone.",
+
+    "Jangan sembarangan mengirimkan dokumen pribadi kepada pihak yang tidak jelas.":
+      "Do not send personal documents carelessly to unverified parties.",
+
+    "Pastikan tujuan penggunaan dokumen dan informasi pribadi dapat dipahami.":
+      "Make sure you understand how your documents and personal information will be used.",
+
+    "Hindari membuka tautan mencurigakan dari pihak yang tidak dikenal.":
+      "Avoid opening suspicious links from unknown parties.",
+
+    "4. Periksa Identitas Perusahaan":
+      "4. Verify the Company's Identity",
+
+    "Sebelum melamar, luangkan waktu untuk memeriksa informasi perusahaan melalui sumber resmi.":
+      "Before applying, take the time to verify the company's information through official sources.",
+
+    "Periksa website dan profil resmi perusahaan.":
+      "Check the company's website and official profile.",
+
+    "Cocokkan alamat serta informasi kontak perusahaan.":
+      "Verify the company's address and contact information.",
+
+    "Pastikan informasi lowongan sesuai dengan posisi yang ditawarkan perusahaan.":
+      "Make sure the job vacancy information matches the position offered by the company.",
+
+    "Jika ragu, hubungi perusahaan melalui saluran komunikasi resminya.":
+      "If you have doubts, contact the company through its official communication channels.",
+
+    "5. Apa yang Harus Dilakukan Jika Menemukan Penipuan?":
+      "5. What Should You Do If You Encounter a Scam?",
+
+    "Jika menemukan lowongan atau pihak yang diduga melakukan penipuan, lakukan langkah berikut:":
+      "If you encounter a suspicious job vacancy or someone suspected of committing fraud, take the following steps:",
+
+    "Hentikan komunikasi jika terdapat tanda-tanda mencurigakan.":
+      "Stop communicating if you notice suspicious signs.",
+
+    "Jangan mengirimkan uang atau informasi pribadi tambahan.":
+      "Do not send money or additional personal information.",
+
+    "Simpan bukti komunikasi, pesan, dan informasi lowongan.":
+      "Keep records of communications, messages, and job vacancy information.",
+
+    "Laporkan kepada platform tempat lowongan ditemukan atau pihak berwenang melalui saluran resmi.":
+      "Report the incident to the platform where you found the vacancy or to the relevant authorities through official channels.",
+
+    "6. Peran Kerjiva":
+      "6. Kerjiva's Role",
+
+    "Kerjiva berupaya membantu pencari kerja menemukan informasi lowongan dan peluang karier melalui platform Kerjiva. Kami mengajak seluruh pengguna untuk selalu memeriksa informasi pekerjaan dengan teliti, menjaga keamanan data pribadi, dan berhati-hati terhadap tawaran yang mencurigakan.":
+      "Kerjiva strives to help job seekers find job vacancy information and career opportunities through its platform. We encourage all users to carefully verify job information, protect their personal data, and be cautious of suspicious offers.",
+
+    "Berhati-hati dalam memilih lowongan kerja merupakan langkah penting untuk melindungi diri dari penipuan. Jangan terburu-buru mengambil keputusan dan selalu periksa informasi sebelum melamar pekerjaan.":
+      "Being careful when choosing job vacancies is an important step in protecting yourself from scams. Do not rush into making decisions, and always verify information before applying for a job.",
+
+
   };
 
 
