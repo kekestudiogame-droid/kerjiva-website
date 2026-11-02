@@ -286,6 +286,29 @@
   <footer class="footer">
     © Kerjiva - Platform Karier Indonesia
   </footer>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<script>
+  const SUPABASE_URL =
+    "https://ksqrimmecpriyepsuclc.supabase.co";
+
+  const SUPABASE_KEY =
+    "sb_publishable_xvPQL9oniSRwZoqmSc5W4A_NS9ldWIL";
+
+  const communitySupabase =
+    window.supabase.createClient(
+      SUPABASE_URL,
+      SUPABASE_KEY,
+      {
+        auth: {
+          flowType: "implicit",
+          detectSessionInUrl: false,
+          persistSession: true,
+          autoRefreshToken: true
+        }
+      }
+    );
+</script>
 
   <script src="language.js"></script>
 
