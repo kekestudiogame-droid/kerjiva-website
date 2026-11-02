@@ -1116,7 +1116,151 @@
       "5. Job Seekers' Rights and Responsibilities",
 
     "6. Panduan Menghindari Penipuan Lowongan Kerja":
-      "6. Guide to Avoiding Job Scams"
+    "6. Guide to Avoiding Job Scams",
+     
+    /* =====================================================
+       PUSAT INFORMASI KERJIVA
+       ARTIKEL 2 — CARA MEMBUAT CV YANG MENARIK
+       ===================================================== */
+
+    "Cara Membuat CV yang Menarik | Kerjiva":
+      "How to Create an Attractive CV | Kerjiva",
+
+    "Pelajari cara membuat CV yang menarik, rapi, profesional, dan sesuai kemampuan untuk meningkatkan peluang mendapatkan pekerjaan bersama Kerjiva.":
+      "Learn how to create an attractive, neat, and professional CV that reflects your abilities and improves your job opportunities with Kerjiva.",
+
+    "Panduan Cara Membuat CV yang Menarik":
+      "Guide to Creating an Attractive CV",
+
+    "Cara Membuat CV yang Menarik":
+      "How to Create an Attractive CV",
+
+    "Tampilkan kemampuan terbaikmu melalui CV yang rapi dan profesional.":
+      "Showcase your best abilities with a neat and professional CV.",
+
+    "CV (Curriculum Vitae) merupakan salah satu dokumen":
+      "A CV (Curriculum Vitae) is one of the important documents",
+
+    "penting saat melamar pekerjaan. Melalui CV, perusahaan":
+      "when applying for a job. Through your CV, companies",
+
+    "dapat mengenal latar belakang, pengalaman, pendidikan,":
+      "can learn about your background, experience, education,",
+
+    "dan kemampuan yang kamu miliki.":
+      "and the skills you possess.",
+
+    "CV yang disusun dengan baik dapat membantu memberikan":
+      "A well-prepared CV can help create",
+
+    "kesan pertama yang positif. Berikut beberapa tips":
+      "a positive first impression. Here are some simple tips",
+
+    "sederhana untuk membuat CV yang menarik.":
+      "for creating an attractive CV.",
+
+    "1. Gunakan Data Diri yang Benar":
+      "1. Use Accurate Personal Information",
+
+    "Cantumkan nama lengkap, nomor telepon yang aktif,":
+      "Include your full name, active phone number,",
+
+    "dan alamat email yang terlihat profesional.":
+      "and a professional-looking email address.",
+
+    "Pastikan informasi kontak mudah dibaca dan dapat":
+      "Make sure your contact information is easy to read",
+
+    "digunakan perusahaan untuk menghubungimu.":
+      "and allows companies to contact you.",
+
+    "2. Tulis Ringkasan Profil Singkat":
+      "2. Write a Short Profile Summary",
+
+    "Buat pengenalan singkat mengenai dirimu, latar belakang,":
+      "Write a brief introduction about yourself, your background,",
+
+    "dan kemampuan utama yang relevan dengan pekerjaan":
+      "and key skills relevant to the job",
+
+    "yang dilamar. Gunakan kalimat yang jelas dan tidak":
+      "you are applying for. Use clear sentences that are not",
+
+    "terlalu panjang.":
+      "too long.",
+
+    "3. Cantumkan Pengalaman dan Pendidikan":
+      "3. Include Experience and Education",
+
+    "Tuliskan pengalaman kerja, pendidikan, organisasi,":
+      "List your work experience, education, organizations,",
+
+    "proyek, atau kegiatan yang relevan. Jika belum memiliki":
+      "projects, or relevant activities. If you do not yet have",
+
+    "pengalaman kerja, kamu tetap dapat mencantumkan":
+      "work experience, you can still include",
+
+    "pengalaman organisasi atau proyek yang pernah diikuti.":
+      "organizational experience or projects you have participated in.",
+
+    "4. Tampilkan Keterampilan yang Relevan":
+      "4. Highlight Relevant Skills",
+
+    "Cantumkan keterampilan yang sesuai dengan posisi":
+      "Include skills that match the job position",
+
+    "pekerjaan, baik keterampilan teknis maupun kemampuan":
+      "you are applying for, including technical skills and",
+
+    "komunikasi dan kerja sama tim. Pilih keterampilan":
+      "communication and teamwork abilities. Choose skills",
+
+    "yang benar-benar kamu kuasai.":
+      "that you genuinely possess.",
+
+    "5. Gunakan Format yang Rapi":
+      "5. Use a Neat Format",
+
+    "Gunakan desain sederhana, jenis huruf yang mudah":
+      "Use a simple design, an easy-to-read font,",
+
+    "dibaca, dan susunan informasi yang jelas. Hindari":
+      "and a clear information layout. Avoid",
+
+    "penggunaan terlalu banyak warna atau elemen":
+      "using too many colors or elements",
+
+    "yang membuat CV terlihat penuh.":
+      "that make your CV look cluttered.",
+
+    "6. Periksa Kembali Sebelum Dikirim":
+      "6. Review Before Sending",
+
+    "Periksa ejaan, nomor telepon, alamat email, dan":
+      "Check the spelling, phone number, email address, and",
+
+    "seluruh informasi yang dicantumkan. Pastikan isi CV":
+      "all the information provided. Make sure your CV",
+
+    "sesuai dengan pekerjaan yang dilamar dan tidak":
+      "matches the job you are applying for and does not",
+
+    "memuat informasi yang keliru.":
+      "contain incorrect information.",
+
+    "Buatlah CV secara jujur dan sesuai dengan kemampuan":
+      "Create your CV honestly and according to the abilities",
+
+    "yang kamu miliki. CV yang jelas, rapi, dan relevan":
+      "you possess. A clear, neat, and relevant CV",
+
+    "dapat membantu perusahaan memahami potensi dirimu.":
+      "can help companies understand your potential.",
+
+    "Kerjiva — Temukan peluang karier dan tunjukkan kemampuan terbaikmu.":
+      "Kerjiva — Discover career opportunities and showcase your best abilities.",
+
 
   };
 
