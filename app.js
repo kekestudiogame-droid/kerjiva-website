@@ -3818,6 +3818,7 @@ const menuCompanies = document.querySelector("#menuCompanies");
 const menuHelp = document.querySelector("#menuHelp");
 const menuPayment = document.querySelector("#menuPayment");
 const menuSettings = document.querySelector("#menuSettings");
+const menuCommunity = document.querySelector("#menuCommunity");
 const menuInformation = document.querySelector("#menuInformation");
 const informationDropdown = document.querySelector("#informationDropdown");
 const infoArticle1 = document.querySelector("#infoArticle1");
@@ -3873,6 +3874,11 @@ if (menuPayment) {
 if (menuSettings) {
   menuSettings.onclick = function () {
     window.location.href = "settings.html";
+  };
+}
+if (menuCommunity) {
+  menuCommunity.onclick = function () {
+    window.location.href = "komunitas.html";
   };
 }
 
