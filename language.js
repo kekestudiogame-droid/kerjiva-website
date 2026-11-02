@@ -1523,6 +1523,92 @@
     "© Kerjiva - Platform Karier Indonesia":
       "© Kerjiva - Indonesia Career Platform",
 
+         /* =====================================================
+       PUSAT INFORMASI KERJIVA
+       ARTIKEL 5 — HAK DAN KEWAJIBAN PENCARI KERJA
+       ===================================================== */
+
+    "Hak dan Kewajiban Pencari Kerja | Kerjiva":
+      "Job Seekers' Rights and Responsibilities | Kerjiva",
+
+    "Panduan mengenai hak dan kewajiban pencari kerja agar proses mencari pekerjaan berjalan dengan aman, nyaman, dan profesional.":
+      "A guide to job seekers' rights and responsibilities to help ensure a safe, comfortable, and professional job search.",
+
+    "Hak dan Kewajiban Pencari Kerja":
+      "Job Seekers' Rights and Responsibilities",
+
+    "HAK DAN KEWAJIBAN PENCARI KERJA":
+      "JOB SEEKERS' RIGHTS AND RESPONSIBILITIES",
+
+    "Memahami hak dan kewajiban untuk proses pencarian kerja yang aman, nyaman, dan profesional.":
+      "Understand your rights and responsibilities for a safe, comfortable, and professional job search.",
+
+    "Memahami hak dan kewajiban sebagai pencari kerja merupakan hal penting agar proses mencari pekerjaan dapat berjalan dengan aman, nyaman, dan profesional. Dengan mengetahui hal tersebut, pencari kerja dapat lebih bijak dalam memilih peluang karier.":
+      "Understanding your rights and responsibilities as a job seeker is important to ensure a safe, comfortable, and professional job search. This knowledge helps job seekers make wiser career choices.",
+
+    "1. Hak Pencari Kerja":
+      "1. Job Seekers' Rights",
+
+    "Pencari kerja berhak mendapatkan informasi lowongan kerja yang jelas, termasuk posisi, lokasi, persyaratan, dan informasi pekerjaan lainnya.":
+      "Job seekers have the right to receive clear job vacancy information, including the position, location, requirements, and other job-related details.",
+
+    "Pencari kerja berhak mendapatkan perlakuan yang adil dan tidak diskriminatif selama proses rekrutmen.":
+      "Job seekers have the right to fair and non-discriminatory treatment throughout the recruitment process.",
+
+    "Pencari kerja berhak memperoleh informasi mengenai proses seleksi sesuai dengan kebijakan perusahaan.":
+      "Job seekers have the right to receive information about the selection process in accordance with company policies.",
+
+    "Pencari kerja berhak mendapatkan perlindungan atas data pribadi yang diberikan selama proses melamar pekerjaan.":
+      "Job seekers have the right to have their personal data protected when applying for jobs.",
+
+    "2. Kewajiban Pencari Kerja":
+      "2. Job Seekers' Responsibilities",
+
+    "Memberikan informasi yang benar dan jujur mengenai identitas, pendidikan, pengalaman kerja, serta kemampuan yang dimiliki.":
+      "Provide truthful and accurate information about your identity, education, work experience, and skills.",
+
+    "Melengkapi dokumen yang diperlukan sesuai dengan persyaratan lowongan pekerjaan.":
+      "Prepare the required documents according to the job vacancy requirements.",
+
+    "Menjaga komunikasi yang sopan dan profesional dengan perusahaan selama proses rekrutmen.":
+      "Maintain polite and professional communication with companies throughout the recruitment process.",
+
+    "Mengikuti jadwal seleksi tepat waktu serta menghargai waktu dan ketentuan yang telah ditetapkan perusahaan.":
+      "Attend selection appointments on time and respect the schedules and requirements set by the company.",
+
+    "3. Tips Mencari Kerja dengan Bijak":
+      "3. Tips for a Wise Job Search",
+
+    "Periksa identitas dan informasi perusahaan sebelum melamar pekerjaan.":
+      "Check the company's identity and information before applying for a job.",
+
+    "Baca deskripsi dan persyaratan pekerjaan dengan teliti.":
+      "Read the job description and requirements carefully.",
+
+    "Waspadai permintaan pembayaran yang tidak jelas selama proses rekrutmen.":
+      "Be cautious of unclear payment requests during the recruitment process.",
+
+    "Jaga keamanan data pribadi dan dokumen penting.":
+      "Protect your personal data and important documents.",
+
+    "Gunakan platform yang menyediakan informasi lowongan kerja dengan jelas.":
+      "Use platforms that provide clear job vacancy information.",
+
+    "4. Peran Kerjiva":
+      "4. Kerjiva's Role",
+
+    "Kerjiva membantu pencari kerja menemukan informasi lowongan dan peluang karier. Kerjiva juga mengajak pengguna untuk selalu berhati-hati, menjaga keamanan data pribadi, dan memilih peluang kerja dengan bijak.":
+      "Kerjiva helps job seekers find job vacancy information and career opportunities. Kerjiva also encourages users to stay cautious, protect their personal data, and choose job opportunities wisely.",
+
+    "Memahami hak dan kewajiban merupakan langkah penting dalam membangun proses pencarian kerja yang aman dan profesional. Jadilah pencari kerja yang aktif, jujur, dan bijak dalam memilih peluang karier.":
+      "Understanding your rights and responsibilities is an important step toward a safe and professional job search. Be an active, honest, and thoughtful job seeker when choosing career opportunities.",
+
+    "Kerjiva — Your Career, Your Future.":
+      "Kerjiva — Your Career, Your Future.",
+
+    "← Kembali ke Kerjiva":
+      "← Back to Kerjiva",
+
 
 
   };
