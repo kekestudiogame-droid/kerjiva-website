@@ -1768,11 +1768,11 @@
      
     /* =====================================================
        KOMUNITAS KERJIVA
-       ===================================================== */
-
-    "Komunitas Kerjiva":
-      "Kerjiva Community",
-
+       ===================================================== */       
+     
+    "KOMUNITAS KERJIVA":
+      "KERJIVA COMMUNITY",
+     
     "Berbagi pendapat, pengalaman, pertanyaan, dan masukan. Mari saling mendukung dan bertumbuh bersama untuk membangun perjalanan karier yang lebih baik.":
       "Share opinions, experiences, questions, and feedback. Let's support one another and grow together to build a better career journey.",
 
