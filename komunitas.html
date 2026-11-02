@@ -249,17 +249,22 @@
 
       <p>Sampaikan pengalaman, pendapat, pertanyaan, kritik, saran, atau ide kamu seputar dunia kerja dan Kerjiva.</p>
 
-    <textarea
+   <textarea
+  id="communityPostInput"
   class="post-area"
   placeholder="Tulis sesuatu yang ingin kamu bagikan..."
   disabled
 ></textarea>
 
-<div class="login-notice">
+<div id="communityLoginNotice" class="login-notice">
   Untuk membuat postingan dan memberikan komentar, silakan masuk ke akun Kerjiva terlebih dahulu.
 </div>
 
-<a href="index.html" class="login-button">
+<a
+  href="index.html"
+  id="communityLoginButton"
+  class="login-button"
+>
   Masuk ke Kerjiva
 </a>
 
@@ -308,6 +313,50 @@
         }
       }
     );
+
+  const communityPostInput =
+    document.getElementById("communityPostInput");
+
+  const communityLoginNotice =
+    document.getElementById("communityLoginNotice");
+
+  const communityLoginButton =
+    document.getElementById("communityLoginButton");
+
+  function updateCommunityAccess(session) {
+    const isLoggedIn = !!session;
+    const isVerified =
+      !!session?.user?.email_confirmed_at;
+
+    if (isLoggedIn && isVerified) {
+      communityPostInput.disabled = false;
+      communityLoginNotice.style.display = "none";
+      communityLoginButton.style.display = "none";
+    } else {
+      communityPostInput.disabled = true;
+      communityLoginNotice.style.display = "block";
+      communityLoginButton.style.display = "inline-block";
+
+      if (isLoggedIn && !isVerified) {
+        communityLoginNotice.textContent =
+          "Silakan verifikasi email akun Kerjiva terlebih dahulu sebelum membuat postingan atau komentar.";
+      }
+    }
+  }
+
+  communitySupabase.auth.getSession().then(({ data, error }) => {
+    if (error) {
+      console.error("Gagal memeriksa session Komunitas:", error.message);
+      updateCommunityAccess(null);
+      return;
+    }
+
+    updateCommunityAccess(data.session);
+  });
+
+  communitySupabase.auth.onAuthStateChange((event, session) => {
+    updateCommunityAccess(session);
+  });
 </script>
 
   <script src="language.js"></script>
