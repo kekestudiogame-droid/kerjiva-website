@@ -1260,6 +1260,141 @@
 
     "Kerjiva — Temukan peluang karier dan tunjukkan kemampuan terbaikmu.":
       "Kerjiva — Discover career opportunities and showcase your best abilities.",
+     
+    /* =====================================================
+       PUSAT INFORMASI KERJIVA
+       ARTIKEL 3 — TIPS MENGHADAPI WAWANCARA KERJA
+       ===================================================== */
+
+    "Tips Menghadapi Wawancara Kerja | Kerjiva":
+      "Job Interview Tips | Kerjiva",
+
+    "Pelajari tips menghadapi wawancara kerja, mempersiapkan diri, menjawab pertanyaan, dan meningkatkan kepercayaan diri bersama Kerjiva.":
+      "Learn tips for preparing for job interviews, answering questions, and building confidence with Kerjiva.",
+
+    "Tips Menghadapi Wawancara Kerja Bersama Kerjiva":
+      "Job Interview Tips with Kerjiva",
+
+    "Tips Menghadapi Wawancara Kerja":
+      "Job Interview Tips",
+
+    "Persiapkan diri dengan baik dan tunjukkan kemampuan terbaikmu.":
+      "Prepare yourself well and showcase your best abilities.",
+
+    "Wawancara kerja merupakan salah satu tahap penting":
+      "A job interview is one of the important stages",
+
+    "dalam proses rekrutmen. Melalui wawancara, perusahaan":
+      "in the recruitment process. Through an interview, companies",
+
+    "ingin mengenal kepribadian, pengalaman, dan kemampuan":
+      "want to learn about your personality, experience, and abilities",
+
+    "calon karyawan.":
+      "as a prospective employee.",
+
+    "Persiapan yang baik dapat membantu meningkatkan":
+      "Good preparation can help improve",
+
+    "kepercayaan diri saat wawancara. Berikut beberapa":
+      "your confidence during an interview. Here are some",
+
+    "tips yang bisa kamu terapkan.":
+      "tips you can put into practice.",
+
+    "1. Pelajari Profil Perusahaan":
+      "1. Learn About the Company",
+
+    "Cari tahu bidang usaha, produk, layanan, dan informasi":
+      "Find out about the company's business, products, services, and information",
+
+    "perusahaan sebelum wawancara. Dengan begitu, kamu":
+      "before the interview. This way, you",
+
+    "akan lebih memahami perusahaan yang dilamar.":
+      "will better understand the company you are applying to.",
+
+    "2. Pahami Posisi yang Dilamar":
+      "2. Understand the Position You Applied For",
+
+    "Baca kembali deskripsi pekerjaan dan persyaratan":
+      "Review the job description and requirements",
+
+    "posisi tersebut. Kenali tugas serta keterampilan":
+      "for the position. Understand the responsibilities and skills",
+
+    "yang dibutuhkan agar kamu dapat menjelaskan":
+      "required so you can explain",
+
+    "kesesuaian dirimu.":
+      "why you are a suitable candidate.",
+
+    "3. Persiapkan Jawaban":
+      "3. Prepare Your Answers",
+
+    "Latih jawaban untuk pertanyaan umum tentang diri,":
+      "Practice answering common questions about yourself,",
+
+    "pengalaman, kelebihan, dan tujuan karier. Jawablah":
+      "your experience, strengths, and career goals. Answer",
+
+    "dengan jelas, jujur, dan sesuai pengalamanmu.":
+      "clearly, honestly, and based on your experience.",
+
+    "4. Berpakaian Rapi dan Datang Tepat Waktu":
+      "4. Dress Neatly and Arrive on Time",
+
+    "Gunakan pakaian yang rapi dan sesuai dengan lingkungan":
+      "Wear neat clothing that is appropriate for the company's",
+
+    "perusahaan. Usahakan datang lebih awal agar memiliki":
+      "work environment. Try to arrive early so you have",
+
+    "waktu untuk mempersiapkan diri.":
+      "time to prepare yourself.",
+
+    "5. Jaga Sikap dan Komunikasi":
+      "5. Maintain a Positive Attitude and Good Communication",
+
+    "Bersikaplah sopan, percaya diri, dan tunjukkan":
+      "Be polite, confident, and show",
+
+    "sikap yang positif. Dengarkan pertanyaan dengan baik":
+      "a positive attitude. Listen carefully to questions",
+
+    "dan berikan jawaban yang jelas serta mudah dipahami.":
+      "and provide clear and easy-to-understand answers.",
+
+    "6. Ajukan Pertanyaan yang Relevan":
+      "6. Ask Relevant Questions",
+
+    "Jika diberikan kesempatan, ajukan pertanyaan":
+      "If given the opportunity, ask questions",
+
+    "mengenai pekerjaan, tanggung jawab, atau proses":
+      "about the job, responsibilities, or the",
+
+    "rekrutmen. Hal ini menunjukkan bahwa kamu tertarik":
+      "recruitment process. This shows that you are interested",
+
+    "dengan posisi yang dilamar.":
+      "in the position you applied for.",
+
+    "Tetaplah jujur dan menjadi diri sendiri saat":
+      "Always be honest and be yourself during",
+
+    "wawancara. Persiapan yang matang, sikap positif,":
+      "the interview. Good preparation, a positive attitude,",
+
+    "dan komunikasi yang baik dapat membantu":
+      "and good communication can help",
+
+    "memberikan kesan yang baik kepada perusahaan.":
+      "you make a good impression on the company.",
+
+    "Kerjiva — Temukan peluang karier dengan lebih mudah dan bijak.":
+      "Kerjiva — Discover career opportunities more easily and wisely.",
+
 
 
   };
