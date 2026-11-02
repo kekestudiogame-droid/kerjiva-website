@@ -343,6 +343,89 @@
 
   const communityLoginButton =
     document.getElementById("communityLoginButton");
+  const communityPostsList =
+  document.getElementById("communityPostsList");
+
+// ================= MEMUAT POSTINGAN PUBLIK =================
+
+async function loadCommunityPosts() {
+  communityPostsList.innerHTML =
+    '<p style="text-align:center;color:#64748b;">Memuat postingan...</p>';
+
+  try {
+    const { data: posts, error } = await communitySupabase
+      .from("community_posts")
+      .select("id, content, created_at")
+      .eq("is_hidden", false)
+      .order("created_at", { ascending: false });
+
+    if (error) {
+      throw error;
+    }
+
+    if (!posts || posts.length === 0) {
+      communityPostsList.innerHTML = `
+        <div class="empty-state">
+          <div class="empty-icon">💬</div>
+          <h3>Selamat Datang di Komunitas Kerjiva</h3>
+          <p>Belum ada postingan. Jadilah yang pertama berbagi bersama komunitas!</p>
+        </div>
+      `;
+      return;
+    }
+
+    communityPostsList.innerHTML = "";
+
+    posts.forEach(function (post) {
+      const postCard = document.createElement("article");
+
+      postCard.style.cssText = `
+        padding: 20px;
+        margin-bottom: 16px;
+        background: #ffffff;
+        border: 1px solid #e5eaf1;
+        border-radius: 12px;
+      `;
+
+      const postContent = document.createElement("p");
+      postContent.style.cssText = `
+        margin: 0;
+        color: #243247;
+        font-size: 15px;
+        white-space: pre-wrap;
+        overflow-wrap: anywhere;
+      `;
+      postContent.textContent = post.content;
+
+      const postDate = document.createElement("small");
+      postDate.style.cssText = `
+        display: block;
+        margin-top: 14px;
+        color: #8491a3;
+        font-size: 12px;
+      `;
+
+      postDate.textContent = new Date(post.created_at)
+        .toLocaleString("id-ID", {
+          dateStyle: "medium",
+          timeStyle: "short"
+        });
+
+      postCard.appendChild(postContent);
+      postCard.appendChild(postDate);
+      communityPostsList.appendChild(postCard);
+    });
+
+  } catch (error) {
+    console.error("Gagal memuat postingan komunitas:", error);
+
+    communityPostsList.innerHTML =
+      '<p style="text-align:center;color:#b42318;">Postingan belum dapat dimuat. Silakan coba muat ulang halaman.</p>';
+  }
+}
+
+// Muat postingan saat halaman dibuka
+loadCommunityPosts();
 
 function updateCommunityAccess(session) {
   const isLoggedIn = !!session;
