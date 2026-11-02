@@ -3820,6 +3820,7 @@ const menuPayment = document.querySelector("#menuPayment");
 const menuSettings = document.querySelector("#menuSettings");
 const menuInformation = document.querySelector("#menuInformation");
 const informationDropdown = document.querySelector("#informationDropdown");
+const infoArticle1 = document.querySelector("#infoArticle1");
 const menuLogout = document.querySelector("#menuLogout");
 const menuHome = document.querySelector("#menuHome");
 
@@ -3875,6 +3876,11 @@ if (menuInformation && informationDropdown) {
 
     informationDropdown.style.display = isOpen ? "none" : "block";
     menuInformation.setAttribute("aria-expanded", String(!isOpen));
+  };
+}
+if (infoArticle1) {
+  infoArticle1.onclick = function () {
+    window.location.href = "panduan-kerja-aman.html";
   };
 }
 
