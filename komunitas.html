@@ -142,6 +142,16 @@
       font-size: 14px;
       font-weight: bold;
     }
+    #communityPostButton {
+  border: none;
+  cursor: pointer;
+  margin-top: 12px;
+}
+
+#communityPostButton:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
 
     .login-button:hover {
       background: #f28c28;
@@ -255,6 +265,14 @@
   placeholder="Tulis sesuatu yang ingin kamu bagikan..."
   disabled
 ></textarea>
+         <button
+  type="button"
+  id="communityPostButton"
+  class="login-button"
+  disabled
+>
+  Posting
+</button>
 
 <div id="communityLoginNotice" class="login-notice">
   Untuk membuat postingan dan memberikan komentar, silakan masuk ke akun Kerjiva terlebih dahulu.
@@ -316,6 +334,8 @@
 
   const communityPostInput =
     document.getElementById("communityPostInput");
+  const communityPostButton =
+  document.getElementById("communityPostButton");
 
   const communityLoginNotice =
     document.getElementById("communityLoginNotice");
@@ -323,26 +343,28 @@
   const communityLoginButton =
     document.getElementById("communityLoginButton");
 
-  function updateCommunityAccess(session) {
-    const isLoggedIn = !!session;
-    const isVerified =
-      !!session?.user?.email_confirmed_at;
+function updateCommunityAccess(session) {
+  const isLoggedIn = !!session;
+  const isVerified =
+    !!session?.user?.email_confirmed_at;
 
-    if (isLoggedIn && isVerified) {
-      communityPostInput.disabled = false;
-      communityLoginNotice.style.display = "none";
-      communityLoginButton.style.display = "none";
-    } else {
-      communityPostInput.disabled = true;
-      communityLoginNotice.style.display = "block";
-      communityLoginButton.style.display = "inline-block";
+  if (isLoggedIn && isVerified) {
+    communityPostInput.disabled = false;
+    communityPostButton.disabled = false;
+    communityLoginNotice.style.display = "none";
+    communityLoginButton.style.display = "none";
+  } else {
+    communityPostInput.disabled = true;
+    communityPostButton.disabled = true;
+    communityLoginNotice.style.display = "block";
+    communityLoginButton.style.display = "inline-block";
 
-      if (isLoggedIn && !isVerified) {
-        communityLoginNotice.textContent =
-          "Silakan verifikasi email akun Kerjiva terlebih dahulu sebelum membuat postingan atau komentar.";
-      }
+    if (isLoggedIn && !isVerified) {
+      communityLoginNotice.textContent =
+        "Silakan verifikasi email akun Kerjiva terlebih dahulu sebelum membuat postingan atau komentar.";
     }
   }
+}
 
   communitySupabase.auth.getSession().then(({ data, error }) => {
     if (error) {
