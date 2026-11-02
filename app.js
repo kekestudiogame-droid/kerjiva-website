@@ -3823,6 +3823,7 @@ const informationDropdown = document.querySelector("#informationDropdown");
 const infoArticle1 = document.querySelector("#infoArticle1");
 const infoArticle2 = document.querySelector("#infoArticle2");
 const infoArticle3 = document.querySelector("#infoArticle3");
+const infoArticle4 = document.querySelector("#infoArticle4");
 const menuLogout = document.querySelector("#menuLogout");
 const menuHome = document.querySelector("#menuHome");
 
@@ -3897,6 +3898,11 @@ if (infoArticle2) {
 if (infoArticle3) {
   infoArticle3.onclick = function () {
     window.location.href = "artikel-wawancara.html";
+  };
+}
+if (infoArticle4) {
+  infoArticle4.onclick = function () {
+    window.location.href = "artikel-perusahaan.html";
   };
 }
 
