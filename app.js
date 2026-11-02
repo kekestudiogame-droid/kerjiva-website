@@ -3825,6 +3825,7 @@ const infoArticle2 = document.querySelector("#infoArticle2");
 const infoArticle3 = document.querySelector("#infoArticle3");
 const infoArticle4 = document.querySelector("#infoArticle4");
 const infoArticle5 = document.querySelector("#infoArticle5");
+const infoArticle6 = document.querySelector("#infoArticle6");
 const menuLogout = document.querySelector("#menuLogout");
 const menuHome = document.querySelector("#menuHome");
 
@@ -3909,6 +3910,11 @@ if (infoArticle4) {
 if (infoArticle5) {
   infoArticle5.onclick = function () {
     window.location.href = "artikel-hak-pencari-kerja.html";
+  };
+}
+if (infoArticle6) {
+  infoArticle6.onclick = function () {
+    window.location.href = "artikel-hindari-penipuan-lowongan.html";
   };
 }
 
