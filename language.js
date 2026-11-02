@@ -1095,8 +1095,28 @@
     "Kerjiva — Temukan peluang karier dengan lebih mudah dan bijak.":
       "Kerjiva — Discover career opportunities more easily and wisely.",
 
-    "© Kerjiva - Platform Karier Indonesia":
-      "© Kerjiva - Indonesian Career Platform"
+       "© Kerjiva - Platform Karier Indonesia":
+      "© Kerjiva - Indonesian Career Platform",
+
+    /* MENU PUSAT INFORMASI KERJIVA */
+
+    "Pusat Informasi Kerjiva":
+      "Kerjiva Information Center",
+
+    "2. Cara Membuat CV yang Menarik":
+      "2. How to Create an Attractive CV",
+
+    "3. Tips Menghadapi Wawancara Kerja":
+      "3. Job Interview Tips",
+
+    "4. Panduan Perusahaan Memasang Lowongan":
+      "4. Guide for Companies on Posting Jobs",
+
+    "5. Hak dan Kewajiban Pencari Kerja":
+      "5. Job Seekers' Rights and Responsibilities",
+
+    "6. Panduan Menghindari Penipuan Lowongan Kerja":
+      "6. Guide to Avoiding Job Scams"
 
   };
 
