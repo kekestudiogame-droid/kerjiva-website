@@ -3870,14 +3870,18 @@ if (menuSettings) {
     window.location.href = "settings.html";
   };
 }
+
 if (menuInformation && informationDropdown) {
-  menuInformation.onclick = function () {
+  menuInformation.onclick = function (e) {
+    e.stopPropagation();
+
     const isOpen = informationDropdown.style.display === "block";
 
     informationDropdown.style.display = isOpen ? "none" : "block";
     menuInformation.setAttribute("aria-expanded", String(!isOpen));
   };
 }
+
 if (infoArticle1) {
   infoArticle1.onclick = function () {
     window.location.href = "panduan-kerja-aman.html";
