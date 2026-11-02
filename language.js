@@ -941,7 +941,162 @@
       "Search again",
 
     "Muat ulang":
-      "Reload"
+      "Reload",
+       
+         /* =====================================================
+       PUSAT INFORMASI KERJIVA
+       ARTIKEL 1 — PANDUAN KERJA AMAN
+       ===================================================== */
+
+    "Panduan Mencari Pekerjaan yang Aman | Kerjiva":
+      "Safe Job Search Guide | Kerjiva",
+
+    "Panduan mencari pekerjaan yang aman, mengenali lowongan palsu, melindungi data pribadi, dan menghindari penipuan bersama Kerjiva.":
+      "A guide to finding safe jobs, identifying fake job listings, protecting personal data, and avoiding scams with Kerjiva.",
+
+    "Kerjiva - Halaman Utama":
+      "Kerjiva - Home",
+
+    "Logo Kerjiva":
+      "Kerjiva Logo",
+
+    "Panduan Aman Mencari Pekerjaan bersama Kerjiva":
+      "Safe Job Search Guide with Kerjiva",
+
+    "TIPS KARIER":
+      "CAREER TIPS",
+
+    "Panduan Mencari Pekerjaan yang Aman":
+      "Safe Job Search Guide",
+
+    "Cari kerja dengan cerdas, aman, dan waspada bersama Kerjiva.":
+      "Search for jobs wisely, safely, and carefully with Kerjiva.",
+
+    "Mencari pekerjaan merupakan langkah penting untuk":
+      "Finding a job is an important step toward",
+
+    "membangun masa depan. Namun, pencari kerja perlu":
+      "building your future. However, job seekers should",
+
+    "berhati-hati karena masih ada lowongan palsu dan":
+      "be careful because fake job listings and",
+
+    "berbagai modus penipuan yang dapat merugikan.":
+      "various scams can cause harm.",
+
+    "Agar proses mencari pekerjaan lebih aman, berikut":
+      "To make your job search safer, here are",
+
+    "beberapa panduan yang bisa diterapkan.":
+      "some practical guidelines you can follow.",
+
+    "1. Gunakan Platform Lowongan Kerja Terpercaya":
+      "1. Use a Trusted Job Platform",
+
+    "Cari informasi pekerjaan melalui platform yang":
+      "Find job opportunities through platforms that",
+
+    "memiliki informasi lowongan dan perusahaan yang jelas.":
+      "provide clear information about jobs and companies.",
+
+    "Baca seluruh deskripsi pekerjaan sebelum mengirimkan":
+      "Read the full job description before submitting",
+
+    "lamaran.":
+      "your application.",
+
+    "2. Periksa Identitas Perusahaan":
+      "2. Verify the Company's Identity",
+
+    "Pastikan nama perusahaan, alamat, situs web, dan":
+      "Make sure the company name, address, website, and",
+
+    "informasi kontaknya dapat ditemukan dan diperiksa.":
+      "contact information can be found and verified.",
+
+    "Jika ragu, hubungi perusahaan melalui saluran resmi":
+      "If in doubt, contact the company through the official channels",
+
+    "yang tercantum di situsnya.":
+      "listed on its website.",
+
+    "3. Waspadai Permintaan Biaya":
+      "3. Be Careful of Payment Requests",
+
+    "Berhati-hatilah jika ada pihak yang meminta uang untuk":
+      "Be cautious if anyone asks for money for",
+
+    "biaya pendaftaran, wawancara, pelatihan, administrasi,":
+      "registration, interviews, training, or administration fees,",
+
+    "atau menjanjikan pekerjaan dengan imbalan pembayaran.":
+      "or promises a job in exchange for payment.",
+
+    "Jangan terburu-buru melakukan transfer.":
+      "Do not rush into making a payment.",
+
+    "4. Lindungi Data Pribadi":
+      "4. Protect Your Personal Data",
+
+    "Jangan memberikan kata sandi, PIN, kode OTP, atau":
+      "Never share your password, PIN, OTP code, or",
+
+    "informasi rekening kepada pihak yang tidak berwenang.":
+      "bank account information with unauthorized parties.",
+
+    "Kirim dokumen pribadi hanya jika memang diperlukan":
+      "Only send personal documents when necessary",
+
+    "melalui proses rekrutmen yang dapat dipercaya.":
+      "through a trustworthy recruitment process.",
+
+    "5. Periksa Informasi Sebelum Menghadiri Wawancara":
+      "5. Verify Details Before Attending an Interview",
+
+    "Pastikan lokasi dan jadwal wawancara benar. Beri tahu":
+      "Make sure the interview location and schedule are correct. Inform",
+
+    "keluarga atau orang terdekat jika harus menghadiri":
+      "your family or someone close to you if you need to attend",
+
+    "wawancara secara langsung, terutama di lokasi yang":
+      "an in-person interview, especially at a location",
+
+    "belum dikenal.":
+      "you are unfamiliar with.",
+
+    "6. Jangan Mudah Tergiur Janji yang Tidak Masuk Akal":
+      "6. Be Wary of Unrealistic Promises",
+
+    "Waspadai tawaran gaji sangat tinggi dengan persyaratan":
+      "Be cautious of very high salary offers with",
+
+    "yang tidak jelas, proses penerimaan yang terlalu mudah,":
+      "unclear requirements, overly easy recruitment processes,",
+
+    "atau tekanan untuk segera mengambil keputusan.":
+      "or pressure to make an immediate decision.",
+
+    "Ingat!":
+      "Remember!",
+
+    "Kesempatan kerja yang baik tidak seharusnya":
+      "A genuine job opportunity should not require",
+
+    "mengharuskan pencari kerja menyerahkan uang atau":
+      "job seekers to hand over money or",
+
+    "data rahasia secara sembarangan. Selalu periksa":
+      "confidential information carelessly. Always verify",
+
+    "informasi sebelum mengambil keputusan.":
+      "the information before making a decision.",
+
+    "Kerjiva — Temukan peluang karier dengan lebih mudah dan bijak.":
+      "Kerjiva — Discover career opportunities more easily and wisely.",
+
+    "© Kerjiva - Platform Karier Indonesia":
+      "© Kerjiva - Indonesian Career Platform"
 
   };
 
