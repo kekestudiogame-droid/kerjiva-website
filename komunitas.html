@@ -379,6 +379,96 @@ function updateCommunityAccess(session) {
   communitySupabase.auth.onAuthStateChange((event, session) => {
     updateCommunityAccess(session);
   });
+
+    // ================= POSTING KOMUNITAS =================
+
+  communityPostButton.addEventListener("click", async function () {
+    const content = communityPostInput.value.trim();
+
+    if (!content) {
+      alert("Silakan tulis sesuatu sebelum posting.");
+      return;
+    }
+
+    if (content.length > 5000) {
+      alert("Postingan maksimal 5.000 karakter.");
+      return;
+    }
+
+    communityPostButton.disabled = true;
+    communityPostButton.textContent = "Memproses...";
+
+    try {
+      // Periksa session dan verifikasi email
+      const { data: sessionData, error: sessionError } =
+        await communitySupabase.auth.getSession();
+
+      if (sessionError || !sessionData.session) {
+        throw new Error("Silakan login terlebih dahulu.");
+      }
+
+      const user = sessionData.session.user;
+
+      if (!user.email_confirmed_at) {
+        throw new Error("Email harus diverifikasi sebelum membuat postingan.");
+      }
+
+      // Terjemahkan postingan melalui Edge Function Gemini
+      const { data: translation, error: translationError } =
+        await communitySupabase.functions.invoke(
+          "translate-community",
+          {
+            body: { content: content }
+          }
+        );
+
+      if (translationError) {
+        throw translationError;
+      }
+
+      if (
+        !translation ||
+        !translation.success ||
+        !translation.content_id ||
+        !translation.content_en
+      ) {
+        throw new Error("Hasil terjemahan tidak lengkap.");
+      }
+
+      // Simpan postingan ke Supabase
+      const { error: insertError } = await communitySupabase
+        .from("community_posts")
+        .insert({
+          user_id: user.id,
+          content: content,
+          content_id: translation.content_id,
+          content_en: translation.content_en
+        });
+
+      if (insertError) {
+        throw insertError;
+      }
+
+      alert("Postingan berhasil diterbitkan!");
+
+      communityPostInput.value = "";
+
+    } catch (error) {
+      console.error("Gagal membuat postingan:", error);
+      alert("Postingan belum berhasil dibuat: " + error.message);
+
+    } finally {
+      communityPostButton.textContent = "Posting";
+
+      const { data } = await communitySupabase.auth.getSession();
+
+      const canPost =
+        !!data.session &&
+        !!data.session.user.email_confirmed_at;
+
+      communityPostButton.disabled = !canPost;
+    }
+  });
 </script>
 
   <script src="language.js"></script>
