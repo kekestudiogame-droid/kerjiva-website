@@ -1,1 +1,306 @@
 
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <meta name="description" content="Komunitas Kerjiva adalah ruang berbagi pendapat, pengalaman, pertanyaan, dan masukan seputar dunia kerja.">
+
+  <title>Komunitas Kerjiva | Kerjiva</title>
+
+  <style>
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      font-family: Arial, Helvetica, sans-serif;
+      background: #f4f7fb;
+      color: #243247;
+      line-height: 1.7;
+    }
+
+    .header {
+      background: #ffffff;
+      border-bottom: 1px solid #e5eaf1;
+    }
+
+    .header-inner {
+      max-width: 1050px;
+      margin: 0 auto;
+      padding: 18px 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+    }
+
+    .logo {
+      display: block;
+      width: 175px;
+      max-width: 55%;
+      height: auto;
+    }
+
+    .back-link {
+      text-decoration: none;
+      color: #ffffff;
+      background: #174b85;
+      padding: 10px 17px;
+      border-radius: 8px;
+      font-size: 14px;
+      font-weight: bold;
+      white-space: nowrap;
+    }
+
+    .back-link:hover {
+      background: #f28c28;
+    }
+
+    .container {
+      max-width: 900px;
+      margin: 38px auto;
+      padding: 0 20px;
+    }
+
+    .community-card {
+      background: #ffffff;
+      border-radius: 16px;
+      padding: 34px 42px 40px;
+      box-shadow: 0 8px 28px rgba(25, 48, 79, 0.08);
+      margin-bottom: 22px;
+    }
+
+    .category {
+      display: inline-block;
+      margin: 0 0 12px;
+      color: #f28c00;
+      font-size: 12px;
+      font-weight: 800;
+      letter-spacing: 1.2px;
+    }
+
+    h1 {
+      margin: 0 0 10px;
+      color: #123f82;
+      font-size: 30px;
+      line-height: 1.25;
+    }
+
+    h2 {
+      margin: 0 0 10px;
+      color: #123f82;
+      font-size: 20px;
+    }
+
+    .subtitle {
+      margin: 0 0 24px;
+      color: #637187;
+      font-size: 16px;
+    }
+
+    .post-area {
+      width: 100%;
+      min-height: 125px;
+      resize: vertical;
+      padding: 15px;
+      border: 1px solid #dbe3ec;
+      border-radius: 9px;
+      font-family: inherit;
+      font-size: 14px;
+      line-height: 1.6;
+      outline: none;
+    }
+
+    .post-area:focus {
+      border-color: #174b85;
+    }
+
+    .post-area:disabled {
+      background: #f8fafc;
+      cursor: not-allowed;
+    }
+
+    .login-notice {
+      margin-top: 15px;
+      padding: 14px 16px;
+      background: #fff7ed;
+      border: 1px solid #fed7aa;
+      border-radius: 9px;
+      color: #9a5415;
+      font-size: 14px;
+    }
+
+    .login-button {
+      display: inline-block;
+      margin-top: 15px;
+      padding: 11px 20px;
+      border-radius: 8px;
+      background: #174b85;
+      color: #ffffff;
+      text-decoration: none;
+      font-size: 14px;
+      font-weight: bold;
+    }
+
+    .login-button:hover {
+      background: #f28c28;
+    }
+
+    .empty-state {
+      text-align: center;
+      padding: 35px 20px;
+      background: #f8fafc;
+      border: 1px dashed #cbd5e1;
+      border-radius: 10px;
+    }
+
+    .empty-icon {
+      font-size: 36px;
+      margin-bottom: 12px;
+    }
+
+    .empty-state h3 {
+      color: #174b85;
+      margin: 0 0 8px;
+      font-size: 18px;
+    }
+
+    .empty-state p {
+      color: #64748b;
+      margin: 0;
+      font-size: 14px;
+    }
+
+    .footer {
+      padding: 22px 16px;
+      color: #718096;
+      text-align: center;
+      font-size: 13px;
+    }
+
+    @media (max-width: 600px) {
+      .header-inner {
+        padding: 14px 16px;
+      }
+
+      .logo {
+        width: 145px;
+      }
+
+      .back-link {
+        padding: 8px 11px;
+        font-size: 12px;
+      }
+
+      .container {
+        margin: 22px auto;
+        padding: 0 12px;
+      }
+
+      .community-card {
+        padding: 25px 21px 30px;
+        border-radius: 12px;
+      }
+
+      h1 {
+        font-size: 25px;
+      }
+
+      h2 {
+        font-size: 18px;
+      }
+
+      .subtitle {
+        font-size: 15px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <header class="header">
+    <div class="header-inner">
+      <a href="index.html" aria-label="Kerjiva - Beranda">
+        <img
+          src="kerjiva.png"
+          alt="Kerjiva - Your Career, Your Future"
+          class="logo"
+        >
+      </a>
+
+      <a href="index.html" class="back-link">
+        ← Kembali ke Kerjiva
+      </a>
+    </div>
+  </header>
+
+  <main class="container">
+
+    <section class="community-card">
+
+      <div class="category">KOMUNITAS KERJIVA</div>
+
+      <h1>Komunitas Kerjiva</h1>
+
+      <p class="subtitle">
+        Berbagi pendapat, pengalaman, pertanyaan, dan masukan.
+        Mari saling mendukung dan bertumbuh bersama untuk
+        membangun perjalanan karier yang lebih baik.
+      </p>
+
+      <h2>Apa yang ingin kamu bagikan?</h2>
+
+      <p>
+        Sampaikan pengalaman, pendapat, pertanyaan, kritik,
+        saran, atau ide kamu seputar dunia kerja dan Kerjiva.
+      </p>
+
+      <textarea
+        class="post-area"
+        placeholder="Tulis sesuatu yang ingin kamu bagikan..."
+        disabled
+      ></textarea>
+
+      <div class="login-notice">
+        Untuk membuat postingan dan memberikan komentar,
+        silakan masuk ke akun Kerjiva terlebih dahulu.
+      </div>
+
+      <a href="index.html" class="login-button">
+        Masuk ke Kerjiva
+      </a>
+
+    </section>
+
+    <section class="community-card">
+
+      <h2>Postingan Komunitas</h2>
+
+      <div class="empty-state">
+
+        <div class="empty-icon">💬</div>
+
+        <h3>Selamat Datang di Komunitas Kerjiva</h3>
+
+        <p>
+          Ruang berbagi dan berdiskusi bersama akan segera hadir.
+          Nantikan perkembangan Komunitas Kerjiva!
+        </p>
+
+      </div>
+
+    </section>
+
+  </main>
+
+  <footer class="footer">
+    © Kerjiva - Platform Karier Indonesia
+  </footer>
+
+  <script src="language.js"></script>
+
+</body>
+</html>
+
