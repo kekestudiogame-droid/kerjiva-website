@@ -3818,6 +3818,8 @@ const menuCompanies = document.querySelector("#menuCompanies");
 const menuHelp = document.querySelector("#menuHelp");
 const menuPayment = document.querySelector("#menuPayment");
 const menuSettings = document.querySelector("#menuSettings");
+const menuInformation = document.querySelector("#menuInformation");
+const informationDropdown = document.querySelector("#informationDropdown");
 const menuLogout = document.querySelector("#menuLogout");
 const menuHome = document.querySelector("#menuHome");
 
@@ -3865,6 +3867,14 @@ if (menuPayment) {
 if (menuSettings) {
   menuSettings.onclick = function () {
     window.location.href = "settings.html";
+  };
+}
+if (menuInformation && informationDropdown) {
+  menuInformation.onclick = function () {
+    const isOpen = informationDropdown.style.display === "block";
+
+    informationDropdown.style.display = isOpen ? "none" : "block";
+    menuInformation.setAttribute("aria-expanded", String(!isOpen));
   };
 }
 
