@@ -3824,6 +3824,7 @@ const infoArticle1 = document.querySelector("#infoArticle1");
 const infoArticle2 = document.querySelector("#infoArticle2");
 const infoArticle3 = document.querySelector("#infoArticle3");
 const infoArticle4 = document.querySelector("#infoArticle4");
+const infoArticle5 = document.querySelector("#infoArticle5");
 const menuLogout = document.querySelector("#menuLogout");
 const menuHome = document.querySelector("#menuHome");
 
@@ -3903,6 +3904,11 @@ if (infoArticle3) {
 if (infoArticle4) {
   infoArticle4.onclick = function () {
     window.location.href = "artikel-perusahaan.html";
+  };
+}
+if (infoArticle5) {
+  infoArticle5.onclick = function () {
+    window.location.href = "artikel-hak-pencari-kerja.html";
   };
 }
 
