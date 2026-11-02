@@ -3821,6 +3821,7 @@ const menuSettings = document.querySelector("#menuSettings");
 const menuInformation = document.querySelector("#menuInformation");
 const informationDropdown = document.querySelector("#informationDropdown");
 const infoArticle1 = document.querySelector("#infoArticle1");
+const infoArticle2 = document.querySelector("#infoArticle2");
 const menuLogout = document.querySelector("#menuLogout");
 const menuHome = document.querySelector("#menuHome");
 
@@ -3885,6 +3886,11 @@ if (menuInformation && informationDropdown) {
 if (infoArticle1) {
   infoArticle1.onclick = function () {
     window.location.href = "panduan-kerja-aman.html";
+  };
+}
+if (infoArticle2) {
+  infoArticle2.onclick = function () {
+    window.location.href = "artikel-cv.html";
   };
 }
 
