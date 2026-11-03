@@ -286,6 +286,88 @@
   Masuk ke Kerjiva
 </a>
 
+       </section>
+
+    <!-- RATING & ULASAN KERJIVA -->
+    <section class="community-card" id="communityReviewsSection">
+
+      <h2>Rating & Ulasan Kerjiva</h2>
+
+      <p style="color:#64748b; margin-bottom:16px;">
+        Bagikan pengalamanmu menggunakan Kerjiva dan bantu pengguna lain mengenal Kerjiva.
+      </p>
+
+      <div style="
+        padding:18px;
+        background:#f8fafc;
+        border:1px solid #e5eaf1;
+        border-radius:12px;
+        margin-bottom:20px;
+      ">
+        <div id="communityAverageRating"
+          style="font-size:28px;font-weight:bold;color:#172b4d;">
+          0.0 / 5
+        </div>
+
+        <div id="communityAverageStars"
+          style="color:#f5a623;font-size:22px;">
+          ☆☆☆☆☆
+        </div>
+
+        <small id="communityReviewCount" style="color:#8491a3;">
+          Belum ada ulasan
+        </small>
+      </div>
+
+      <div id="communityReviewForm">
+
+        <h3>Beri Penilaian untuk Kerjiva</h3>
+
+        <p style="color:#64748b;font-size:14px;">
+          Berapa bintang yang ingin kamu berikan?
+        </p>
+
+        <div id="communityRatingInput"
+          style="display:flex;gap:8px;margin-bottom:16px;">
+
+          <button type="button" data-rating="1" aria-label="1 bintang">☆</button>
+          <button type="button" data-rating="2" aria-label="2 bintang">☆</button>
+          <button type="button" data-rating="3" aria-label="3 bintang">☆</button>
+          <button type="button" data-rating="4" aria-label="4 bintang">☆</button>
+          <button type="button" data-rating="5" aria-label="5 bintang">☆</button>
+
+        </div>
+
+        <textarea
+          id="communityReviewInput"
+          class="post-area"
+          maxlength="2000"
+          placeholder="Ceritakan pengalamanmu menggunakan Kerjiva..."
+          disabled
+        ></textarea>
+
+        <button
+          type="button"
+          id="communityReviewButton"
+          class="login-button"
+          disabled
+        >
+          Kirim Ulasan
+        </button>
+
+        <p id="communityReviewNotice"
+          class="login-notice">
+          Silakan masuk ke akun Kerjiva yang sudah terverifikasi untuk memberikan rating dan ulasan.
+        </p>
+
+      </div>
+
+      <div id="communityReviewsList" style="margin-top:24px;">
+        <p style="text-align:center;color:#64748b;">
+          Memuat ulasan...
+        </p>
+      </div>
+
     </section>
 
   <section class="community-card">
