@@ -349,19 +349,20 @@
 // ================= MEMUAT POSTINGAN PUBLIK =================
 
 
+
 async function loadCommunityPosts() {
   communityPostsList.innerHTML =
     '<p style="text-align:center;color:#64748b;">Memuat postingan...</p>';
 
   try {
-    const { data: posts, error } = await communitySupabase
+    const { data: posts, error: postsError } = await communitySupabase
       .from("community_posts")
-      .select("id, content, content_id, content_en, created_at")
+      .select("id, user_id, content, content_id, content_en, created_at")
       .eq("is_hidden", false)
       .order("created_at", { ascending: false });
 
-    if (error) {
-      throw error;
+    if (postsError) {
+      throw postsError;
     }
 
     const language =
@@ -384,6 +385,21 @@ async function loadCommunityPosts() {
       return;
     }
 
+    const userIds = [...new Set(posts.map(post => post.user_id))];
+
+    const { data: authors, error: authorsError } = await communitySupabase
+      .from("community_public_authors")
+      .select("user_id, author_name, author_type")
+      .in("user_id", userIds);
+
+    if (authorsError) {
+      throw authorsError;
+    }
+
+    const authorMap = new Map(
+      (authors || []).map(author => [author.user_id, author])
+    );
+
     communityPostsList.innerHTML = "";
 
     posts.forEach(function (post) {
@@ -397,8 +413,40 @@ async function loadCommunityPosts() {
         border-radius: 12px;
       `;
 
-      const postContent = document.createElement("p");
+      const author = authorMap.get(post.user_id);
 
+      const authorName = document.createElement("strong");
+      authorName.style.cssText = `
+        display: block;
+        margin-bottom: 12px;
+        color: #172b4d;
+        font-size: 14px;
+      `;
+
+      authorName.textContent = author
+        ? author.author_name
+        : (language === "en" ? "Kerjiva User" : "Pengguna Kerjiva");
+
+      const authorType = document.createElement("small");
+      authorType.style.cssText = `
+        display: block;
+        margin-top: 3px;
+        color: #8491a3;
+        font-size: 11px;
+        font-weight: normal;
+      `;
+
+      authorType.textContent = author
+        ? (
+            author.author_type === "company"
+              ? (language === "en" ? "Company" : "Perusahaan")
+              : (language === "en" ? "Job Seeker" : "Pencari Kerja")
+          )
+        : "";
+
+      authorName.appendChild(authorType);
+
+      const postContent = document.createElement("p");
       postContent.style.cssText = `
         margin: 0;
         color: #243247;
@@ -413,7 +461,6 @@ async function loadCommunityPosts() {
           : (post.content_id || post.content);
 
       const postDate = document.createElement("small");
-
       postDate.style.cssText = `
         display: block;
         margin-top: 14px;
@@ -427,6 +474,7 @@ async function loadCommunityPosts() {
           timeStyle: "short"
         });
 
+      postCard.appendChild(authorName);
       postCard.appendChild(postContent);
       postCard.appendChild(postDate);
       communityPostsList.appendChild(postCard);
