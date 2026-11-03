@@ -245,150 +245,118 @@
       </a>
     </div>
   </header>
-
-  <main class="container">
-
-  
-       <section class="community-card">
-
-      <h1>Komunitas Kerjiva</h1>
-
-      <p class="subtitle">Berbagi pendapat, pengalaman, pertanyaan, dan masukan. Mari saling mendukung dan bertumbuh bersama untuk membangun perjalanan karier yang lebih baik.</p>
-
-      <h2>Apa yang ingin kamu bagikan?</h2>
-
-      <p>Sampaikan pengalaman, pendapat, pertanyaan, kritik, saran, atau ide kamu seputar dunia kerja dan Kerjiva.</p>
-
-   <textarea
-  id="communityPostInput"
-  class="post-area"
-  placeholder="Tulis sesuatu yang ingin kamu bagikan..."
-  disabled
-></textarea>
-         <button
-  type="button"
-  id="communityPostButton"
-  class="login-button"
-  disabled
->
-  Posting
-</button>
-
-<div id="communityLoginNotice" class="login-notice">
-  Untuk membuat postingan dan memberikan komentar, silakan masuk ke akun Kerjiva terlebih dahulu.
-</div>
-
-<a
-  href="index.html"
-  id="communityLoginButton"
-  class="login-button"
->
-  Masuk ke Kerjiva
-</a>
-
-       </section>
-
-    <!-- RATING & ULASAN KERJIVA -->
-    <section class="community-card" id="communityReviewsSection">
-
-      <h2>Rating & Ulasan Kerjiva</h2>
-
-      <p style="color:#64748b; margin-bottom:16px;">
-        Bagikan pengalamanmu menggunakan Kerjiva dan bantu pengguna lain mengenal Kerjiva.
-      </p>
-
-      <div style="
-        padding:18px;
-        background:#f8fafc;
-        border:1px solid #e5eaf1;
-        border-radius:12px;
-        margin-bottom:20px;
-      ">
-        <div id="communityAverageRating"
-          style="font-size:28px;font-weight:bold;color:#172b4d;">
-          0.0 / 5
-        </div>
-
-        <div id="communityAverageStars"
-          style="color:#f5a623;font-size:22px;">
-          ☆☆☆☆☆
-        </div>
-
-        <small id="communityReviewCount" style="color:#8491a3;">
-          Belum ada ulasan
-        </small>
-      </div>
-
-      <div id="communityReviewForm">
-
-        <h3>Beri Penilaian untuk Kerjiva</h3>
-
-        <p style="color:#64748b;font-size:14px;">
-          Berapa bintang yang ingin kamu berikan?
-        </p>
-
-        <div id="communityRatingInput"
-          style="display:flex;gap:8px;margin-bottom:16px;">
-
-          <button type="button" data-rating="1" aria-label="1 bintang">☆</button>
-          <button type="button" data-rating="2" aria-label="2 bintang">☆</button>
-          <button type="button" data-rating="3" aria-label="3 bintang">☆</button>
-          <button type="button" data-rating="4" aria-label="4 bintang">☆</button>
-          <button type="button" data-rating="5" aria-label="5 bintang">☆</button>
-
-        </div>
-
-        <textarea
-          id="communityReviewInput"
-          class="post-area"
-          maxlength="2000"
-          placeholder="Ceritakan pengalamanmu menggunakan Kerjiva..."
-          disabled
-        ></textarea>
-
-        <button
-          type="button"
-          id="communityReviewButton"
-          class="login-button"
-          disabled
-        >
-          Kirim Ulasan
-        </button>
-
-        <p id="communityReviewNotice"
-          class="login-notice">
-          Silakan masuk ke akun Kerjiva yang sudah terverifikasi untuk memberikan rating dan ulasan.
-        </p>
-
-      </div>
-
-      <div id="communityReviewsList" style="margin-top:24px;">
-        <p style="text-align:center;color:#64748b;">
-          Memuat ulasan...
-        </p>
-      </div>
-
-    </section>
+<main class="container">
 
   <section class="community-card">
 
-  <h2>Postingan Komunitas</h2>
+    <h1>Komunitas Kerjiva</h1>
 
-  <div id="communityPostsList">
+    <p class="subtitle">
+      Berbagi pendapat, pengalaman, pertanyaan, dan masukan.
+      Mari saling mendukung dan bertumbuh bersama.
+    </p>
 
-    <div class="empty-state">
-      <div class="empty-icon">💬</div>
+    <div style="
+      padding:18px;
+      margin:20px 0;
+      background:#f8fafc;
+      border:1px solid #e5eaf1;
+      border-radius:12px;
+    ">
+      <h3 style="margin:0 0 8px;color:#172b4d;">
+        Penilaian Komunitas
+      </h3>
 
-      <h3>Selamat Datang di Komunitas Kerjiva</h3>
+      <div id="communityAverageRating"
+        style="font-size:26px;font-weight:bold;color:#172b4d;">
+        0.0 / 5
+      </div>
 
-      <p>Belum ada postingan. Jadilah yang pertama berbagi bersama komunitas!</p>
+      <div id="communityAverageStars"
+        style="color:#f5a623;font-size:21px;">
+        ☆☆☆☆☆
+      </div>
+
+      <small id="communityReviewCount" style="color:#8491a3;">
+        Belum ada penilaian
+      </small>
     </div>
 
-  </div>
+    <h2>Apa yang ingin kamu bagikan?</h2>
 
-</section>
-  </main>
+    <p>
+      Sampaikan pengalaman, pendapat, pertanyaan, kritik,
+      saran, ide, atau ulasanmu seputar dunia kerja dan Kerjiva.
+    </p>
 
+    <textarea
+      id="communityPostInput"
+      class="post-area"
+      maxlength="5000"
+      placeholder="Tulis sesuatu yang ingin kamu bagikan..."
+      disabled
+    ></textarea>
+
+    <div style="margin:16px 0;">
+      <p style="margin-bottom:8px;font-weight:600;color:#172b4d;">
+        Beri rating untuk Kerjiva (opsional)
+      </p>
+
+      <div id="communityRatingInput"
+        style="display:flex;gap:8px;align-items:center;">
+
+        <button type="button" data-rating="1" aria-label="1 bintang">☆</button>
+        <button type="button" data-rating="2" aria-label="2 bintang">☆</button>
+        <button type="button" data-rating="3" aria-label="3 bintang">☆</button>
+        <button type="button" data-rating="4" aria-label="4 bintang">☆</button>
+        <button type="button" data-rating="5" aria-label="5 bintang">☆</button>
+
+      </div>
+    </div>
+
+    <button
+      type="button"
+      id="communityPostButton"
+      class="login-button"
+      disabled
+    >
+      Posting
+    </button>
+
+    <div id="communityLoginNotice" class="login-notice">
+      Untuk membuat postingan dan memberikan rating,
+      silakan masuk ke akun Kerjiva terlebih dahulu.
+    </div>
+
+    <a
+      href="index.html"
+      id="communityLoginButton"
+      class="login-button"
+    >
+      Masuk ke Kerjiva
+    </a>
+
+  </section>
+
+  <section class="community-card">
+
+    <h2>Postingan Komunitas</h2>
+
+    <div id="communityPostsList">
+      <div class="empty-state">
+        <div class="empty-icon">💬</div>
+        <h3>Selamat Datang di Komunitas Kerjiva</h3>
+        <p>
+          Belum ada postingan. Jadilah yang pertama berbagi
+          bersama komunitas!
+        </p>
+      </div>
+    </div>
+
+  </section>
+
+</main>
+ 
   <footer class="footer">
     © Kerjiva - Platform Karier Indonesia
   </footer>
@@ -429,156 +397,60 @@
   const communityPostsList =
   document.getElementById("communityPostsList");
   
-    // ================= RATING & ULASAN KERJIVA =================
+  // ================= RATING KOMUNITAS =================
 
-  const communityReviewInput =
-    document.getElementById("communityReviewInput");
+const communityRatingInput =
+  document.getElementById("communityRatingInput");
 
-  const communityReviewButton =
-    document.getElementById("communityReviewButton");
+const communityAverageRating =
+  document.getElementById("communityAverageRating");
 
-  const communityReviewNotice =
-    document.getElementById("communityReviewNotice");
+const communityAverageStars =
+  document.getElementById("communityAverageStars");
 
-  const communityRatingInput =
-    document.getElementById("communityRatingInput");
+const communityReviewCount =
+  document.getElementById("communityReviewCount");
 
-  const communityReviewsList =
-    document.getElementById("communityReviewsList");
+let selectedCommunityRating = 0;
 
-  let selectedCommunityRating = 0;
+const ratingStars =
+  communityRatingInput.querySelectorAll("button[data-rating]");
 
-  const ratingStars =
-    communityRatingInput.querySelectorAll("button[data-rating]");
+ratingStars.forEach(function (star) {
+  star.style.cssText = `
+    border: none;
+    background: transparent;
+    color: #f5a623;
+    font-size: 30px;
+    cursor: pointer;
+    padding: 0;
+  `;
 
-  ratingStars.forEach(function (star) {
-    star.style.cssText = `
-      border: none;
-      background: transparent;
-      color: #f5a623;
-      font-size: 32px;
-      cursor: pointer;
-      padding: 0;
-    `;
+  star.addEventListener("click", function () {
+    selectedCommunityRating = Number(star.dataset.rating);
 
-    star.addEventListener("click", function () {
-      selectedCommunityRating = Number(star.dataset.rating);
-
-      ratingStars.forEach(function (item) {
-        const rating = Number(item.dataset.rating);
-
-        item.textContent =
-          rating <= selectedCommunityRating ? "★" : "☆";
-      });
+    ratingStars.forEach(function (item) {
+      const rating = Number(item.dataset.rating);
+      item.textContent =
+        rating <= selectedCommunityRating ? "★" : "☆";
     });
   });
+});
 
-    // ================= MENYIMPAN RATING & ULASAN =================
-
-  communityReviewButton.addEventListener("click", async function () {
-    const content = communityReviewInput.value.trim();
-
-    if (selectedCommunityRating < 1 || selectedCommunityRating > 5) {
-      alert("Silakan pilih rating bintang 1 sampai 5.");
-      return;
-    }
-
-    if (!content) {
-      alert("Silakan tulis ulasan terlebih dahulu.");
-      return;
-    }
-
-    if (content.length > 2000) {
-      alert("Ulasan maksimal 2.000 karakter.");
-      return;
-    }
-
-    communityReviewButton.disabled = true;
-    communityReviewButton.textContent = "Memproses...";
-
-    try {
-      const { data: sessionData, error: sessionError } =
-        await communitySupabase.auth.getSession();
-
-      if (sessionError || !sessionData.session) {
-        throw new Error("Silakan masuk ke akun Kerjiva terlebih dahulu.");
-      }
-
-      const user = sessionData.session.user;
-
-      if (!user.email_confirmed_at) {
-        throw new Error(
-          "Email harus diverifikasi sebelum memberikan rating dan ulasan."
-        );
-      }
-
-      const { error: reviewError } = await communitySupabase
-        .from("community_reviews")
-        .upsert(
-          {
-            user_id: user.id,
-            rating: selectedCommunityRating,
-            content: content,
-            updated_at: new Date().toISOString()
-          },
-          {
-            onConflict: "user_id"
-          }
-        );
-
-      if (reviewError) {
-        throw reviewError;
-      }
-
-      alert("Rating dan ulasan berhasil disimpan!");
-      await loadCommunityReviews();
-
-      communityReviewInput.value = "";
-
-      selectedCommunityRating = 0;
-
-      ratingStars.forEach(function (star) {
-        star.textContent = "☆";
-      });
-
-    } catch (error) {
-      console.error("Gagal menyimpan ulasan:", error);
-      alert("Ulasan belum berhasil disimpan: " + error.message);
-
-    } finally {
-      communityReviewButton.textContent = "Kirim Ulasan";
-
-      const { data } = await communitySupabase.auth.getSession();
-
-      const canReview =
-        !!data.session &&
-        !!data.session.user.email_confirmed_at;
-
-      communityReviewButton.disabled = !canReview;
-    }
-  });
-
-  // ================= MEMUAT RATING & ULASAN KERJIVA =================
-
-async function loadCommunityReviews() {
-  communityReviewsList.innerHTML =
-    '<p style="text-align:center;color:#64748b;">Memuat ulasan...</p>';
-
+async function loadCommunityRatingSummary() {
   try {
-    const { data: reviews, error } = await communitySupabase
-      .from("community_reviews")
-      .select("id, user_id, rating, content, created_at")
-      .order("created_at", { ascending: false });
+    const { data: ratings, error } = await communitySupabase
+      .from("community_posts")
+      .select("rating")
+      .eq("is_hidden", false)
+      .not("rating", "is", null);
 
     if (error) throw error;
 
-    const language =
-      localStorage.getItem("siteLanguage") === "en" ? "en" : "id";
+    const totalRatings = ratings ? ratings.length : 0;
 
-    const totalReviews = reviews ? reviews.length : 0;
-
-    const averageRating = totalReviews
-      ? reviews.reduce((sum, review) => sum + review.rating, 0) / totalReviews
+    const averageRating = totalRatings
+      ? ratings.reduce((sum, item) => sum + item.rating, 0) / totalRatings
       : 0;
 
     communityAverageRating.textContent =
@@ -587,117 +459,23 @@ async function loadCommunityReviews() {
     const roundedAverage = Math.round(averageRating);
 
     communityAverageStars.textContent =
-      "★".repeat(roundedAverage) + "☆".repeat(5 - roundedAverage);
+      "★".repeat(roundedAverage) +
+      "☆".repeat(5 - roundedAverage);
+
+    const language =
+      localStorage.getItem("siteLanguage") === "en" ? "en" : "id";
 
     communityReviewCount.textContent = language === "en"
-      ? totalReviews + (totalReviews === 1 ? " review" : " reviews")
-      : totalReviews + " ulasan";
-
-    if (!totalReviews) {
-      communityReviewsList.innerHTML =
-        `<p style="text-align:center;color:#64748b;">
-          ${language === "en"
-            ? "No reviews yet."
-            : "Belum ada ulasan."}
-        </p>`;
-      return;
-    }
-
-    const userIds = [...new Set(reviews.map(review => review.user_id))];
-
-    const { data: authors, error: authorsError } = await communitySupabase
-      .from("community_public_authors")
-      .select("user_id, author_name, author_type")
-      .in("user_id", userIds);
-
-    if (authorsError) throw authorsError;
-
-    const authorMap = new Map(
-      (authors || []).map(author => [author.user_id, author])
-    );
-
-    communityReviewsList.innerHTML = "";
-
-    reviews.forEach(function (review) {
-      const card = document.createElement("article");
-
-      card.style.cssText = `
-        padding: 18px;
-        margin-bottom: 14px;
-        background: #ffffff;
-        border: 1px solid #e5eaf1;
-        border-radius: 12px;
-      `;
-
-      const author = authorMap.get(review.user_id);
-
-      const name = document.createElement("strong");
-      name.style.cssText = "display:block;color:#172b4d;font-size:14px;";
-      name.textContent = author
-        ? author.author_name
-        : (language === "en" ? "Kerjiva User" : "Pengguna Kerjiva");
-
-      const type = document.createElement("small");
-      type.style.cssText = "display:block;margin-top:3px;color:#8491a3;font-size:11px;";
-      type.textContent = author
-        ? (author.author_type === "company"
-            ? (language === "en" ? "Company" : "Perusahaan")
-            : (language === "en" ? "Job Seeker" : "Pencari Kerja"))
-        : "";
-
-      name.appendChild(type);
-
-      const content = document.createElement("p");
-      content.style.cssText = `
-        margin: 12px 0;
-        color: #243247;
-        font-size: 14px;
-        white-space: pre-wrap;
-        overflow-wrap: anywhere;
-      `;
-      content.textContent = review.content;
-
-      const footer = document.createElement("div");
-      footer.style.cssText = `
-        display: flex;
-        align-items: center;
-        flex-wrap: wrap;
-        gap: 10px;
-      `;
-
-      const date = document.createElement("small");
-      date.style.cssText = "color:#8491a3;font-size:12px;";
-      date.textContent = new Date(review.created_at).toLocaleString("id-ID", {
-        dateStyle: "medium",
-        timeStyle: "short"
-      });
-
-      const stars = document.createElement("span");
-      stars.style.cssText = "color:#f5a623;font-size:16px;";
-      stars.textContent =
-        "★".repeat(review.rating) + "☆".repeat(5 - review.rating);
-
-      footer.appendChild(date);
-      footer.appendChild(stars);
-
-      card.appendChild(name);
-      card.appendChild(content);
-      card.appendChild(footer);
-
-      communityReviewsList.appendChild(card);
-    });
+      ? totalRatings + (totalRatings === 1 ? " rating" : " ratings")
+      : totalRatings + " penilaian";
 
   } catch (error) {
-    console.error("Gagal memuat rating dan ulasan:", error);
-
-    communityReviewsList.innerHTML =
-      '<p style="text-align:center;color:#b42318;">Rating dan ulasan belum dapat dimuat.</p>';
+    console.error("Gagal memuat ringkasan rating:", error);
   }
 }
 
-// Muat rating dan ulasan saat halaman dibuka
-loadCommunityReviews();
-
+loadCommunityRatingSummary();
+  
 // ================= MEMUAT POSTINGAN PUBLIK =================
 
 
@@ -709,7 +487,7 @@ async function loadCommunityPosts() {
   try {
     const { data: posts, error: postsError } = await communitySupabase
       .from("community_posts")
-      .select("id, user_id, content, content_id, content_en, created_at")
+      .select("id, user_id, content, content_id, content_en, rating, created_at")
       .eq("is_hidden", false)
       .order("created_at", { ascending: false });
 
@@ -812,24 +590,52 @@ async function loadCommunityPosts() {
           ? (post.content_en || post.content)
           : (post.content_id || post.content);
 
-      const postDate = document.createElement("small");
-      postDate.style.cssText = `
-        display: block;
-        margin-top: 14px;
-        color: #8491a3;
-        font-size: 12px;
-      `;
+   const postFooter = document.createElement("div");
 
-      postDate.textContent = new Date(post.created_at)
-        .toLocaleString("id-ID", {
-          dateStyle: "medium",
-          timeStyle: "short"
-        });
+postFooter.style.cssText = `
+  display:flex;
+  align-items:center;
+  flex-wrap:wrap;
+  gap:10px;
+  margin-top:14px;
+`;
 
-      postCard.appendChild(authorName);
-      postCard.appendChild(postContent);
-      postCard.appendChild(postDate);
-      communityPostsList.appendChild(postCard);
+const postDate = document.createElement("small");
+
+postDate.style.cssText = `
+  color:#8491a3;
+  font-size:12px;
+`;
+
+postDate.textContent = new Date(post.created_at)
+  .toLocaleString("id-ID", {
+    dateStyle: "medium",
+    timeStyle: "short"
+  });
+
+postFooter.appendChild(postDate);
+
+if (post.rating !== null && post.rating !== undefined) {
+  const postRating = document.createElement("span");
+
+  postRating.style.cssText = `
+    color:#f5a623;
+    font-size:15px;
+  `;
+
+  postRating.textContent =
+    "★".repeat(post.rating) +
+    "☆".repeat(5 - post.rating);
+
+  postFooter.appendChild(postRating);
+}
+
+postCard.appendChild(authorName);
+postCard.appendChild(postContent);
+postCard.appendChild(postFooter);
+
+communityPostsList.appendChild(postCard);
+    
     });
 
   } catch (error) {
@@ -845,8 +651,7 @@ loadCommunityPosts();
 
 function updateCommunityAccess(session) {
   const isLoggedIn = !!session;
-  const isVerified =
-    !!session?.user?.email_confirmed_at;
+  const isVerified = !!session?.user?.email_confirmed_at;
 
   if (isLoggedIn && isVerified) {
     communityPostInput.disabled = false;
@@ -854,26 +659,15 @@ function updateCommunityAccess(session) {
     communityLoginNotice.style.display = "none";
     communityLoginButton.style.display = "none";
 
-    communityReviewInput.disabled = false;
-    communityReviewButton.disabled = false;
-    communityReviewNotice.style.display = "none";
-
   } else {
     communityPostInput.disabled = true;
     communityPostButton.disabled = true;
     communityLoginNotice.style.display = "block";
     communityLoginButton.style.display = "inline-block";
 
-    communityReviewInput.disabled = true;
-    communityReviewButton.disabled = true;
-    communityReviewNotice.style.display = "block";
-
     if (isLoggedIn && !isVerified) {
       communityLoginNotice.textContent =
-        "Silakan verifikasi email akun Kerjiva terlebih dahulu sebelum membuat postingan atau komentar.";
-
-      communityReviewNotice.textContent =
-        "Silakan verifikasi email akun Kerjiva terlebih dahulu sebelum memberikan rating dan ulasan.";
+        "Silakan verifikasi email akun Kerjiva terlebih dahulu sebelum membuat postingan.";
     }
   }
 }
@@ -948,13 +742,14 @@ function updateCommunityAccess(session) {
 
       // Simpan postingan ke Supabase
       const { error: insertError } = await communitySupabase
-        .from("community_posts")
-        .insert({
-          user_id: user.id,
-          content: content,
-          content_id: translation.content_id,
-          content_en: translation.content_en
-        });
+       .from("community_posts")
+       .insert({
+        user_id: user.id,
+        content: content,
+        content_id: translation.content_id,
+        content_en: translation.content_en,
+       rating: selectedCommunityRating || null
+       });
 
       if (insertError) {
         throw insertError;
@@ -963,6 +758,14 @@ function updateCommunityAccess(session) {
       alert("Postingan berhasil diterbitkan!");
 
       communityPostInput.value = "";
+      selectedCommunityRating = 0;
+
+     ratingStars.forEach(function (star) {
+     star.textContent = "☆";
+     });
+
+     await loadCommunityPosts();
+     await loadCommunityRatingSummary();
 
     } catch (error) {
       console.error("Gagal membuat postingan:", error);
