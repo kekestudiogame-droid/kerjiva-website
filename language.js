@@ -1853,30 +1853,29 @@
        ID → EN
        ===================================================== */
 
-    if (language === "en") {
+   if (language === "en") {
 
-      const trimmed = value.trim();
+  const trimmed = value.trim();
+  const normalized = trimmed.replace(/\s+/g, " ");
 
-      if (
-        GLOBAL_TRANSLATIONS[trimmed]
-      ) {
+  if (GLOBAL_TRANSLATIONS[normalized]) {
 
-        const translated =
-          GLOBAL_TRANSLATIONS[trimmed];
+    const translated =
+      GLOBAL_TRANSLATIONS[normalized];
 
-        const leading =
-          value.match(/^\s*/)?.[0] || "";
+    const leading =
+      value.match(/^\s*/)?.[0] || "";
 
-        const trailing =
-          value.match(/\s*$/)?.[0] || "";
+    const trailing =
+      value.match(/\s*$/)?.[0] || "";
 
-        return (
-          leading +
-          translated +
-          trailing
-        );
+    return (
+      leading +
+      translated +
+      trailing
+    );
 
-      }
+  }
              if (EN_TO_ID[trimmed]) {
                   return value;
                }
