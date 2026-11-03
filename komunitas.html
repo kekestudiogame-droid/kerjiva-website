@@ -348,6 +348,7 @@
 
 // ================= MEMUAT POSTINGAN PUBLIK =================
 
+
 async function loadCommunityPosts() {
   communityPostsList.innerHTML =
     '<p style="text-align:center;color:#64748b;">Memuat postingan...</p>';
@@ -355,7 +356,7 @@ async function loadCommunityPosts() {
   try {
     const { data: posts, error } = await communitySupabase
       .from("community_posts")
-      .select("id, content, created_at")
+      .select("id, content, content_id, content_en, created_at")
       .eq("is_hidden", false)
       .order("created_at", { ascending: false });
 
@@ -363,12 +364,21 @@ async function loadCommunityPosts() {
       throw error;
     }
 
+    const language =
+      localStorage.getItem("siteLanguage") === "en"
+        ? "en"
+        : "id";
+
     if (!posts || posts.length === 0) {
       communityPostsList.innerHTML = `
         <div class="empty-state">
           <div class="empty-icon">💬</div>
-          <h3>Selamat Datang di Komunitas Kerjiva</h3>
-          <p>Belum ada postingan. Jadilah yang pertama berbagi bersama komunitas!</p>
+          <h3>${language === "en"
+            ? "Welcome to the Kerjiva Community"
+            : "Selamat Datang di Komunitas Kerjiva"}</h3>
+          <p>${language === "en"
+            ? "No posts yet. Be the first to share with the community!"
+            : "Belum ada postingan. Jadilah yang pertama berbagi bersama komunitas!"}</p>
         </div>
       `;
       return;
@@ -388,6 +398,7 @@ async function loadCommunityPosts() {
       `;
 
       const postContent = document.createElement("p");
+
       postContent.style.cssText = `
         margin: 0;
         color: #243247;
@@ -395,9 +406,14 @@ async function loadCommunityPosts() {
         white-space: pre-wrap;
         overflow-wrap: anywhere;
       `;
-      postContent.textContent = post.content;
+
+      postContent.textContent =
+        language === "en"
+          ? (post.content_en || post.content)
+          : (post.content_id || post.content);
 
       const postDate = document.createElement("small");
+
       postDate.style.cssText = `
         display: block;
         margin-top: 14px;
