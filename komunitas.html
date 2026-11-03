@@ -517,11 +517,11 @@ async function loadCommunityPosts() {
 
     const userIds = [...new Set(posts.map(post => post.user_id))];
 
-    const { data: authors, error: authorsError } = await communitySupabase
-      .from("community_public_authors")
-      .select("user_id, author_name, author_type")
-      .in("user_id", userIds);
-
+   const { data: authors, error: authorsError } = await communitySupabase
+  .from("community_public_authors")
+  .select("user_id, author_name")
+  .in("user_id", userIds);
+    
     if (authorsError) {
       throw authorsError;
     }
@@ -543,39 +543,20 @@ async function loadCommunityPosts() {
         border-radius: 12px;
       `;
 
-      const author = authorMap.get(post.user_id);
+     const author = authorMap.get(post.user_id);
 
-      const authorName = document.createElement("strong");
-      authorName.style.cssText = `
-        display: block;
-        margin-bottom: 12px;
-        color: #172b4d;
-        font-size: 14px;
-      `;
+    const authorName = document.createElement("strong");
 
-      authorName.textContent = author
-        ? author.author_name
-        : (language === "en" ? "Kerjiva User" : "Pengguna Kerjiva");
+authorName.style.cssText = `
+  display: block;
+  margin-bottom: 12px;
+  color: #172b4d;
+  font-size: 14px;
+`;
 
-      const authorType = document.createElement("small");
-      authorType.style.cssText = `
-        display: block;
-        margin-top: 3px;
-        color: #8491a3;
-        font-size: 11px;
-        font-weight: normal;
-      `;
-
-      authorType.textContent = author
-        ? (
-            author.author_type === "company"
-              ? (language === "en" ? "Company" : "Perusahaan")
-              : (language === "en" ? "Job Seeker" : "Pencari Kerja")
-          )
-        : "";
-
-      authorName.appendChild(authorType);
-
+authorName.textContent = author
+  ? author.author_name
+  : (language === "en" ? "Kerjiva User" : "Pengguna Kerjiva");
       const postContent = document.createElement("p");
       postContent.style.cssText = `
         margin: 0;
