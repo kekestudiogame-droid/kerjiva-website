@@ -1798,7 +1798,19 @@
   "Welcome to the Kerjiva Community",
 
 "Ruang berbagi dan berdiskusi bersama akan segera hadir. Nantikan perkembangan Komunitas Kerjiva!":
-  "A space for sharing and discussion is coming soon. Stay tuned for updates on the Kerjiva Community!"
+  "A space for sharing and discussion is coming soon. Stay tuned for updates on the Kerjiva Community!",
+
+"Berbagi pendapat, pengalaman, pertanyaan, dan masukan. Mari saling mendukung dan bertumbuh bersama.":
+  "Share opinions, experiences, questions, and feedback. Let's support one another and grow together.",
+
+"Penilaian Komunitas":
+  "Community Rating",
+
+"Sampaikan pengalaman, pendapat, pertanyaan, kritik, saran, ide, atau ulasanmu seputar dunia kerja dan Kerjiva.":
+  "Share your experiences, opinions, questions, criticism, suggestions, ideas, or reviews about the world of work and Kerjiva.",
+
+"Beri rating untuk Kerjiva (opsional)":
+  "Rate Kerjiva (optional)",
 
 };
    
