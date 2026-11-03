@@ -425,8 +425,278 @@
 
   const communityLoginButton =
     document.getElementById("communityLoginButton");
+  
   const communityPostsList =
   document.getElementById("communityPostsList");
+  
+    // ================= RATING & ULASAN KERJIVA =================
+
+  const communityReviewInput =
+    document.getElementById("communityReviewInput");
+
+  const communityReviewButton =
+    document.getElementById("communityReviewButton");
+
+  const communityReviewNotice =
+    document.getElementById("communityReviewNotice");
+
+  const communityRatingInput =
+    document.getElementById("communityRatingInput");
+
+  const communityReviewsList =
+    document.getElementById("communityReviewsList");
+
+  let selectedCommunityRating = 0;
+
+  const ratingStars =
+    communityRatingInput.querySelectorAll("button[data-rating]");
+
+  ratingStars.forEach(function (star) {
+    star.style.cssText = `
+      border: none;
+      background: transparent;
+      color: #f5a623;
+      font-size: 32px;
+      cursor: pointer;
+      padding: 0;
+    `;
+
+    star.addEventListener("click", function () {
+      selectedCommunityRating = Number(star.dataset.rating);
+
+      ratingStars.forEach(function (item) {
+        const rating = Number(item.dataset.rating);
+
+        item.textContent =
+          rating <= selectedCommunityRating ? "★" : "☆";
+      });
+    });
+  });
+
+    // ================= MENYIMPAN RATING & ULASAN =================
+
+  communityReviewButton.addEventListener("click", async function () {
+    const content = communityReviewInput.value.trim();
+
+    if (selectedCommunityRating < 1 || selectedCommunityRating > 5) {
+      alert("Silakan pilih rating bintang 1 sampai 5.");
+      return;
+    }
+
+    if (!content) {
+      alert("Silakan tulis ulasan terlebih dahulu.");
+      return;
+    }
+
+    if (content.length > 2000) {
+      alert("Ulasan maksimal 2.000 karakter.");
+      return;
+    }
+
+    communityReviewButton.disabled = true;
+    communityReviewButton.textContent = "Memproses...";
+
+    try {
+      const { data: sessionData, error: sessionError } =
+        await communitySupabase.auth.getSession();
+
+      if (sessionError || !sessionData.session) {
+        throw new Error("Silakan masuk ke akun Kerjiva terlebih dahulu.");
+      }
+
+      const user = sessionData.session.user;
+
+      if (!user.email_confirmed_at) {
+        throw new Error(
+          "Email harus diverifikasi sebelum memberikan rating dan ulasan."
+        );
+      }
+
+      const { error: reviewError } = await communitySupabase
+        .from("community_reviews")
+        .upsert(
+          {
+            user_id: user.id,
+            rating: selectedCommunityRating,
+            content: content,
+            updated_at: new Date().toISOString()
+          },
+          {
+            onConflict: "user_id"
+          }
+        );
+
+      if (reviewError) {
+        throw reviewError;
+      }
+
+      alert("Rating dan ulasan berhasil disimpan!");
+      await loadCommunityReviews();
+
+      communityReviewInput.value = "";
+
+      selectedCommunityRating = 0;
+
+      ratingStars.forEach(function (star) {
+        star.textContent = "☆";
+      });
+
+    } catch (error) {
+      console.error("Gagal menyimpan ulasan:", error);
+      alert("Ulasan belum berhasil disimpan: " + error.message);
+
+    } finally {
+      communityReviewButton.textContent = "Kirim Ulasan";
+
+      const { data } = await communitySupabase.auth.getSession();
+
+      const canReview =
+        !!data.session &&
+        !!data.session.user.email_confirmed_at;
+
+      communityReviewButton.disabled = !canReview;
+    }
+  });
+
+  // ================= MEMUAT RATING & ULASAN KERJIVA =================
+
+async function loadCommunityReviews() {
+  communityReviewsList.innerHTML =
+    '<p style="text-align:center;color:#64748b;">Memuat ulasan...</p>';
+
+  try {
+    const { data: reviews, error } = await communitySupabase
+      .from("community_reviews")
+      .select("id, user_id, rating, content, created_at")
+      .order("created_at", { ascending: false });
+
+    if (error) throw error;
+
+    const language =
+      localStorage.getItem("siteLanguage") === "en" ? "en" : "id";
+
+    const totalReviews = reviews ? reviews.length : 0;
+
+    const averageRating = totalReviews
+      ? reviews.reduce((sum, review) => sum + review.rating, 0) / totalReviews
+      : 0;
+
+    communityAverageRating.textContent =
+      averageRating.toFixed(1) + " / 5";
+
+    const roundedAverage = Math.round(averageRating);
+
+    communityAverageStars.textContent =
+      "★".repeat(roundedAverage) + "☆".repeat(5 - roundedAverage);
+
+    communityReviewCount.textContent = language === "en"
+      ? totalReviews + (totalReviews === 1 ? " review" : " reviews")
+      : totalReviews + " ulasan";
+
+    if (!totalReviews) {
+      communityReviewsList.innerHTML =
+        `<p style="text-align:center;color:#64748b;">
+          ${language === "en"
+            ? "No reviews yet."
+            : "Belum ada ulasan."}
+        </p>`;
+      return;
+    }
+
+    const userIds = [...new Set(reviews.map(review => review.user_id))];
+
+    const { data: authors, error: authorsError } = await communitySupabase
+      .from("community_public_authors")
+      .select("user_id, author_name, author_type")
+      .in("user_id", userIds);
+
+    if (authorsError) throw authorsError;
+
+    const authorMap = new Map(
+      (authors || []).map(author => [author.user_id, author])
+    );
+
+    communityReviewsList.innerHTML = "";
+
+    reviews.forEach(function (review) {
+      const card = document.createElement("article");
+
+      card.style.cssText = `
+        padding: 18px;
+        margin-bottom: 14px;
+        background: #ffffff;
+        border: 1px solid #e5eaf1;
+        border-radius: 12px;
+      `;
+
+      const author = authorMap.get(review.user_id);
+
+      const name = document.createElement("strong");
+      name.style.cssText = "display:block;color:#172b4d;font-size:14px;";
+      name.textContent = author
+        ? author.author_name
+        : (language === "en" ? "Kerjiva User" : "Pengguna Kerjiva");
+
+      const type = document.createElement("small");
+      type.style.cssText = "display:block;margin-top:3px;color:#8491a3;font-size:11px;";
+      type.textContent = author
+        ? (author.author_type === "company"
+            ? (language === "en" ? "Company" : "Perusahaan")
+            : (language === "en" ? "Job Seeker" : "Pencari Kerja"))
+        : "";
+
+      name.appendChild(type);
+
+      const content = document.createElement("p");
+      content.style.cssText = `
+        margin: 12px 0;
+        color: #243247;
+        font-size: 14px;
+        white-space: pre-wrap;
+        overflow-wrap: anywhere;
+      `;
+      content.textContent = review.content;
+
+      const footer = document.createElement("div");
+      footer.style.cssText = `
+        display: flex;
+        align-items: center;
+        flex-wrap: wrap;
+        gap: 10px;
+      `;
+
+      const date = document.createElement("small");
+      date.style.cssText = "color:#8491a3;font-size:12px;";
+      date.textContent = new Date(review.created_at).toLocaleString("id-ID", {
+        dateStyle: "medium",
+        timeStyle: "short"
+      });
+
+      const stars = document.createElement("span");
+      stars.style.cssText = "color:#f5a623;font-size:16px;";
+      stars.textContent =
+        "★".repeat(review.rating) + "☆".repeat(5 - review.rating);
+
+      footer.appendChild(date);
+      footer.appendChild(stars);
+
+      card.appendChild(name);
+      card.appendChild(content);
+      card.appendChild(footer);
+
+      communityReviewsList.appendChild(card);
+    });
+
+  } catch (error) {
+    console.error("Gagal memuat rating dan ulasan:", error);
+
+    communityReviewsList.innerHTML =
+      '<p style="text-align:center;color:#b42318;">Rating dan ulasan belum dapat dimuat.</p>';
+  }
+}
+
+// Muat rating dan ulasan saat halaman dibuka
+loadCommunityReviews();
 
 // ================= MEMUAT POSTINGAN PUBLIK =================
 
@@ -583,19 +853,30 @@ function updateCommunityAccess(session) {
     communityPostButton.disabled = false;
     communityLoginNotice.style.display = "none";
     communityLoginButton.style.display = "none";
+
+    communityReviewInput.disabled = false;
+    communityReviewButton.disabled = false;
+    communityReviewNotice.style.display = "none";
+
   } else {
     communityPostInput.disabled = true;
     communityPostButton.disabled = true;
     communityLoginNotice.style.display = "block";
     communityLoginButton.style.display = "inline-block";
 
+    communityReviewInput.disabled = true;
+    communityReviewButton.disabled = true;
+    communityReviewNotice.style.display = "block";
+
     if (isLoggedIn && !isVerified) {
       communityLoginNotice.textContent =
         "Silakan verifikasi email akun Kerjiva terlebih dahulu sebelum membuat postingan atau komentar.";
+
+      communityReviewNotice.textContent =
+        "Silakan verifikasi email akun Kerjiva terlebih dahulu sebelum memberikan rating dan ulasan.";
     }
   }
 }
-
   communitySupabase.auth.getSession().then(({ data, error }) => {
     if (error) {
       console.error("Gagal memeriksa session Komunitas:", error.message);
@@ -699,6 +980,7 @@ function updateCommunityAccess(session) {
       communityPostButton.disabled = !canPost;
     }
   });
+  
 </script>
 
   <script src="language.js"></script>
