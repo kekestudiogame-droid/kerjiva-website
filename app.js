@@ -12697,13 +12697,23 @@ async function editMyJob(jobId) {
             <option value="Lainnya">Lainnya</option>
           </select>
 
-          <label>Lokasi / Kota</label>
-          <input
-            id="editJobCity"
-            value="${job.city || ""}"
-            placeholder="Contoh: Jakarta"
-            style="width:100%;box-sizing:border-box;margin:7px 0 15px;padding:12px;border:1px solid #dbe2ea;border-radius:10px;"
-          >
+          <div style="position:relative;margin-bottom:15px;">
+            <label style="display:block;">Lokasi / Kota</label>
+
+            <input
+             id="editJobCity"
+             value="${job.city || ""}"
+             placeholder="Ketik nama kota, misalnya Jakarta"
+             autocomplete="off"
+             style="display:block;width:100%;box-sizing:border-box;margin:7px 0 0;padding:12px;border:1px solid #dbe2ea;border-radius:10px;"
+             >
+
+             <div
+             id="editJobCitySuggestions"
+             class="job-suggestions hidden"
+             style="position:absolute;top:100%;left:0;right:0;width:100%;max-height:180px;overflow-y:auto;background:white;border:1px solid #dbe2ea;border-radius:10px;box-shadow:0 8px 18px rgba(0,0,0,.12);z-index:10001;"
+             ></div>
+             </div>
 
           <label>Jenis Pekerjaan</label>
           <select
@@ -12801,6 +12811,84 @@ async function editMyJob(jobId) {
     `;
 
     document.body.appendChild(form);
+    
+    const cityInput = form.querySelector("#editJobCity");
+    const suggestions = form.querySelector("#editJobCitySuggestions");
+
+    cityInput.dataset.selectedCity = job.city || "";
+
+function getEditCityDisplayName(city) {
+  const name = city
+    .replace(/^Kabupaten Administrasi /, "")
+    .replace(/^Kota Administrasi /, "")
+    .replace(/^Kabupaten /, "")
+    .replace(/^Kota /, "");
+
+  const sameName = cities.filter(item => {
+    const itemName = item
+      .replace(/^Kabupaten Administrasi /, "")
+      .replace(/^Kota Administrasi /, "")
+      .replace(/^Kabupaten /, "")
+      .replace(/^Kota /, "");
+
+    return itemName.toLowerCase() === name.toLowerCase();
+  });
+
+  if (sameName.length > 1) {
+    return name + (
+      city.startsWith("Kabupaten") ? " (Kabupaten)" : " (Kota)"
+    );
+  }
+
+  return name;
+}
+
+cityInput.addEventListener("input", () => {
+  cityInput.dataset.selectedCity = "";
+
+  const query = cityInput.value.trim().toLowerCase();
+
+  if (!query) {
+    suggestions.innerHTML = "";
+    suggestions.classList.add("hidden");
+    return;
+  }
+
+  const matches = cities
+    .filter(city => city.toLowerCase().includes(query))
+    .slice(0, 10);
+
+  if (!matches.length) {
+    suggestions.innerHTML = "";
+    suggestions.classList.add("hidden");
+    return;
+  }
+
+  suggestions.innerHTML = matches.map(city => `
+    <button type="button"
+      class="job-suggestion-item"
+      data-city="${city.replace(/&/g, "&amp;").replace(/"/g, "&quot;")}"
+      style="display:block;width:100%;padding:11px 12px;text-align:left;background:white;border:0;border-bottom:1px solid #eef2f7;cursor:pointer;">
+      ${getEditCityDisplayName(city)}
+    </button>
+  `).join("");
+
+  suggestions.classList.remove("hidden");
+
+  suggestions.querySelectorAll(".job-suggestion-item").forEach(button => {
+    button.addEventListener("click", () => {
+      const selectedCity = button.dataset.city
+        .replace(/^Kabupaten Administrasi /, "")
+        .replace(/^Kota Administrasi /, "");
+
+      cityInput.value = selectedCity;
+      cityInput.dataset.selectedCity = selectedCity;
+
+      suggestions.innerHTML = "";
+      suggestions.classList.add("hidden");
+    });
+  });
+});
 
     // Set nilai select sesuai data database
     document.getElementById("editJobCategory").value =
@@ -12830,9 +12918,9 @@ async function saveEditedJob(jobId) {
   const category =
     document.getElementById("editJobCategory").value;
 
-  const city =
-    document.getElementById("editJobCity").value.trim();
-
+  const cityInput = document.getElementById("editJobCity");
+  const city = cityInput.dataset.selectedCity || "";
+  
   const jobType =
     document.getElementById("editJobType").value;
 
