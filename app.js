@@ -13178,16 +13178,22 @@ function showPostJobForm() {
           <option>Lainnya</option>
         </select>
 
-        <label>Lokasi / Kota</label>
-        <input
-          id="jobCity"
-          placeholder="Ketik nama kota, misalnya Jakarta"
-          autocomplete="off"
-          style="width:100%;box-sizing:border-box;margin:7px 0 0;padding:12px;border:1px solid #dbe2ea;border-radius:10px;"
+       <div style="position:relative;margin-bottom:15px;">
+       <label style="display:block;">Lokasi / Kota</label>
+
+       <input
+        id="jobCity"
+        placeholder="Ketik nama kota, misalnya Jakarta"
+        autocomplete="off"
+        style="display:block;width:100%;box-sizing:border-box;margin:7px 0 0;padding:12px;border:1px solid #dbe2ea;border-radius:10px;"
         >
-        <div id="jobCitySuggestions" class="job-suggestions hidden"
-          style="max-height:180px;overflow-y:auto;margin-bottom:15px;background:white;border:1px solid #dbe2ea;border-radius:10px;">
-        </div>
+
+       <div
+        id="jobCitySuggestions"
+        class="job-suggestions hidden"
+        style="position:absolute;top:100%;left:0;right:0;width:100%;max-height:180px;overflow-y:auto;background:white;border:1px solid #dbe2ea;border-radius:10px;box-shadow:0 8px 18px rgba(0,0,0,.12);z-index:10001;"
+      ></div>
+       </div>
 
         <label>Jenis Pekerjaan</label>
         <select id="jobType"
