@@ -13109,9 +13109,10 @@ function companyLogout() {
   location.reload();
 }
 
+
 function showPostJobForm() {
-   const userData = localStorage.getItem("kerjivaUser");
-   const accessToken = localStorage.getItem("kerjivaAccessToken");
+  const userData = localStorage.getItem("kerjivaUser");
+  const accessToken = localStorage.getItem("kerjivaAccessToken");
 
   if (!userData || !accessToken) {
     showNotification("companySessionNotFound");
@@ -13142,32 +13143,21 @@ function showPostJobForm() {
         margin:auto;
       ">
 
-        <h2 style="
-          margin:0 0 6px;
-          font-size:26px;
-          color:#123b6d;
-        ">Pasang Lowongan</h2>
+        <h2 style="margin:0 0 6px;font-size:26px;color:#123b6d;">
+          Pasang Lowongan
+        </h2>
 
-        <p style="
-          margin:0 0 22px;
-          color:#64748b;
-          font-size:14px;
-        ">
+        <p style="margin:0 0 22px;color:#64748b;font-size:14px;">
           Lengkapi informasi pekerjaan yang ingin Anda tawarkan.
         </p>
 
         <label>Judul / Posisi Pekerjaan</label>
-        <input
-          id="jobTitle"
-          placeholder="Contoh: Staff Administrasi"
-          style="width:100%;box-sizing:border-box;margin:7px 0 15px;padding:12px;border:1px solid #dbe2ea;border-radius:10px;"
-        >
+        <input id="jobTitle" placeholder="Contoh: Staff Administrasi"
+          style="width:100%;box-sizing:border-box;margin:7px 0 15px;padding:12px;border:1px solid #dbe2ea;border-radius:10px;">
 
         <label>Kategori Pekerjaan</label>
-        <select
-          id="jobCategory"
-          style="width:100%;box-sizing:border-box;margin:7px 0 15px;padding:12px;border:1px solid #dbe2ea;border-radius:10px;background:white;"
-        >
+        <select id="jobCategory"
+          style="width:100%;box-sizing:border-box;margin:7px 0 15px;padding:12px;border:1px solid #dbe2ea;border-radius:10px;background:white;">
           <option value="">Pilih kategori</option>
           <option>Administrasi</option>
           <option>Accounting</option>
@@ -13191,15 +13181,17 @@ function showPostJobForm() {
         <label>Lokasi / Kota</label>
         <input
           id="jobCity"
-          placeholder="Contoh: Jakarta"
-          style="width:100%;box-sizing:border-box;margin:7px 0 15px;padding:12px;border:1px solid #dbe2ea;border-radius:10px;"
+          placeholder="Ketik nama kota, misalnya Jakarta"
+          autocomplete="off"
+          style="width:100%;box-sizing:border-box;margin:7px 0 0;padding:12px;border:1px solid #dbe2ea;border-radius:10px;"
         >
+        <div id="jobCitySuggestions" class="job-suggestions hidden"
+          style="max-height:180px;overflow-y:auto;margin-bottom:15px;background:white;border:1px solid #dbe2ea;border-radius:10px;">
+        </div>
 
         <label>Jenis Pekerjaan</label>
-        <select
-          id="jobType"
-          style="width:100%;box-sizing:border-box;margin:7px 0 15px;padding:12px;border:1px solid #dbe2ea;border-radius:10px;background:white;"
-        >
+        <select id="jobType"
+          style="width:100%;box-sizing:border-box;margin:7px 0 15px;padding:12px;border:1px solid #dbe2ea;border-radius:10px;background:white;">
           <option value="">Pilih jenis pekerjaan</option>
           <option value="Full-time">Full-time</option>
           <option value="Part-time">Part-time</option>
@@ -13207,113 +13199,145 @@ function showPostJobForm() {
         </select>
 
         <label>Gaji</label>
-        <input
-          id="jobSalary"
-          placeholder="Contoh: Rp 5.000.000 - Rp 7.000.000 / bulan"
-          style="width:100%;box-sizing:border-box;margin:7px 0 15px;padding:12px;border:1px solid #dbe2ea;border-radius:10px;"
-        >
+        <input id="jobSalary" placeholder="Contoh: Rp 5.000.000 - Rp 7.000.000 / bulan"
+          style="width:100%;box-sizing:border-box;margin:7px 0 15px;padding:12px;border:1px solid #dbe2ea;border-radius:10px;">
 
         <label>Pengalaman Kerja</label>
-        <input
-          id="jobExperience"
-          placeholder="Contoh: Minimal 1 tahun"
-          style="width:100%;box-sizing:border-box;margin:7px 0 15px;padding:12px;border:1px solid #dbe2ea;border-radius:10px;"
-        >
+        <input id="jobExperience" placeholder="Contoh: Minimal 1 tahun"
+          style="width:100%;box-sizing:border-box;margin:7px 0 15px;padding:12px;border:1px solid #dbe2ea;border-radius:10px;">
 
         <label>Pendidikan Minimal</label>
-        <input
-          id="jobEducation"
-          placeholder="Contoh: SMA / SMK / D3 / S1"
-          style="width:100%;box-sizing:border-box;margin:7px 0 15px;padding:12px;border:1px solid #dbe2ea;border-radius:10px;"
-        >
+        <input id="jobEducation" placeholder="Contoh: SMA / SMK / D3 / S1"
+          style="width:100%;box-sizing:border-box;margin:7px 0 15px;padding:12px;border:1px solid #dbe2ea;border-radius:10px;">
 
         <label>Deskripsi Pekerjaan</label>
-        <textarea
-          id="jobDescription"
-          placeholder="Jelaskan pekerjaan dan tanggung jawabnya..."
-          style="width:100%;box-sizing:border-box;height:100px;margin:7px 0 15px;padding:12px;border:1px solid #dbe2ea;border-radius:10px;resize:vertical;"
-        ></textarea>
+        <textarea id="jobDescription" placeholder="Jelaskan pekerjaan dan tanggung jawabnya..."
+          style="width:100%;box-sizing:border-box;height:100px;margin:7px 0 15px;padding:12px;border:1px solid #dbe2ea;border-radius:10px;resize:vertical;"></textarea>
 
         <label>Syarat / Kualifikasi</label>
-        <textarea
-          id="jobRequirements"
-          placeholder="Tuliskan persyaratan kandidat..."
-          style="width:100%;box-sizing:border-box;height:100px;margin:7px 0 15px;padding:12px;border:1px solid #dbe2ea;border-radius:10px;resize:vertical;"
-        ></textarea>
+        <textarea id="jobRequirements" placeholder="Tuliskan persyaratan kandidat..."
+          style="width:100%;box-sizing:border-box;height:100px;margin:7px 0 15px;padding:12px;border:1px solid #dbe2ea;border-radius:10px;resize:vertical;"></textarea>
 
         <label>Batas Lamaran</label>
-        <input
-          id="jobDeadline"
-          type="date"
-          style="width:100%;box-sizing:border-box;margin:7px 0 20px;padding:12px;border:1px solid #dbe2ea;border-radius:10px;"
-        >
+        <input id="jobDeadline" type="date"
+          style="width:100%;box-sizing:border-box;margin:7px 0 20px;padding:12px;border:1px solid #dbe2ea;border-radius:10px;">
 
-      <div style="display:flex;flex-direction:column;gap:10px;">
-      <button
-      onclick="submitJobPost()"
-      style="
-      width:100%;
-      padding:13px;
-      border:0;
-      border-radius:10px;
-      background:#123b6d;
-      color:white;
-      font-weight:bold;
-      cursor:pointer;
-    "
-  >
-    Simpan Lowongan
-  </button>
+        <div style="display:flex;flex-direction:column;gap:10px;">
+          <button onclick="submitJobPost()"
+            style="width:100%;padding:13px;border:0;border-radius:10px;background:#123b6d;color:white;font-weight:bold;cursor:pointer;">
+            Simpan Lowongan
+          </button>
 
-  <button
-    onclick="publishNewJob()"
-    style="
-      width:100%;
-      padding:13px;
-      border:0;
-      border-radius:10px;
-      background:#16805c;
-      color:white;
-      font-weight:bold;
-      cursor:pointer;
-    "
-  >
-    🚀 Kirim Lowongan
-  </button>
+          <button onclick="publishNewJob()"
+            style="width:100%;padding:13px;border:0;border-radius:10px;background:#16805c;color:white;font-weight:bold;cursor:pointer;">
+            🚀 Kirim Lowongan
+          </button>
 
-  <button
-    onclick="this.closest('div[style*=fixed]').remove()"
-    style="
-      width:100%;
-      padding:13px;
-      border:1px solid #dbe2ea;
-      border-radius:10px;
-      background:white;
-      cursor:pointer;
-    "
-  >
-    Batal
-  </button>
-
-</div>
+          <button onclick="this.closest('div[style*=fixed]').remove()"
+            style="width:100%;padding:13px;border:1px solid #dbe2ea;border-radius:10px;background:white;cursor:pointer;">
+            Batal
+          </button>
         </div>
-
       </div>
     </div>
   `;
 
-document.body.appendChild(form);
-translatePostJobForm(form);
+  document.body.appendChild(form);
 
-if (window.setLanguage) {
-  window.setLanguage(localStorage.getItem("siteLanguage") || "id");
-}
-}
+  const cityInput = form.querySelector("#jobCity");
+  const suggestions = form.querySelector("#jobCitySuggestions");
 
+
+  function getCityDisplayName(city) {
+    const name = city
+      .replace(/^Kabupaten Administrasi /, "")
+      .replace(/^Kota Administrasi /, "")
+      .replace(/^Kabupaten /, "")
+      .replace(/^Kota /, "");
+
+    const sameName = cities.filter(item => {
+      const itemName = item
+        .replace(/^Kabupaten Administrasi /, "")
+        .replace(/^Kota Administrasi /, "")
+        .replace(/^Kabupaten /, "")
+        .replace(/^Kota /, "");
+
+      return itemName.toLowerCase() === name.toLowerCase();
+    });
+
+    if (sameName.length > 1) {
+      return name + (
+        city.startsWith("Kabupaten") ? " (Kabupaten)" : " (Kota)"
+      );
+    }
+
+    return name;
+  }
+
+  cityInput.addEventListener("input", () => {
+    cityInput.dataset.selectedCity = "";
+    showCitySuggestions();
+  });
+
+  cityInput.addEventListener("focus", showCitySuggestions);
+
+  function showCitySuggestions() {
+    const query = cityInput.value.trim().toLowerCase();
+
+    if (!query) {
+      suggestions.innerHTML = "";
+      suggestions.classList.add("hidden");
+      return;
+    }
+
+    const matches = cities
+      .filter(city => city.toLowerCase().includes(query))
+      .slice(0, 10);
+
+    if (!matches.length) {
+      suggestions.innerHTML = "";
+      suggestions.classList.add("hidden");
+      return;
+    }
+
+    suggestions.innerHTML = matches.map(city => `
+      <button type="button"
+        class="job-suggestion-item"
+        data-city="${city.replace(/&/g, "&amp;").replace(/"/g, "&quot;")}"
+        style="display:block;width:100%;padding:11px 12px;text-align:left;background:white;border:0;border-bottom:1px solid #eef2f7;cursor:pointer;">
+        ${getCityDisplayName(city)}
+      </button>
+    `).join("");
+
+    suggestions.classList.remove("hidden");
+
+   suggestions.querySelectorAll(".job-suggestion-item").forEach(button => {
+   button.addEventListener("click", () => {
+    const selectedCity = button.dataset.city
+      .replace(/^Kabupaten Administrasi /, "")
+      .replace(/^Kota Administrasi /, "");
+
+    cityInput.value = selectedCity;
+    cityInput.dataset.selectedCity = selectedCity;
+
+    suggestions.innerHTML = "";
+    suggestions.classList.add("hidden");
+  });
+  });
+  }
+
+
+  translatePostJobForm(form);
+
+  if (window.setLanguage) {
+    window.setLanguage(localStorage.getItem("siteLanguage") || "id");
+  }
+}
 
 async function publishNewJob() {
   const title = document.getElementById("jobTitle").value.trim();
-  const city = document.getElementById("jobCity").value.trim();
+  const cityInput = document.getElementById("jobCity");
+  const city = cityInput.dataset.selectedCity || "";
   const description = document.getElementById("jobDescription").value.trim();
   const category = document.getElementById("jobCategory").value;
   const jobType = document.getElementById("jobType").value;
@@ -13410,7 +13434,8 @@ window.publishNewJob = publishNewJob;
 
 async function submitJobPost() {
   const title = document.getElementById("jobTitle").value.trim();
-  const city = document.getElementById("jobCity").value.trim();
+  const cityInput = document.getElementById("jobCity");
+  const city = cityInput.dataset.selectedCity || "";
   const description = document.getElementById("jobDescription").value.trim();
   const category = document.getElementById("jobCategory").value;
   const jobType = document.getElementById("jobType").value;
