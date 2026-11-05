@@ -10140,7 +10140,6 @@ const interviewStatusLabel =
   }
 }
 
-
 async function deleteInterview(interviewId) {
 
   const language = localStorage.getItem("siteLanguage") || "id";
@@ -10155,10 +10154,9 @@ async function deleteInterview(interviewId) {
 
   try {
 
-    const accessToken = localStorage.getItem("kerjivaAccessToken");
-    const userData = localStorage.getItem("kerjivaUser");
+ const accessToken = localStorage.getItem("kerjivaAccessToken");
 
-    if (!accessToken || !userData) {
+    if (!accessToken) {
       alert(
         language === "en"
           ? "Please login first."
@@ -10167,20 +10165,13 @@ async function deleteInterview(interviewId) {
       return;
     }
 
-    const user = JSON.parse(userData);
-
-    if (!user.id) {
-      throw new Error("User ID tidak ditemukan.");
-    }
-
     const response = await fetch(
-      `${SUPABASE_URL}interviews?id=eq.${encodeURIComponent(interviewId)}&applicant_id=eq.${encodeURIComponent(user.id)}`,
+      `${SUPABASE_URL}interviews?id=eq.${interviewId}`,
       {
         method: "DELETE",
         headers: {
           apikey: SUPABASE_KEY,
-          Authorization: `Bearer ${accessToken}`,
-          Prefer: "return=representation"
+          Authorization: `Bearer ${accessToken}`
         }
       }
     );
@@ -10189,21 +10180,14 @@ async function deleteInterview(interviewId) {
       throw new Error(await response.text());
     }
 
-    const deletedInterviews = await response.json();
-
-    if (!Array.isArray(deletedInterviews) || deletedInterviews.length === 0) {
-      throw new Error(
-        "Tidak ada data interview yang terhapus. Periksa ID dan DELETE policy RLS Supabase."
-      );
-    }
-
     alert(
       language === "en"
         ? "Interview invitation deleted."
         : "Undangan interview berhasil dihapus."
     );
 
-    await showJobseekerDashboard();
+    // Muat ulang dashboard
+    showJobseekerDashboard();
 
   } catch (error) {
 
@@ -10216,7 +10200,6 @@ async function deleteInterview(interviewId) {
     );
   }
 }
-
   window.deleteInterview = deleteInterview;
 
 function translateMyApplications(page) {
@@ -15197,7 +15180,31 @@ window.viewApplicantDocument = viewApplicantDocument;
               resize:vertical;
             "
           ></textarea>
-            
+                    <div style="
+            margin:10px 0 25px;
+            padding:18px;
+            background:#f8fafc;
+            border:1px solid #e5eaf1;
+            border-radius:10px;
+          ">
+            <div style="
+              font-weight:bold;
+              color:#172b4d;
+              margin-bottom:10px;
+            ">
+              📄 ${language === "en" ? "My CV" : "CV Saya"}
+            </div>
+
+            <div id="jobseekerCvDisplay">
+              <span style="color:#6b7280;">
+                ${language === "en"
+                  ? "Checking your CV..."
+                  : "Memeriksa CV kamu..."}
+              </span>
+            </div>
+          </div>
+
+         
                <button
                id="saveJobseekerProfileBtn"
                type="button"
@@ -15276,7 +15283,82 @@ if (profilePhoto && profile.photo_url) {
 
         document.getElementById("jobseekerSkills").value =
           profile.skills || "";
-    
+      const cvDisplay = document.getElementById("jobseekerCvDisplay");
+
+if (cvDisplay) {
+  if (profile.cv_url) {
+    try {
+      const cvPath = profile.cv_url.split("/object/public/cv/")[1];
+
+      const signedResponse = await fetch(
+      `${SUPABASE_URL.replace("/rest/v1/", "/storage/v1")}/object/sign/cv/${cvPath}`,
+        {
+          method: "POST",
+          headers: {
+            apikey: SUPABASE_KEY,
+          Authorization: `Bearer ${accessToken}`,
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify({
+            expiresIn: 31536000
+          })
+        }
+      );
+
+      if (!signedResponse.ok) {
+        throw new Error(await signedResponse.text());
+      }
+
+      const signedData = await signedResponse.json();
+      const signedUrl =
+      `${SUPABASE_URL.replace("/rest/v1/", "/storage/v1")}${signedData.signedURL}`;
+     
+      cvDisplay.innerHTML = `
+        <a
+          href="${signedUrl}"
+          target="_blank"
+          rel="noopener noreferrer"
+          style="
+            display:inline-block;
+            padding:10px 16px;
+            background:#123b6d;
+            color:white;
+            text-decoration:none;
+            border-radius:8px;
+            font-weight:bold;
+          "
+        >
+          📄 ${language === "en" ? "View My CV" : "Lihat CV Saya"}
+        </a>
+      `;
+    } catch (error) {
+      console.error("Gagal membuat URL CV:", error);
+
+      cvDisplay.innerHTML = `
+        <span style="color:#dc2626;">
+          ${language === "en"
+            ? "CV could not be opened."
+            : "CV tidak dapat dibuka."}
+        </span>
+      `;
+    }
+ } else {
+  cvDisplay.innerHTML = `
+    <span style="color:#6b7280;">
+      ${language === "en"
+        ? "No CV uploaded yet."
+        : "Belum ada CV yang diupload."}
+    </span>
+  `;
+}
+}
+      }
+    }
+
+  } catch (error) {
+    console.error("Gagal mengambil profil:", error);
+  }
+};
 
 // ================= UPLOAD FOTO PROFIL =================
 
@@ -15374,12 +15456,6 @@ if (profilePhoto && profile.photo_url) {
       }
     });
   }
-                } // Penutup if (profiles.length > 0)
-      } // Penutup if (response.ok)
-    } catch (error) {
-      console.error("Gagal mengambil profil:", error);
-    }
-  }; // Penutup showJobseekerProfile
 
 
 
@@ -15455,6 +15531,7 @@ window.saveJobseekerProfile = async function () {
   }
 };
 
+};
 
 // ================= LIHAT PASSWORD =================
 
