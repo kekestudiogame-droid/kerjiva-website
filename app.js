@@ -10200,6 +10200,7 @@ async function deleteInterview(interviewId) {
     );
   }
 }
+  window.deleteInterview = deleteInterview;
 
 function translateMyApplications(page) {
 
