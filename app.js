@@ -7516,6 +7516,20 @@ if (uploadDocumentCvBtn && documentCvFileInput && documentCvStatus) {
         const errorText = await documentResponse.text();
         throw new Error(errorText);
       }
+            await renderJobseekerDocument({
+        userId: user.id,
+        token: token,
+        documentType: "cv",
+        displayId: "#documentCvDisplay",
+        buttonId: "viewDocumentCvBtn",
+        icon: "📄",
+        labelId: "Lihat CV",
+        labelEn: "View CV",
+        emptyId: "Belum ada CV yang diupload.",
+        emptyEn: "No CV uploaded yet.",
+        errorId: "Gagal memuat CV.",
+        errorEn: "Failed to load CV."
+      });
 
       documentCvStatus.textContent =
         currentLanguage === "en"
@@ -7697,6 +7711,20 @@ if (uploadWorkLetterBtn && workLetterFileInput && workLetterStatus) {
         const errorText = await documentResponse.text();
         throw new Error(errorText);
       }
+            await renderJobseekerDocument({
+        userId: user.id,
+        token: token,
+        documentType: "work_letter",
+        displayId: "#workLetterDisplay",
+        buttonId: "viewWorkLetterBtn",
+        icon: "📑",
+        labelId: "Lihat Paklaring",
+        labelEn: "View Work Experience Letter",
+        emptyId: "Belum ada paklaring yang diupload.",
+        emptyEn: "No work experience letter uploaded yet.",
+        errorId: "Gagal memuat paklaring.",
+        errorEn: "Failed to load work experience letter."
+      });
 
       workLetterStatus.textContent =
         currentLanguage === "en"
@@ -7872,6 +7900,20 @@ if (uploadEducationBtn && educationFileInput && educationStatus) {
         const errorText = await documentResponse.text();
         throw new Error(errorText);
       }
+            await renderJobseekerDocument({
+        userId: user.id,
+        token: token,
+        documentType: "education",
+        displayId: "#educationDisplay",
+        buttonId: "viewEducationBtn",
+        icon: "🎓",
+        labelId: "Lihat Ijazah / Sertifikat",
+        labelEn: "View Certificate",
+        emptyId: "Belum ada ijazah / sertifikat yang diupload.",
+        emptyEn: "No certificate uploaded yet.",
+        errorId: "Gagal memuat ijazah / sertifikat.",
+        errorEn: "Failed to load certificate."
+      });
 
       educationStatus.textContent =
         currentLanguage === "en"
@@ -8047,6 +8089,20 @@ if (uploadOtherDocumentBtn && otherDocumentFileInput && otherDocumentStatus) {
         const errorText = await documentResponse.text();
         throw new Error(errorText);
       }
+            await renderJobseekerDocument({
+        userId: user.id,
+        token: token,
+        documentType: "other",
+        displayId: "#otherDocumentDisplay",
+        buttonId: "viewOtherDocumentBtn",
+        icon: "📎",
+        labelId: "Lihat Dokumen",
+        labelEn: "View Document",
+        emptyId: "Belum ada dokumen yang diupload.",
+        emptyEn: "No document uploaded yet.",
+        errorId: "Gagal memuat dokumen.",
+        errorEn: "Failed to load document."
+      });
 
       otherDocumentStatus.textContent =
         currentLanguage === "en"
@@ -8224,6 +8280,20 @@ if (uploadKtpBtn && ktpFileInput && ktpStatus) {
         const errorText = await documentResponse.text();
         throw new Error(errorText);
       }
+            await renderJobseekerDocument({
+        userId: user.id,
+        token: token,
+        documentType: "ktp",
+        displayId: "#ktpDisplay",
+        buttonId: "viewKtpBtn",
+        icon: "🪪",
+        labelId: "Lihat KTP",
+        labelEn: "View ID Card",
+        emptyId: "Belum ada KTP yang diupload.",
+        emptyEn: "No ID card uploaded yet.",
+        errorId: "Gagal memuat KTP.",
+        errorEn: "Failed to load ID card."
+      });
 
       ktpStatus.textContent =
         currentLanguage === "en"
@@ -8377,6 +8447,20 @@ if (uploadSimABtn && simAFileInput && simAStatus) {
         const errorText = await uploadResponse.text();
         throw new Error(errorText);
       }
+            await renderJobseekerDocument({
+        userId: user.id,
+        token: token,
+        documentType: "sim_a",
+        displayId: "#simADisplay",
+        buttonId: "viewSimABtn",
+        icon: "🚗",
+        labelId: "Lihat SIM A",
+        labelEn: "View SIM A",
+        emptyId: "Belum ada SIM A yang diupload.",
+        emptyEn: "No SIM A uploaded yet.",
+        errorId: "Gagal memuat SIM A.",
+        errorEn: "Failed to load SIM A."
+      });
 
       const documentResponse = await fetch(
         `${SUPABASE_URL}jobseeker_documents`,
@@ -8542,6 +8626,20 @@ if (uploadSimCBtn && simCFileInput && simCStatus) {
         const errorText = await documentResponse.text();
         throw new Error(errorText);
       }
+            await renderJobseekerDocument({
+        userId: user.id,
+        token: token,
+        documentType: "sim_c",
+        displayId: "#simCDisplay",
+        buttonId: "viewSimCBtn",
+        icon: "🛵",
+        labelId: "Lihat SIM C",
+        labelEn: "View SIM C",
+        emptyId: "Belum ada SIM C yang diupload.",
+        emptyEn: "No SIM C uploaded yet.",
+        errorId: "Gagal memuat SIM C.",
+        errorEn: "Failed to load SIM C."
+      });
 
       simCStatus.textContent =
         currentLanguage === "en"
@@ -8738,6 +8836,20 @@ if (uploadResumeBtn && resumeFileInput && resumeStatus) {
         const errorText = await documentResponse.text();
         throw new Error(errorText);
       }
+            await renderJobseekerDocument({
+        userId: user.id,
+        token: token,
+        documentType: "resume",
+        displayId: "#resumeDisplay",
+        buttonId: "viewResumeBtn",
+        icon: "📄",
+        labelId: "Lihat Daftar Riwayat Hidup",
+        labelEn: "View Resume",
+        emptyId: "Belum ada daftar riwayat hidup yang diupload.",
+        emptyEn: "No resume uploaded yet.",
+        errorId: "Gagal memuat daftar riwayat hidup.",
+        errorEn: "Failed to load resume."
+      });
 
       resumeStatus.textContent =
         currentLanguage === "en"
