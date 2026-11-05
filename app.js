@@ -7244,6 +7244,145 @@ translateJobseekerDashboard(dashboard);
 
 loadInterviewInvitations();
 
+   // ================= FUNGSI TAMPILKAN DOKUMEN =================
+
+async function renderJobseekerDocument({
+  userId,
+  token,
+  documentType,
+  displayId,
+  buttonId,
+  icon,
+  labelId,
+  labelEn,
+  emptyId,
+  emptyEn,
+  errorId,
+  errorEn
+}) {
+  const display = document.querySelector(displayId);
+
+  if (!display || !userId || !token) return;
+
+  const isEnglish =
+    localStorage.getItem("siteLanguage") === "en";
+
+  try {
+    const response = await fetch(
+      `${SUPABASE_URL}jobseeker_documents?user_id=eq.${userId}&document_type=eq.${documentType}&select=id,document_name,file_path,created_at&order=created_at.desc&limit=1`,
+      {
+        method: "GET",
+        headers: {
+          apikey: SUPABASE_KEY,
+          Authorization: `Bearer ${token}`
+        }
+      }
+    );
+
+    if (!response.ok) {
+      throw new Error(await response.text());
+    }
+
+    const documents = await response.json();
+
+    if (documents.length === 0) {
+      display.innerHTML = `
+        <div style="color:#64748b;font-size:14px;">
+          ${isEnglish ? emptyEn : emptyId}
+        </div>
+      `;
+      return;
+    }
+
+    const documentData = documents[0];
+
+    display.innerHTML = `
+      <a
+        href="#"
+        id="${buttonId}"
+        style="
+          display:inline-block;
+          padding:10px 16px;
+          background:#e8eef6;
+          color:#123b6d;
+          border-radius:8px;
+          text-decoration:none;
+          font-weight:bold;
+        "
+      >
+        ${icon} ${isEnglish ? labelEn : labelId}
+      </a>
+    `;
+
+    const viewButton = display.querySelector(`#${buttonId}`);
+
+    if (viewButton) {
+      viewButton.addEventListener("click", async (event) => {
+        event.preventDefault();
+
+        const currentIsEnglish =
+          localStorage.getItem("siteLanguage") === "en";
+
+        try {
+          const signResponse = await fetch(
+            `${SUPABASE_URL.replace("/rest/v1/", "/storage/v1/object/sign/jobseeker-documents/")}${encodeURI(documentData.file_path)}`,
+            {
+              method: "POST",
+              headers: {
+                apikey: SUPABASE_KEY,
+                Authorization: `Bearer ${token}`,
+                "Content-Type": "application/json"
+              },
+              body: JSON.stringify({
+                expiresIn: 3600
+              })
+            }
+          );
+
+          if (!signResponse.ok) {
+            throw new Error(await signResponse.text());
+          }
+
+          const signData = await signResponse.json();
+
+          const signedUrl =
+            `${SUPABASE_URL.replace("/rest/v1/", "/storage/v1")}${signData.signedURL}`;
+
+          window.open(
+            signedUrl,
+            "_blank",
+            "noopener,noreferrer"
+          );
+
+        } catch (error) {
+          console.error(
+            `Gagal membuka dokumen ${documentType}:`,
+            error
+          );
+
+          alert(
+            currentIsEnglish
+              ? `Failed to open ${labelEn}.`
+              : `Gagal membuka ${labelId}.`
+          );
+        }
+      });
+    }
+
+  } catch (error) {
+    console.error(
+      `Gagal memuat dokumen ${documentType}:`,
+      error
+    );
+
+    display.innerHTML = `
+      <div style="color:#dc2626;font-size:14px;">
+        ${isEnglish ? errorEn : errorId}
+      </div>
+    `;
+  }
+}
+
    
 // ================= DOKUMEN: CV =================
 
@@ -7406,144 +7545,26 @@ if (uploadDocumentCvBtn && documentCvFileInput && documentCvStatus) {
 
 // ================= TAMPILKAN CV =================
 
-const documentCvDisplay = document.querySelector("#documentCvDisplay");
-
-if (documentCvDisplay && userData && accessToken) {
+if (userData && accessToken) {
 
   const documentCvUser = JSON.parse(userData);
 
-  try {
+  await renderJobseekerDocument({
+    userId: documentCvUser.id,
+    token: accessToken,
+    documentType: "cv",
+    displayId: "#documentCvDisplay",
+    buttonId: "viewDocumentCvBtn",
+    icon: "📄",
+    labelId: "Lihat CV",
+    labelEn: "View CV",
+    emptyId: "Belum ada CV yang diupload.",
+    emptyEn: "No CV uploaded yet.",
+    errorId: "Gagal memuat CV.",
+    errorEn: "Failed to load CV."
+  });
 
-    const documentCvResponse = await fetch(
-      `${SUPABASE_URL}jobseeker_documents?user_id=eq.${documentCvUser.id}&document_type=eq.cv&select=id,document_name,file_path,created_at&order=created_at.desc`,
-      {
-        method: "GET",
-        headers: {
-          apikey: SUPABASE_KEY,
-          Authorization: `Bearer ${accessToken}`
-        }
-      }
-    );
-
-    if (!documentCvResponse.ok) {
-      throw new Error(await documentCvResponse.text());
-    }
-
-    const documents = await documentCvResponse.json();
-
-    if (documents.length > 0) {
-
-      const documentCv = documents[0];
-
-      documentCvDisplay.innerHTML = `
-        <a
-          href="#"
-          id="viewDocumentCvBtn"
-          style="
-            display:inline-block;
-            padding:10px 16px;
-            background:#e8eef6;
-            color:#123b6d;
-            border-radius:8px;
-            text-decoration:none;
-            font-weight:bold;
-          "
-        >
-          📄 ${
-            currentLanguage === "en"
-              ? "View CV"
-              : "Lihat CV"
-          }
-        </a>
-      `;
-
-      document
-        .querySelector("#viewDocumentCvBtn")
-        .addEventListener("click", async (event) => {
-
-          event.preventDefault();
-
-          try {
-
-            const signResponse = await fetch(
-              `${SUPABASE_URL.replace("/rest/v1/", "/storage/v1/object/sign/jobseeker-documents/")}${encodeURI(documentCv.file_path)}`,
-              {
-                method: "POST",
-                headers: {
-                  apikey: SUPABASE_KEY,
-                  Authorization: `Bearer ${accessToken}`,
-                  "Content-Type": "application/json"
-                },
-                body: JSON.stringify({
-                  expiresIn: 3600
-                })
-              }
-            );
-
-            if (!signResponse.ok) {
-              throw new Error(await signResponse.text());
-            }
-
-            const signData = await signResponse.json();
-
-            const signedUrl =
-              `${SUPABASE_URL.replace("/rest/v1/", "/storage/v1")}${signData.signedURL}`;
-
-            window.open(
-              signedUrl,
-              "_blank",
-              "noopener,noreferrer"
-            );
-
-          } catch (error) {
-
-            console.error("Gagal membuka CV:", error);
-
-            alert(
-              currentLanguage === "en"
-                ? "Failed to open CV."
-                : "Gagal membuka CV."
-            );
-          }
-
-        });
-
-    } else {
-
-      documentCvDisplay.innerHTML = `
-        <div style="
-          color:#64748b;
-          font-size:14px;
-        ">
-          ${
-            currentLanguage === "en"
-              ? "No CV uploaded yet."
-              : "Belum ada CV yang diupload."
-          }
-        </div>
-      `;
-    }
-
-  } catch (error) {
-
-    console.error("Gagal mengambil CV:", error);
-
-    documentCvDisplay.innerHTML = `
-      <div style="
-        color:#dc2626;
-        font-size:14px;
-      ">
-        ${
-          currentLanguage === "en"
-            ? "Failed to load CV."
-            : "Gagal memuat CV."
-        }
-      </div>
-    `;
-  }
 }
-
-   
     // ================= DOKUMEN: PAKLARING =================
 
 const uploadWorkLetterBtn = document.querySelector("#uploadWorkLetterBtn");
@@ -7697,143 +7718,27 @@ if (uploadWorkLetterBtn && workLetterFileInput && workLetterStatus) {
   });
 
 }
-    // ================= TAMPILKAN PAKLARING =================
+  // ================= TAMPILKAN PAKLARING =================
 
-const workLetterDisplay = document.querySelector("#workLetterDisplay");
-
-if (workLetterDisplay && userData && accessToken) {
+if (userData && accessToken) {
 
   const workLetterUser = JSON.parse(userData);
 
-  try {
+  await renderJobseekerDocument({
+    userId: workLetterUser.id,
+    token: accessToken,
+    documentType: "work_letter",
+    displayId: "#workLetterDisplay",
+    buttonId: "viewWorkLetterBtn",
+    icon: "📑",
+    labelId: "Lihat Paklaring",
+    labelEn: "View Work Experience Letter",
+    emptyId: "Belum ada paklaring yang diupload.",
+    emptyEn: "No work experience letter uploaded yet.",
+    errorId: "Gagal memuat paklaring.",
+    errorEn: "Failed to load work experience letter."
+  });
 
-    const workLetterResponse = await fetch(
-      `${SUPABASE_URL}jobseeker_documents?user_id=eq.${workLetterUser.id}&document_type=eq.work_letter&select=id,document_name,file_path,created_at&order=created_at.desc`,
-      {
-        method: "GET",
-        headers: {
-          apikey: SUPABASE_KEY,
-          Authorization: `Bearer ${accessToken}`
-        }
-      }
-    );
-
-    if (!workLetterResponse.ok) {
-      throw new Error(await workLetterResponse.text());
-    }
-
-    const documents = await workLetterResponse.json();
-
-    if (documents.length > 0) {
-
-      const workLetter = documents[0];
-
-      workLetterDisplay.innerHTML = `
-        <a
-          href="#"
-          id="viewWorkLetterBtn"
-          style="
-            display:inline-block;
-            padding:10px 16px;
-            background:#e8eef6;
-            color:#123b6d;
-            border-radius:8px;
-            text-decoration:none;
-            font-weight:bold;
-          "
-        >
-          📑 ${
-            currentLanguage === "en"
-              ? "View Work Experience Letter"
-              : "Lihat Paklaring"
-          }
-        </a>
-      `;
-
-      document
-        .querySelector("#viewWorkLetterBtn")
-        .addEventListener("click", async (event) => {
-
-          event.preventDefault();
-
-          try {
-
-            const signResponse = await fetch(
-              `${SUPABASE_URL.replace("/rest/v1/", "/storage/v1/object/sign/jobseeker-documents/")}${encodeURI(workLetter.file_path)}`,
-              {
-                method: "POST",
-                headers: {
-                  apikey: SUPABASE_KEY,
-                  Authorization: `Bearer ${accessToken}`,
-                  "Content-Type": "application/json"
-                },
-                body: JSON.stringify({
-                  expiresIn: 3600
-                })
-              }
-            );
-
-            if (!signResponse.ok) {
-              throw new Error(await signResponse.text());
-            }
-
-            const signData = await signResponse.json();
-
-            const signedUrl =
-              `${SUPABASE_URL.replace("/rest/v1/", "/storage/v1")}${signData.signedURL}`;
-
-            window.open(
-              signedUrl,
-              "_blank",
-              "noopener,noreferrer"
-            );
-
-          } catch (error) {
-
-            console.error("Gagal membuka paklaring:", error);
-
-            alert(
-              currentLanguage === "en"
-                ? "Failed to open work experience letter."
-                : "Gagal membuka paklaring."
-            );
-          }
-
-        });
-
-    } else {
-
-      workLetterDisplay.innerHTML = `
-        <div style="
-          color:#64748b;
-          font-size:14px;
-        ">
-          ${
-            currentLanguage === "en"
-              ? "No work experience letter uploaded yet."
-              : "Belum ada paklaring yang diupload."
-          }
-        </div>
-      `;
-    }
-
-  } catch (error) {
-
-    console.error("Gagal mengambil paklaring:", error);
-
-    workLetterDisplay.innerHTML = `
-      <div style="
-        color:#dc2626;
-        font-size:14px;
-      ">
-        ${
-          currentLanguage === "en"
-            ? "Failed to load work experience letter."
-            : "Gagal memuat paklaring."
-        }
-      </div>
-    `;
-  }
 }
     // ================= DOKUMEN: IJAZAH / SERTIFIKAT =================
 
@@ -7988,149 +7893,27 @@ if (uploadEducationBtn && educationFileInput && educationStatus) {
   });
 
 }
-    // ================= TAMPILKAN IJAZAH / SERTIFIKAT =================
+  // ================= TAMPILKAN IJAZAH / SERTIFIKAT =================
 
-const educationDisplay = document.querySelector("#educationDisplay");
-
-if (educationDisplay && userData && accessToken) {
+if (userData && accessToken) {
 
   const educationUser = JSON.parse(userData);
 
-  try {
+  await renderJobseekerDocument({
+    userId: educationUser.id,
+    token: accessToken,
+    documentType: "education",
+    displayId: "#educationDisplay",
+    buttonId: "viewEducationBtn",
+    icon: "🎓",
+    labelId: "Lihat Ijazah / Sertifikat",
+    labelEn: "View Certificate",
+    emptyId: "Belum ada ijazah / sertifikat yang diupload.",
+    emptyEn: "No certificate uploaded yet.",
+    errorId: "Gagal memuat ijazah / sertifikat.",
+    errorEn: "Failed to load certificate."
+  });
 
-    const educationResponse = await fetch(
-      `${SUPABASE_URL}jobseeker_documents?user_id=eq.${educationUser.id}&document_type=eq.education&select=id,document_name,file_path,created_at&order=created_at.desc`,
-      {
-        method: "GET",
-        headers: {
-          apikey: SUPABASE_KEY,
-          Authorization: `Bearer ${accessToken}`
-        }
-      }
-    );
-
-    if (!educationResponse.ok) {
-      throw new Error(await educationResponse.text());
-    }
-
-    const documents = await educationResponse.json();
-
-    if (documents.length > 0) {
-
-      const education = documents[0];
-
-      educationDisplay.innerHTML = `
-        <a
-          href="#"
-          id="viewEducationBtn"
-          style="
-            display:inline-block;
-            padding:10px 16px;
-            background:#e8eef6;
-            color:#123b6d;
-            border-radius:8px;
-            text-decoration:none;
-            font-weight:bold;
-          "
-        >
-          🎓 ${
-            currentLanguage === "en"
-              ? "View Certificate"
-              : "Lihat Ijazah / Sertifikat"
-          }
-        </a>
-      `;
-
-      document
-        .querySelector("#viewEducationBtn")
-        .addEventListener("click", async (event) => {
-
-          event.preventDefault();
-
-          try {
-
-            const signResponse = await fetch(
-              `${SUPABASE_URL.replace("/rest/v1/", "/storage/v1/object/sign/jobseeker-documents/")}${encodeURI(education.file_path)}`,
-              {
-                method: "POST",
-                headers: {
-                  apikey: SUPABASE_KEY,
-                  Authorization: `Bearer ${accessToken}`,
-                  "Content-Type": "application/json"
-                },
-                body: JSON.stringify({
-                  expiresIn: 3600
-                })
-              }
-            );
-
-            if (!signResponse.ok) {
-              throw new Error(await signResponse.text());
-            }
-
-            const signData = await signResponse.json();
-
-            const signedUrl =
-              `${SUPABASE_URL.replace("/rest/v1/", "/storage/v1")}${signData.signedURL}`;
-
-            window.open(
-              signedUrl,
-              "_blank",
-              "noopener,noreferrer"
-            );
-
-          } catch (error) {
-
-            console.error(
-              "Gagal membuka ijazah / sertifikat:",
-              error
-            );
-
-            alert(
-              currentLanguage === "en"
-                ? "Failed to open certificate."
-                : "Gagal membuka ijazah / sertifikat."
-            );
-          }
-
-        });
-
-    } else {
-
-      educationDisplay.innerHTML = `
-        <div style="
-          color:#64748b;
-          font-size:14px;
-        ">
-          ${
-            currentLanguage === "en"
-              ? "No certificate uploaded yet."
-              : "Belum ada ijazah / sertifikat yang diupload."
-          }
-        </div>
-      `;
-    }
-
-  } catch (error) {
-
-    console.error(
-      "Gagal mengambil ijazah / sertifikat:",
-      error
-    );
-
-    educationDisplay.innerHTML = `
-      <div style="
-        color:#dc2626;
-        font-size:14px;
-      ">
-        ${
-          currentLanguage === "en"
-            ? "Failed to load certificate."
-            : "Gagal memuat ijazah / sertifikat."
-        }
-      </div>
-    `;
-  }
 }
     // ================= DOKUMEN: DOKUMEN LAINNYA =================
 
@@ -8285,149 +8068,27 @@ if (uploadOtherDocumentBtn && otherDocumentFileInput && otherDocumentStatus) {
   });
 
 }
-    // ================= TAMPILKAN DOKUMEN LAINNYA =================
+  // ================= TAMPILKAN DOKUMEN LAINNYA =================
 
-const otherDocumentDisplay = document.querySelector("#otherDocumentDisplay");
-
-if (otherDocumentDisplay && userData && accessToken) {
+if (userData && accessToken) {
 
   const otherDocumentUser = JSON.parse(userData);
 
-  try {
+  await renderJobseekerDocument({
+    userId: otherDocumentUser.id,
+    token: accessToken,
+    documentType: "other",
+    displayId: "#otherDocumentDisplay",
+    buttonId: "viewOtherDocumentBtn",
+    icon: "📎",
+    labelId: "Lihat Dokumen",
+    labelEn: "View Document",
+    emptyId: "Belum ada dokumen yang diupload.",
+    emptyEn: "No document uploaded yet.",
+    errorId: "Gagal memuat dokumen.",
+    errorEn: "Failed to load document."
+  });
 
-    const otherDocumentResponse = await fetch(
-      `${SUPABASE_URL}jobseeker_documents?user_id=eq.${otherDocumentUser.id}&document_type=eq.other&select=id,document_name,file_path,created_at&order=created_at.desc`,
-      {
-        method: "GET",
-        headers: {
-          apikey: SUPABASE_KEY,
-          Authorization: `Bearer ${accessToken}`
-        }
-      }
-    );
-
-    if (!otherDocumentResponse.ok) {
-      throw new Error(await otherDocumentResponse.text());
-    }
-
-    const documents = await otherDocumentResponse.json();
-
-    if (documents.length > 0) {
-
-      const documentItem = documents[0];
-
-      otherDocumentDisplay.innerHTML = `
-        <a
-          href="#"
-          id="viewOtherDocumentBtn"
-          style="
-            display:inline-block;
-            padding:10px 16px;
-            background:#e8eef6;
-            color:#123b6d;
-            border-radius:8px;
-            text-decoration:none;
-            font-weight:bold;
-          "
-        >
-          📎 ${
-            currentLanguage === "en"
-              ? "View Document"
-              : "Lihat Dokumen"
-          }
-        </a>
-      `;
-
-      document
-        .querySelector("#viewOtherDocumentBtn")
-        .addEventListener("click", async (event) => {
-
-          event.preventDefault();
-
-          try {
-
-            const signResponse = await fetch(
-              `${SUPABASE_URL.replace("/rest/v1/", "/storage/v1/object/sign/jobseeker-documents/")}${encodeURI(documentItem.file_path)}`,
-              {
-                method: "POST",
-                headers: {
-                  apikey: SUPABASE_KEY,
-                  Authorization: `Bearer ${accessToken}`,
-                  "Content-Type": "application/json"
-                },
-                body: JSON.stringify({
-                  expiresIn: 3600
-                })
-              }
-            );
-
-            if (!signResponse.ok) {
-              throw new Error(await signResponse.text());
-            }
-
-            const signData = await signResponse.json();
-
-            const signedUrl =
-              `${SUPABASE_URL.replace("/rest/v1/", "/storage/v1")}${signData.signedURL}`;
-
-            window.open(
-              signedUrl,
-              "_blank",
-              "noopener,noreferrer"
-            );
-
-          } catch (error) {
-
-            console.error(
-              "Gagal membuka dokumen lainnya:",
-              error
-            );
-
-            alert(
-              currentLanguage === "en"
-                ? "Failed to open document."
-                : "Gagal membuka dokumen."
-            );
-          }
-
-        });
-
-    } else {
-
-      otherDocumentDisplay.innerHTML = `
-        <div style="
-          color:#64748b;
-          font-size:14px;
-        ">
-          ${
-            currentLanguage === "en"
-              ? "No document uploaded yet."
-              : "Belum ada dokumen yang diupload."
-          }
-        </div>
-      `;
-    }
-
-  } catch (error) {
-
-    console.error(
-      "Gagal mengambil dokumen lainnya:",
-      error
-    );
-
-    otherDocumentDisplay.innerHTML = `
-      <div style="
-        color:#dc2626;
-        font-size:14px;
-      ">
-        ${
-          currentLanguage === "en"
-            ? "Failed to load document."
-            : "Gagal memuat dokumen."
-        }
-      </div>
-    `;
-  }
 }
   // ================= DOKUMEN: KTP =================
 
@@ -8584,145 +8245,28 @@ if (uploadKtpBtn && ktpFileInput && ktpStatus) {
   });
 
 }
-    // ================= TAMPILKAN KTP =================
+   // ================= TAMPILKAN KTP =================
 
-const ktpDisplay = document.querySelector("#ktpDisplay");
-
-if (ktpDisplay && userData && accessToken) {
+if (userData && accessToken) {
 
   const ktpUser = JSON.parse(userData);
 
-  try {
+  await renderJobseekerDocument({
+    userId: ktpUser.id,
+    token: accessToken,
+    documentType: "ktp",
+    displayId: "#ktpDisplay",
+    buttonId: "viewKtpBtn",
+    icon: "🪪",
+    labelId: "Lihat KTP",
+    labelEn: "View ID Card",
+    emptyId: "Belum ada KTP yang diupload.",
+    emptyEn: "No ID card uploaded yet.",
+    errorId: "Gagal memuat KTP.",
+    errorEn: "Failed to load ID card."
+  });
 
-    const ktpResponse = await fetch(
-      `${SUPABASE_URL}jobseeker_documents?user_id=eq.${ktpUser.id}&document_type=eq.ktp&select=id,document_name,file_path,created_at&order=created_at.desc`,
-      {
-        method: "GET",
-        headers: {
-          apikey: SUPABASE_KEY,
-          Authorization: `Bearer ${accessToken}`
-        }
-      }
-    );
-
-    if (!ktpResponse.ok) {
-      throw new Error(await ktpResponse.text());
-    }
-
-    const documents = await ktpResponse.json();
-
-    if (documents.length > 0) {
-
-      const ktp = documents[0];
-
-      ktpDisplay.innerHTML = `
-        <a
-          href="#"
-          id="viewKtpBtn"
-          style="
-            display:inline-block;
-            padding:10px 16px;
-            background:#e8eef6;
-            color:#123b6d;
-            border-radius:8px;
-            text-decoration:none;
-            font-weight:bold;
-          "
-        >
-          🪪 ${
-            currentLanguage === "en"
-              ? "View ID Card"
-              : "Lihat KTP"
-          }
-        </a>
-      `;
-
-      document
-        .querySelector("#viewKtpBtn")
-        .addEventListener("click", async (event) => {
-
-          event.preventDefault();
-
-          try {
-
-            const signResponse = await fetch(
-              `${SUPABASE_URL.replace("/rest/v1/", "/storage/v1/object/sign/jobseeker-documents/")}${encodeURI(ktp.file_path)}`,
-              {
-                method: "POST",
-                headers: {
-                  apikey: SUPABASE_KEY,
-                  Authorization: `Bearer ${accessToken}`,
-                  "Content-Type": "application/json"
-                },
-                body: JSON.stringify({
-                  expiresIn: 3600
-                })
-              }
-            );
-
-            if (!signResponse.ok) {
-              throw new Error(await signResponse.text());
-            }
-
-            const signData = await signResponse.json();
-
-            const signedUrl =
-              `${SUPABASE_URL.replace("/rest/v1/", "/storage/v1")}${signData.signedURL}`;
-
-            window.open(
-              signedUrl,
-              "_blank",
-              "noopener,noreferrer"
-            );
-
-          } catch (error) {
-
-            console.error("Gagal membuka KTP:", error);
-
-            alert(
-              currentLanguage === "en"
-                ? "Failed to open ID card."
-                : "Gagal membuka KTP."
-            );
-          }
-
-        });
-
-    } else {
-
-      ktpDisplay.innerHTML = `
-        <div style="
-          color:#64748b;
-          font-size:14px;
-        ">
-          ${
-            currentLanguage === "en"
-              ? "No ID card uploaded yet."
-              : "Belum ada KTP yang diupload."
-          }
-        </div>
-      `;
-    }
-
-  } catch (error) {
-
-    console.error("Gagal mengambil KTP:", error);
-
-    ktpDisplay.innerHTML = `
-      <div style="
-        color:#dc2626;
-        font-size:14px;
-      ">
-        ${
-          currentLanguage === "en"
-            ? "Failed to load ID card."
-            : "Gagal memuat KTP."
-        }
-      </div>
-    `;
-  }
 }
-    
     // ================= DOKUMEN: SIM A =================
 
 const uploadSimABtn = document.querySelector("#uploadSimABtn");
@@ -9019,281 +8563,47 @@ if (uploadSimCBtn && simCFileInput && simCStatus) {
   });
 
 }
-    // ================= TAMPILKAN SIM C =================
+  // ================= TAMPILKAN SIM C =================
 
-const simCDisplay = document.querySelector("#simCDisplay");
-
-if (simCDisplay && userData && accessToken) {
-
+if (userData && accessToken) {
   const simCUser = JSON.parse(userData);
 
-  try {
-
-    const simCResponse = await fetch(
-      `${SUPABASE_URL}jobseeker_documents?user_id=eq.${simCUser.id}&document_type=eq.sim_c&select=id,document_name,file_path,created_at&order=created_at.desc`,
-      {
-        method: "GET",
-        headers: {
-          apikey: SUPABASE_KEY,
-          Authorization: `Bearer ${accessToken}`
-        }
-      }
-    );
-
-    if (!simCResponse.ok) {
-      throw new Error(await simCResponse.text());
-    }
-
-    const documents = await simCResponse.json();
-
-    if (documents.length > 0) {
-
-      const simC = documents[0];
-
-      simCDisplay.innerHTML = `
-        <a
-          href="#"
-          id="viewSimCBtn"
-          style="
-            display:inline-block;
-            padding:10px 16px;
-            background:#e8eef6;
-            color:#123b6d;
-            border-radius:8px;
-            text-decoration:none;
-            font-weight:bold;
-          "
-        >
-          🛵 ${
-            currentLanguage === "en"
-              ? "View SIM C"
-              : "Lihat SIM C"
-          }
-        </a>
-      `;
-
-      document
-        .querySelector("#viewSimCBtn")
-        .addEventListener("click", async (event) => {
-
-          event.preventDefault();
-
-          try {
-
-            const signResponse = await fetch(
-              `${SUPABASE_URL.replace("/rest/v1/", "/storage/v1/object/sign/jobseeker-documents/")}${encodeURI(simC.file_path)}`,
-              {
-                method: "POST",
-                headers: {
-                  apikey: SUPABASE_KEY,
-                  Authorization: `Bearer ${accessToken}`,
-                  "Content-Type": "application/json"
-                },
-                body: JSON.stringify({
-                  expiresIn: 3600
-                })
-              }
-            );
-
-            if (!signResponse.ok) {
-              throw new Error(await signResponse.text());
-            }
-
-            const signData = await signResponse.json();
-
-            const signedUrl =
-              `${SUPABASE_URL.replace("/rest/v1/", "/storage/v1")}${signData.signedURL}`;
-
-            window.open(
-              signedUrl,
-              "_blank",
-              "noopener,noreferrer"
-            );
-
-          } catch (error) {
-
-            console.error("Gagal membuka SIM C:", error);
-
-            alert(
-              currentLanguage === "en"
-                ? "Failed to open SIM C."
-                : "Gagal membuka SIM C."
-            );
-          }
-
-        });
-
-    } else {
-
-      simCDisplay.innerHTML = `
-        <div style="
-          color:#64748b;
-          font-size:14px;
-        ">
-          ${
-            currentLanguage === "en"
-              ? "No SIM C uploaded yet."
-              : "Belum ada SIM C yang diupload."
-          }
-        </div>
-      `;
-    }
-
-  } catch (error) {
-
-    console.error("Gagal mengambil SIM C:", error);
-
-    simCDisplay.innerHTML = `
-      <div style="
-        color:#dc2626;
-        font-size:14px;
-      ">
-        ${
-          currentLanguage === "en"
-            ? "Failed to load SIM C."
-            : "Gagal memuat SIM C."
-        }
-      </div>
-    `;
-  }
+  await renderJobseekerDocument({
+    userId: simCUser.id,
+    token: accessToken,
+    documentType: "sim_c",
+    displayId: "#simCDisplay",
+    buttonId: "viewSimCBtn",
+    icon: "🛵",
+    labelId: "Lihat SIM C",
+    labelEn: "View SIM C",
+    emptyId: "Belum ada SIM C yang diupload.",
+    emptyEn: "No SIM C uploaded yet.",
+    errorId: "Gagal memuat SIM C.",
+    errorEn: "Failed to load SIM C."
+  });
 }
-    // ================= TAMPILKAN SIM A =================
+  // ================= TAMPILKAN SIM A =================
 
-const simADisplay = document.querySelector("#simADisplay");
-
-if (simADisplay && userData && accessToken) {
+if (userData && accessToken) {
 
   const simAUser = JSON.parse(userData);
 
-  try {
+  await renderJobseekerDocument({
+    userId: simAUser.id,
+    token: accessToken,
+    documentType: "sim_a",
+    displayId: "#simADisplay",
+    buttonId: "viewSimABtn",
+    icon: "🚗",
+    labelId: "Lihat SIM A",
+    labelEn: "View SIM A",
+    emptyId: "Belum ada SIM A yang diupload.",
+    emptyEn: "No SIM A uploaded yet.",
+    errorId: "Gagal memuat SIM A.",
+    errorEn: "Failed to load SIM A."
+  });
 
-    const simAResponse = await fetch(
-      `${SUPABASE_URL}jobseeker_documents?user_id=eq.${simAUser.id}&document_type=eq.sim_a&select=id,document_name,file_path,created_at&order=created_at.desc`,
-      {
-        method: "GET",
-        headers: {
-          apikey: SUPABASE_KEY,
-          Authorization: `Bearer ${accessToken}`
-        }
-      }
-    );
-
-    if (!simAResponse.ok) {
-      throw new Error(await simAResponse.text());
-    }
-
-    const documents = await simAResponse.json();
-
-    if (documents.length > 0) {
-
-      const simA = documents[0];
-
-      simADisplay.innerHTML = `
-        <a
-          href="#"
-          id="viewSimABtn"
-          style="
-            display:inline-block;
-            padding:10px 16px;
-            background:#e8eef6;
-            color:#123b6d;
-            border-radius:8px;
-            text-decoration:none;
-            font-weight:bold;
-          "
-        >
-          🚗 ${
-            currentLanguage === "en"
-              ? "View SIM A"
-              : "Lihat SIM A"
-          }
-        </a>
-      `;
-
-      document
-        .querySelector("#viewSimABtn")
-        .addEventListener("click", async (event) => {
-
-          event.preventDefault();
-
-          try {
-
-            const signResponse = await fetch(
-              `${SUPABASE_URL.replace("/rest/v1/", "/storage/v1/object/sign/jobseeker-documents/")}${encodeURI(simA.file_path)}`,
-              {
-                method: "POST",
-                headers: {
-                  apikey: SUPABASE_KEY,
-                  Authorization: `Bearer ${accessToken}`,
-                  "Content-Type": "application/json"
-                },
-                body: JSON.stringify({
-                  expiresIn: 3600
-                })
-              }
-            );
-
-            if (!signResponse.ok) {
-              throw new Error(await signResponse.text());
-            }
-
-            const signData = await signResponse.json();
-
-            const signedUrl =
-              `${SUPABASE_URL.replace("/rest/v1/", "/storage/v1")}${signData.signedURL}`;
-
-            window.open(
-              signedUrl,
-              "_blank",
-              "noopener,noreferrer"
-            );
-
-          } catch (error) {
-
-            console.error("Gagal membuka SIM A:", error);
-
-            alert(
-              currentLanguage === "en"
-                ? "Failed to open SIM A."
-                : "Gagal membuka SIM A."
-            );
-          }
-
-        });
-
-    } else {
-
-      simADisplay.innerHTML = `
-        <div style="
-          color:#64748b;
-          font-size:14px;
-        ">
-          ${
-            currentLanguage === "en"
-              ? "No SIM A uploaded yet."
-              : "Belum ada SIM A yang diupload."
-          }
-        </div>
-      `;
-    }
-
-  } catch (error) {
-
-    console.error("Gagal mengambil SIM A:", error);
-
-    simADisplay.innerHTML = `
-      <div style="
-        color:#dc2626;
-        font-size:14px;
-      ">
-        ${
-          currentLanguage === "en"
-            ? "Failed to load SIM A."
-            : "Gagal memuat SIM A."
-        }
-      </div>
-    `;
-  }
 }
   // ================= DOKUMEN: DAFTAR RIWAYAT HIDUP =================
 
@@ -9452,143 +8762,24 @@ if (uploadResumeBtn && resumeFileInput && resumeStatus) {
 
 // ================= TAMPILKAN RESUME =================
 
-const resumeDisplay = document.querySelector("#resumeDisplay");
-
-if (resumeDisplay && userData && accessToken) {
-
+if (userData && accessToken) {
   const resumeUser = JSON.parse(userData);
 
-  try {
-
-    const resumeResponse = await fetch(
-      `${SUPABASE_URL}jobseeker_documents?user_id=eq.${resumeUser.id}&document_type=eq.resume&select=id,document_name,file_path,created_at&order=created_at.desc`,
-      {
-        method: "GET",
-        headers: {
-          apikey: SUPABASE_KEY,
-          Authorization: `Bearer ${accessToken}`
-        }
-      }
-    );
-
-    if (!resumeResponse.ok) {
-      throw new Error(await resumeResponse.text());
-    }
-
-    const resumes = await resumeResponse.json();
-
-    if (resumes.length > 0) {
-
-      const resume = resumes[0];
-
-      resumeDisplay.innerHTML = `
-        <a
-          href="#"
-          id="viewResumeBtn"
-          style="
-            display:inline-block;
-            padding:10px 16px;
-            background:#e8eef6;
-            color:#123b6d;
-            border-radius:8px;
-            text-decoration:none;
-            font-weight:bold;
-          "
-        >
-          📄 ${
-            currentLanguage === "en"
-              ? "View Resume"
-              : "Lihat Daftar Riwayat Hidup"
-          }
-        </a>
-      `;
-
-             document
-             .querySelector("#viewResumeBtn")
-              ?.addEventListener("click", async (event) => {
-              event.preventDefault();
-
-          try {
-
-            const signResponse = await fetch(
-              `${SUPABASE_URL.replace("/rest/v1/", "/storage/v1/object/sign/jobseeker-documents/")}${encodeURI(resume.file_path)}`,
-              {
-                method: "POST",
-                headers: {
-                  apikey: SUPABASE_KEY,
-                  Authorization: `Bearer ${accessToken}`,
-                  "Content-Type": "application/json"
-                },
-                body: JSON.stringify({
-                  expiresIn: 3600
-                })
-              }
-            );
-
-            if (!signResponse.ok) {
-              throw new Error(await signResponse.text());
-            }
-
-            const signData = await signResponse.json();
-
-            const signedUrl =
-              `${SUPABASE_URL.replace("/rest/v1/", "/storage/v1")}${signData.signedURL}`;
-
-            window.open(
-              signedUrl,
-              "_blank",
-              "noopener,noreferrer"
-            );
-
-          } catch (error) {
-
-            console.error("Gagal membuka resume:", error);
-
-            alert(
-              currentLanguage === "en"
-                ? "Failed to open resume."
-                : "Gagal membuka daftar riwayat hidup."
-            );
-          }
-
-        });
-
-    } else {
-
-      resumeDisplay.innerHTML = `
-        <div style="
-          color:#64748b;
-          font-size:14px;
-        ">
-          ${
-            currentLanguage === "en"
-              ? "No resume uploaded yet."
-              : "Belum ada daftar riwayat hidup yang diupload."
-          }
-        </div>
-      `;
-    }
-
-  } catch (error) {
-
-    console.error("Gagal mengambil resume:", error);
-
-    resumeDisplay.innerHTML = `
-      <div style="
-        color:#dc2626;
-        font-size:14px;
-      ">
-        ${
-          currentLanguage === "en"
-            ? "Failed to load resume."
-            : "Gagal memuat daftar riwayat hidup."
-        }
-      </div>
-    `;
-  }
+  await renderJobseekerDocument({
+    userId: resumeUser.id,
+    token: accessToken,
+    documentType: "resume",
+    displayId: "#resumeDisplay",
+    buttonId: "viewResumeBtn",
+    icon: "📄",
+    labelId: "Lihat Daftar Riwayat Hidup",
+    labelEn: "View Resume",
+    emptyId: "Belum ada daftar riwayat hidup yang diupload.",
+    emptyEn: "No resume uploaded yet.",
+    errorId: "Gagal memuat daftar riwayat hidup.",
+    errorEn: "Failed to load resume."
+  });
 }
-
-
 if (userData && accessToken) {
   const user = JSON.parse(userData);
 
