@@ -15180,31 +15180,7 @@ window.viewApplicantDocument = viewApplicantDocument;
               resize:vertical;
             "
           ></textarea>
-                    <div style="
-            margin:10px 0 25px;
-            padding:18px;
-            background:#f8fafc;
-            border:1px solid #e5eaf1;
-            border-radius:10px;
-          ">
-            <div style="
-              font-weight:bold;
-              color:#172b4d;
-              margin-bottom:10px;
-            ">
-              📄 ${language === "en" ? "My CV" : "CV Saya"}
-            </div>
-
-            <div id="jobseekerCvDisplay">
-              <span style="color:#6b7280;">
-                ${language === "en"
-                  ? "Checking your CV..."
-                  : "Memeriksa CV kamu..."}
-              </span>
-            </div>
-          </div>
-
-         
+             
                <button
                id="saveJobseekerProfileBtn"
                type="button"
