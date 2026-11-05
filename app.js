@@ -3437,127 +3437,114 @@ showNotification(
   showNotification("applicationFailed", " " + error.message);
   }
 }
+
 async function submitApplicationWithDocuments(
   job,
   user,
   accessToken,
   selectedDocuments
 ) {
-
   try {
+    const language =
+      localStorage.getItem("siteLanguage") || "id";
 
-    // SIMPAN LAMARAN
-    const response = await fetch(SUPABASE_APPLICATIONS_URL, {
-      method: "POST",
-      headers: {
-        apikey: SUPABASE_KEY,
-        Authorization: `Bearer ${accessToken}`,
-        "Content-Type": "application/json",
-        Prefer: "return=representation"
-      },
-      body: JSON.stringify({
+    // WAJIB MEMILIH MINIMAL SATU DOKUMEN
+    if (
+      !Array.isArray(selectedDocuments) ||
+      selectedDocuments.length === 0
+    ) {
+      alert(
+        language === "en"
+          ? "Please select at least one document."
+          : "Silakan pilih minimal satu dokumen untuk melamar."
+      );
+      return;
+    }
+
+    console.log(
+      "MENGIRIM LAMARAN MELALUI RPC:",
+      {
         job_id: job.id,
-        user_id: user.id,
-        status: "submitted"
-      })
-    });
+        document_count: selectedDocuments.length
+      }
+    );
+
+    // SIMPAN LAMARAN DAN DOKUMEN DALAM SATU TRANSAKSI
+    const response = await fetch(
+      `${SUPABASE_URL}rpc/submit_application_with_documents`,
+      {
+        method: "POST",
+        headers: {
+          apikey: SUPABASE_KEY,
+          Authorization: `Bearer ${accessToken}`,
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+          p_job_id: job.id,
+          p_document_ids: [...new Set(selectedDocuments)]
+        })
+      }
+    );
+
+    const responseText = await response.text();
+
+    console.log(
+      "STATUS RPC LAMARAN:",
+      response.status
+    );
+
+    console.log(
+      "RESPONS RPC LAMARAN:",
+      responseText
+    );
 
     if (!response.ok) {
+      let errorData = {};
 
-      const data = await response.json().catch(() => ({}));
-      const errorText = JSON.stringify(data).toLowerCase();
+      try {
+        errorData = JSON.parse(responseText);
+      } catch {
+        errorData.message = responseText;
+      }
+
+      const errorText =
+        JSON.stringify(errorData).toLowerCase();
 
       if (
         response.status === 409 ||
+        errorData.code === "23505" ||
         errorText.includes("duplicate") ||
-        errorText.includes("already exists") ||
         errorText.includes("unique constraint")
       ) {
-        const language =
-          localStorage.getItem("siteLanguage") || "id";
-
         alert(
           language === "en"
             ? "You have already applied for this job."
             : "Anda sudah melamar lowongan ini."
         );
-
         return;
       }
 
       throw new Error(
-        data.message ||
-        data.error_description ||
-        data.msg ||
-        "Lamaran gagal dikirim"
+        errorData.message ||
+        errorData.error_description ||
+        errorData.msg ||
+        "Lamaran gagal dikirim."
       );
     }
 
-    const applicationData = await response.json();
+    const applicationId =
+      JSON.parse(responseText);
 
-    const application = Array.isArray(applicationData)
-      ? applicationData[0]
-      : applicationData;
-
-    if (!application || !application.id) {
-      throw new Error("Application ID tidak ditemukan.");
-    }
-
-    console.log(
-      "APPLICATION ID:",
-      application.id
-    );
-
-  
-    // SIMPAN DOKUMEN YANG DIPILIH
-    console.log("DOKUMEN TERPILIH:", selectedDocuments);
-
-    if (selectedDocuments.length > 0) {
-      const documentRows = selectedDocuments.map(documentId => ({
-        application_id: application.id,
-        document_id: documentId
-      }));
-
-      const documentResponse = await fetch(
-        `${SUPABASE_URL}application_documents`,
-        {
-          method: "POST",
-          headers: {
-            apikey: SUPABASE_KEY,
-            Authorization: `Bearer ${accessToken}`,
-            "Content-Type": "application/json",
-            Prefer: "return=representation"
-          },
-          body: JSON.stringify(documentRows)
-        }
+    if (!applicationId) {
+      throw new Error(
+        "ID lamaran tidak ditemukan dari respons RPC."
       );
-
-      const responseText = await documentResponse.text();
-
-      console.log(
-        "STATUS SIMPAN DOKUMEN:",
-        documentResponse.status
-      );
-
-      console.log(
-        "RESPONS SIMPAN DOKUMEN:",
-        responseText
-      );
-
-      if (!documentResponse.ok) {
-        throw new Error(
-          "Gagal menyimpan dokumen lamaran: " + responseText
-        );
-      }
     }
 
     console.log(
-      "DOKUMEN LAMARAN TERSIMPAN:",
-      selectedDocuments
+      "LAMARAN BERHASIL:",
+      applicationId
     );
-
-    const language =
-      localStorage.getItem("siteLanguage") || "id";
 
     showNotification(
       "applicationSuccess",
@@ -3565,9 +3552,8 @@ async function submitApplicationWithDocuments(
     );
 
   } catch (error) {
-
     console.error(
-      "Gagal mengirim lamaran:",
+      "GAGAL MENGIRIM LAMARAN:",
       error
     );
 
@@ -3577,8 +3563,6 @@ async function submitApplicationWithDocuments(
     );
   }
 }
-
-
 // =====================================================
 // HANDLER DETAIL LOWONGAN
 // Membaca terjemahan langsung dari database
