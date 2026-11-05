@@ -7243,6 +7243,306 @@ translateJobseekerDashboard(dashboard);
 
 
 loadInterviewInvitations();
+
+   
+// ================= DOKUMEN: CV =================
+
+const uploadDocumentCvBtn = document.querySelector("#uploadDocumentCvBtn");
+const documentCvFileInput = document.querySelector("#documentCvFileInput");
+const documentCvStatus = document.querySelector("#documentCvStatus");
+const documentCvFileName = document.querySelector("#documentCvFileName");
+
+if (documentCvFileName && documentCvFileInput) {
+  documentCvFileInput.addEventListener("change", () => {
+    if (documentCvFileInput.files.length > 0) {
+      documentCvFileName.textContent = documentCvFileInput.files[0].name;
+    } else {
+      documentCvFileName.textContent =
+        currentLanguage === "en"
+          ? "No file chosen"
+          : "Tidak ada file yang dipilih";
+    }
+  });
+}
+
+if (uploadDocumentCvBtn && documentCvFileInput && documentCvStatus) {
+
+  uploadDocumentCvBtn.addEventListener("click", async () => {
+
+    const file = documentCvFileInput.files[0];
+
+    if (!file) {
+      documentCvStatus.textContent =
+        currentLanguage === "en"
+          ? "Please select a CV file first."
+          : "Pilih file CV terlebih dahulu.";
+      return;
+    }
+
+    if (file.type !== "application/pdf") {
+      documentCvStatus.textContent =
+        currentLanguage === "en"
+          ? "CV must be a PDF file."
+          : "CV harus berupa file PDF.";
+      return;
+    }
+
+    if (file.size > 5 * 1024 * 1024) {
+      documentCvStatus.textContent =
+        currentLanguage === "en"
+          ? "File size must not exceed 5 MB."
+          : "Ukuran file maksimal 5 MB.";
+      return;
+    }
+
+    const token = localStorage.getItem("kerjivaAccessToken");
+    const userData = localStorage.getItem("kerjivaUser");
+
+    if (!token || !userData) {
+      documentCvStatus.textContent =
+        currentLanguage === "en"
+          ? "Please log in first."
+          : "Silakan login terlebih dahulu.";
+      return;
+    }
+
+    let user;
+
+    try {
+      user = JSON.parse(userData);
+    } catch {
+      documentCvStatus.textContent =
+        currentLanguage === "en"
+          ? "Invalid account data. Please log in again."
+          : "Data akun tidak valid. Silakan login kembali.";
+      return;
+    }
+
+    if (!user.id) {
+      documentCvStatus.textContent =
+        currentLanguage === "en"
+          ? "User ID not found."
+          : "ID pengguna tidak ditemukan.";
+      return;
+    }
+
+    try {
+
+      documentCvStatus.textContent =
+        currentLanguage === "en"
+          ? "Uploading CV..."
+          : "Mengupload CV...";
+
+      const filePath =
+        `${user.id}/cv/${Date.now()}_${file.name}`;
+
+      const uploadResponse = await fetch(
+        `${SUPABASE_URL.replace("/rest/v1/", "/storage/v1/object/jobseeker-documents/")}${filePath}`,
+        {
+          method: "POST",
+          headers: {
+            apikey: SUPABASE_KEY,
+            Authorization: `Bearer ${token}`,
+            "Content-Type": file.type
+          },
+          body: file
+        }
+      );
+
+      if (!uploadResponse.ok) {
+        const errorText = await uploadResponse.text();
+        throw new Error(errorText);
+      }
+
+      const documentResponse = await fetch(
+        `${SUPABASE_URL}jobseeker_documents`,
+        {
+          method: "POST",
+          headers: {
+            apikey: SUPABASE_KEY,
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json",
+            "Prefer": "return=minimal"
+          },
+          body: JSON.stringify({
+            user_id: user.id,
+            document_type: "cv",
+            document_name: file.name,
+            file_path: filePath
+          })
+        }
+      );
+
+      if (!documentResponse.ok) {
+        const errorText = await documentResponse.text();
+        throw new Error(errorText);
+      }
+
+      documentCvStatus.textContent =
+        currentLanguage === "en"
+          ? "CV uploaded successfully."
+          : "CV berhasil diupload.";
+
+      documentCvFileInput.value = "";
+
+      documentCvFileName.textContent =
+        currentLanguage === "en"
+          ? "No file chosen"
+          : "Tidak ada file yang dipilih";
+
+    } catch (error) {
+
+      console.error("Gagal upload CV:", error);
+
+      documentCvStatus.textContent =
+        currentLanguage === "en"
+          ? "CV upload failed."
+          : "Gagal mengupload CV.";
+    }
+
+  });
+
+}
+
+// ================= TAMPILKAN CV =================
+
+const documentCvDisplay = document.querySelector("#documentCvDisplay");
+
+if (documentCvDisplay && userData && accessToken) {
+
+  const documentCvUser = JSON.parse(userData);
+
+  try {
+
+    const documentCvResponse = await fetch(
+      `${SUPABASE_URL}jobseeker_documents?user_id=eq.${documentCvUser.id}&document_type=eq.cv&select=id,document_name,file_path,created_at&order=created_at.desc`,
+      {
+        method: "GET",
+        headers: {
+          apikey: SUPABASE_KEY,
+          Authorization: `Bearer ${accessToken}`
+        }
+      }
+    );
+
+    if (!documentCvResponse.ok) {
+      throw new Error(await documentCvResponse.text());
+    }
+
+    const documents = await documentCvResponse.json();
+
+    if (documents.length > 0) {
+
+      const documentCv = documents[0];
+
+      documentCvDisplay.innerHTML = `
+        <a
+          href="#"
+          id="viewDocumentCvBtn"
+          style="
+            display:inline-block;
+            padding:10px 16px;
+            background:#e8eef6;
+            color:#123b6d;
+            border-radius:8px;
+            text-decoration:none;
+            font-weight:bold;
+          "
+        >
+          📄 ${
+            currentLanguage === "en"
+              ? "View CV"
+              : "Lihat CV"
+          }
+        </a>
+      `;
+
+      document
+        .querySelector("#viewDocumentCvBtn")
+        .addEventListener("click", async (event) => {
+
+          event.preventDefault();
+
+          try {
+
+            const signResponse = await fetch(
+              `${SUPABASE_URL.replace("/rest/v1/", "/storage/v1/object/sign/jobseeker-documents/")}${encodeURI(documentCv.file_path)}`,
+              {
+                method: "POST",
+                headers: {
+                  apikey: SUPABASE_KEY,
+                  Authorization: `Bearer ${accessToken}`,
+                  "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                  expiresIn: 3600
+                })
+              }
+            );
+
+            if (!signResponse.ok) {
+              throw new Error(await signResponse.text());
+            }
+
+            const signData = await signResponse.json();
+
+            const signedUrl =
+              `${SUPABASE_URL.replace("/rest/v1/", "/storage/v1")}${signData.signedURL}`;
+
+            window.open(
+              signedUrl,
+              "_blank",
+              "noopener,noreferrer"
+            );
+
+          } catch (error) {
+
+            console.error("Gagal membuka CV:", error);
+
+            alert(
+              currentLanguage === "en"
+                ? "Failed to open CV."
+                : "Gagal membuka CV."
+            );
+          }
+
+        });
+
+    } else {
+
+      documentCvDisplay.innerHTML = `
+        <div style="
+          color:#64748b;
+          font-size:14px;
+        ">
+          ${
+            currentLanguage === "en"
+              ? "No CV uploaded yet."
+              : "Belum ada CV yang diupload."
+          }
+        </div>
+      `;
+    }
+
+  } catch (error) {
+
+    console.error("Gagal mengambil CV:", error);
+
+    documentCvDisplay.innerHTML = `
+      <div style="
+        color:#dc2626;
+        font-size:14px;
+      ">
+        ${
+          currentLanguage === "en"
+            ? "Failed to load CV."
+            : "Gagal memuat CV."
+        }
+      </div>
+    `;
+  }
+}
+
    
     // ================= DOKUMEN: PAKLARING =================
 
