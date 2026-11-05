@@ -10140,6 +10140,7 @@ const interviewStatusLabel =
   }
 }
 
+
 async function deleteInterview(interviewId) {
 
   const language = localStorage.getItem("siteLanguage") || "id";
@@ -10154,9 +10155,10 @@ async function deleteInterview(interviewId) {
 
   try {
 
- const accessToken = localStorage.getItem("kerjivaAccessToken");
+    const accessToken = localStorage.getItem("kerjivaAccessToken");
+    const userData = localStorage.getItem("kerjivaUser");
 
-    if (!accessToken) {
+    if (!accessToken || !userData) {
       alert(
         language === "en"
           ? "Please login first."
@@ -10165,13 +10167,20 @@ async function deleteInterview(interviewId) {
       return;
     }
 
+    const user = JSON.parse(userData);
+
+    if (!user.id) {
+      throw new Error("User ID tidak ditemukan.");
+    }
+
     const response = await fetch(
-      `${SUPABASE_URL}interviews?id=eq.${interviewId}`,
+      `${SUPABASE_URL}interviews?id=eq.${encodeURIComponent(interviewId)}&applicant_id=eq.${encodeURIComponent(user.id)}`,
       {
         method: "DELETE",
         headers: {
           apikey: SUPABASE_KEY,
-          Authorization: `Bearer ${accessToken}`
+          Authorization: `Bearer ${accessToken}`,
+          Prefer: "return=representation"
         }
       }
     );
@@ -10180,14 +10189,21 @@ async function deleteInterview(interviewId) {
       throw new Error(await response.text());
     }
 
+    const deletedInterviews = await response.json();
+
+    if (!Array.isArray(deletedInterviews) || deletedInterviews.length === 0) {
+      throw new Error(
+        "Tidak ada data interview yang terhapus. Periksa ID dan DELETE policy RLS Supabase."
+      );
+    }
+
     alert(
       language === "en"
         ? "Interview invitation deleted."
         : "Undangan interview berhasil dihapus."
     );
 
-    // Muat ulang dashboard
-    showJobseekerDashboard();
+    await showJobseekerDashboard();
 
   } catch (error) {
 
@@ -10200,6 +10216,7 @@ async function deleteInterview(interviewId) {
     );
   }
 }
+
   window.deleteInterview = deleteInterview;
 
 function translateMyApplications(page) {
