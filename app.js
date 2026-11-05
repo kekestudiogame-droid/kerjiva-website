@@ -3210,11 +3210,12 @@ const documents = await documentsResponse.json();
 
 console.log("DOKUMEN PELAMAR:", documents);
 
-  try {
+ try {
+
+  const applicationLanguage =
+    localStorage.getItem("siteLanguage") || "id";
 
 // TAMPILKAN PILIHAN DOKUMEN
- const applicationLanguage = localStorage.getItem("siteLanguage") || "id";
-
 if (documents.length > 0) {
 
   const documentChoices = documents.map(doc => `
@@ -3383,56 +3384,17 @@ if (documents.length > 0) {
 
   return;
 }
-    const response = await fetch(SUPABASE_APPLICATIONS_URL, {
-      method: "POST",
-      headers: {
-        apikey: SUPABASE_KEY,
-        Authorization: `Bearer ${accessToken}`,
-        "Content-Type": "application/json",
-        Prefer: "return=minimal"
-      },
-      body: JSON.stringify({
-        job_id: job.id,
-        user_id: user.id,
-        status: "submitted"
-      })
-    });
-
-   if (!response.ok) {
-  const data = await response.json().catch(() => ({}));
-
-  const errorText = JSON.stringify(data).toLowerCase();
-
-  if (
-    response.status === 409 ||
-    errorText.includes("duplicate") ||
-    errorText.includes("already exists") ||
-    errorText.includes("unique constraint")
-  ) {
-   const language = localStorage.getItem("siteLanguage") || "id";
-
-alert(
- applicationLanguage === "en"
-    ? "You have already applied for this job."
-    : "Anda sudah melamar lowongan ini."
-);
-return;
-  }
-
-  throw new Error(
-    data.message ||
-    data.error_description ||
-    data.msg ||
-    "Lamaran gagal dikirim"
+    if (documents.length === 0) {
+  alert(
+    applicationLanguage === "en"
+      ? "You haven't uploaded any documents yet. Please upload at least one document before applying."
+      : "Kamu belum mengunggah dokumen. Silakan unggah minimal satu dokumen terlebih dahulu sebelum melamar."
   );
+
+  await window.showJobseekerDashboard();
+  return;
 }
-
-   const language = localStorage.getItem("siteLanguage") || "id";
-
-showNotification(
-  "applicationSuccess",
-  `\n\n${job.title} - ${job.company}`
-);
+  
   } catch (error) {
   showNotification("applicationFailed", " " + error.message);
   }
