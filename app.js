@@ -6486,6 +6486,103 @@ const accessToken = localStorage.getItem("kerjivaAccessToken");
           ">
      
 </div>
+
+<!-- DOKUMEN CV -->
+<div style="
+  padding:18px;
+  border:1px solid #e5eaf1;
+  border-radius:12px;
+  background:#f8fafc;
+">
+
+  <strong>
+    📄 ${currentLanguage === "en" ? "Curriculum Vitae (CV)" : "Curriculum Vitae (CV)"}
+  </strong>
+
+  <div style="
+    margin-top:6px;
+    color:#64748b;
+    font-size:14px;
+  ">
+    ${currentLanguage === "en"
+      ? "Upload your CV to support your job applications."
+      : "Upload CV kamu untuk mendukung lamaran pekerjaan."}
+  </div>
+
+  <input
+    type="file"
+    id="documentCvFileInput"
+    accept=".pdf,application/pdf"
+    style="display:none;"
+  >
+
+  <label
+    for="documentCvFileInput"
+    style="
+      display:inline-block;
+      margin-top:15px;
+      padding:11px 18px;
+      background:#e8eef7;
+      color:#123b6d;
+      border-radius:8px;
+      cursor:pointer;
+      font-size:14px;
+      font-weight:bold;
+    "
+  >
+    ${currentLanguage === "en"
+      ? "Choose File"
+      : "Pilih File"}
+  </label>
+
+  <span
+    id="documentCvFileName"
+    style="
+      display:block;
+      margin-top:10px;
+      color:#64748b;
+      font-size:13px;
+    "
+  >
+    ${currentLanguage === "en"
+      ? "No file chosen"
+      : "Tidak ada file yang dipilih"}
+  </span>
+
+  <button
+    id="uploadDocumentCvBtn"
+    style="
+      margin-top:12px;
+      padding:10px 18px;
+      background:#123b6d;
+      color:white;
+      border:none;
+      border-radius:8px;
+      cursor:pointer;
+      font-weight:bold;
+    "
+  >
+    ${currentLanguage === "en"
+      ? "Upload CV"
+      : "Upload CV"}
+  </button>
+
+  <div
+    id="documentCvStatus"
+    style="
+      margin-top:12px;
+      font-weight:bold;
+    "
+  ></div>
+
+  <div
+    id="documentCvDisplay"
+    style="
+      margin-top:12px;
+    "
+  ></div>
+
+</div>
           <div style="
   padding:18px;
   border:1px solid #e5eaf1;
