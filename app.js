@@ -15374,6 +15374,12 @@ if (profilePhoto && profile.photo_url) {
       }
     });
   }
+                } // Penutup if (profiles.length > 0)
+      } // Penutup if (response.ok)
+    } catch (error) {
+      console.error("Gagal mengambil profil:", error);
+    }
+  }; // Penutup showJobseekerProfile
 
 
 
@@ -15449,7 +15455,6 @@ window.saveJobseekerProfile = async function () {
   }
 };
 
-};
 
 // ================= LIHAT PASSWORD =================
 
