@@ -9596,6 +9596,7 @@ uploadBtn?.addEventListener("click", async () => {
     status.textContent = "Gagal upload CV: " + error.message;
   }
 });
+   }
 
       
 
