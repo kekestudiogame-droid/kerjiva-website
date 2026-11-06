@@ -12791,35 +12791,16 @@ function showPostJobForm() {
   `;
 
   document.body.appendChild(form);
-    const salaryInput = form.querySelector("#jobSalary");
+
+  const salaryInput = form.querySelector("#jobSalary");
 
   salaryInput.addEventListener("input", function () {
-    const cursor = this.selectionStart;
-    const digitsBeforeCursor = this.value
-      .slice(0, cursor)
-      .replace(/\D/g, "").length;
-
-    this.value = this.value.replace(/\d+/g, number =>
-      number.replace(/\B(?=(\d{3})+(?!\d))/g, ".")
-    );
-
-    let newCursor = 0;
-    let digitCount = 0;
-
-    while (newCursor < this.value.length &&
-           digitCount < digitsBeforeCursor) {
-      if (/\d/.test(this.value[newCursor])) {
-        digitCount++;
-      }
-      newCursor++;
-    }
-
-    this.setSelectionRange(newCursor, newCursor);
+    const digits = this.value.replace(/\D/g, "");
+    this.value = digits.replace(/\B(?=(\d{3})+(?!\d))/g, ".");
   });
 
   const cityInput = form.querySelector("#jobCity");
   const suggestions = form.querySelector("#jobCitySuggestions");
-
 
   function getCityDisplayName(city) {
     const name = city
