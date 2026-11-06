@@ -12791,6 +12791,31 @@ function showPostJobForm() {
   `;
 
   document.body.appendChild(form);
+    const salaryInput = form.querySelector("#jobSalary");
+
+  salaryInput.addEventListener("input", function () {
+    const cursor = this.selectionStart;
+    const digitsBeforeCursor = this.value
+      .slice(0, cursor)
+      .replace(/\D/g, "").length;
+
+    this.value = this.value.replace(/\d+/g, number =>
+      number.replace(/\B(?=(\d{3})+(?!\d))/g, ".")
+    );
+
+    let newCursor = 0;
+    let digitCount = 0;
+
+    while (newCursor < this.value.length &&
+           digitCount < digitsBeforeCursor) {
+      if (/\d/.test(this.value[newCursor])) {
+        digitCount++;
+      }
+      newCursor++;
+    }
+
+    this.setSelectionRange(newCursor, newCursor);
+  });
 
   const cityInput = form.querySelector("#jobCity");
   const suggestions = form.querySelector("#jobCitySuggestions");
@@ -12889,7 +12914,7 @@ async function publishNewJob() {
   const description = document.getElementById("jobDescription").value.trim();
   const category = document.getElementById("jobCategory").value;
   const jobType = document.getElementById("jobType").value;
-  const salary = document.getElementById("jobSalary").value.trim();
+ const salary = document.getElementById("jobSalary").value.trim().replace(/\./g, "");
   const experience = document.getElementById("jobExperience").value.trim();
   const education = document.getElementById("jobEducation").value.trim();
   const applicationDeadline = document.getElementById("jobDeadline").value;
@@ -12987,7 +13012,7 @@ async function submitJobPost() {
   const description = document.getElementById("jobDescription").value.trim();
   const category = document.getElementById("jobCategory").value;
   const jobType = document.getElementById("jobType").value;
-  const salary = document.getElementById("jobSalary").value.trim();
+  const salary = document.getElementById("jobSalary").value.trim().replace(/\./g, "");
   const experience = document.getElementById("jobExperience").value.trim();
   const education = document.getElementById("jobEducation").value.trim();
   const applicationDeadline = document.getElementById("jobDeadline").value;
