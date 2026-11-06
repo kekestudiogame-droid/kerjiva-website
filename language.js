@@ -1779,9 +1779,9 @@
 "Apa yang ingin kamu bagikan?":
   "What would you like to share?",
 
-"Sampaikan pengalaman, pendapat, pertanyaan, kritik, saran, atau ide kamu seputar dunia kerja dan Kerjiva.":
-  "Share your experiences, opinions, questions, criticism, suggestions, or ideas about the world of work and Kerjiva.",
-
+"Bagikan pengalaman, cerita, pertanyaan, atau ide seputar dunia kerja bersama komunitas Kerjiva. Setiap cerita dan pendapatmu berarti!":
+  "Share your experiences, stories, questions, or ideas about the world of work with the Kerjiva community. Every story and opinion matters!",
+     
 "Tulis sesuatu yang ingin kamu bagikan...":
   "Write something you'd like to share...",
 
