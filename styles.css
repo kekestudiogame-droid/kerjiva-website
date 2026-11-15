@@ -318,6 +318,32 @@ footer{border-top:1px solid var(--line)}
     font-size: 13px;
   }
 }
+
+
+/* =========================
+   DROPDOWN PILIH BAHASA
+   ========================= */
+
+#mainMenu .language-switcher {
+  margin: 4px 0;
+}
+
+#mainMenu #languageDropdown {
+  padding-left: 18px;
+  margin: 2px 0 6px;
+}
+
+#mainMenu #languageDropdown button {
+  min-height: 39px;
+  padding: 9px 13px;
+  font-size: 13px;
+  border-radius: 9px;
+}
+
+#mainMenu #languageToggle {
+  font-weight: 700;
+}
+
 /* =========================
    CHATBOT KERJIVA
    ========================= */
