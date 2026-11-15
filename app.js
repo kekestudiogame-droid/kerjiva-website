@@ -13332,12 +13332,14 @@ function setupAuthButtons() {
   
 
 
+
 /* VERIFIKASI EMAIL BERHASIL */
 const verificationParams = new URLSearchParams(
   window.location.search
 );
 
 if (verificationParams.get("verified") === "email") {
+
   const isEnglish =
     localStorage.getItem("siteLanguage") === "en";
 
@@ -13347,115 +13349,42 @@ if (verificationParams.get("verified") === "email") {
       : "Verifikasi Email Berhasil!\n\nEmail kamu berhasil diverifikasi. Sekarang, silakan masuk ke akun Kerjiva kamu."
   );
 
-  // Tutup halaman kedua setelah pengguna klik OK
-  window.close();
+  // CLEAN UP SESSION AFTER USER CLICKS OK
+  (async function () {
 
-  (async () => {
     try {
+
       if (
         typeof supabaseAuth !== "undefined" &&
         supabaseAuth.auth
       ) {
-        await supabaseAuth.auth.signOut();
+        await supabaseAuth.auth.signOut({
+          scope: "local"
+        });
       }
+
     } catch (error) {
+
       console.error(
         "Verifikasi email - pembersihan sesi:",
         error
       );
+
     }
 
     localStorage.removeItem("kerjivaUser");
     localStorage.removeItem("kerjivaAccessToken");
     localStorage.removeItem("kerjivaActiveRole");
 
-    // Ubah alamat tanpa memuat ulang halaman
-    window.history.replaceState(
-      null,
-      document.title,
-      "/index.html"
-    );
+    // CLOSE VERIFICATION TAB
+    window.close();
 
-    // Siapkan halaman dalam mode MASUK
-    isRegister = false;
-    isCompany = false;
+    // FALLBACK FOR MOBILE BROWSERS
+    window.history.back();
 
-    const authModal =
-      document.getElementById("authModal");
-    const modalTitle =
-      document.getElementById("modalTitle");
-    const modalText =
-      document.getElementById("modalText");
-    const authForm =
-      document.getElementById("authForm");
-
-    if (modalTitle) {
-      modalTitle.textContent =
-        isEnglish ? "Log In" : "Masuk";
-    }
-
-    if (modalText) {
-      modalText.textContent = isEnglish
-        ? "Enter your email and password to log in."
-        : "Masukkan email dan password untuk masuk.";
-    }
-
-    const accountType =
-      document.getElementById("accountType");
-    if (accountType) {
-      accountType.style.display = "block";
-    }
-
-    const accountTypeLabel =
-      document.getElementById("accountTypeLabel");
-    if (accountTypeLabel) {
-      accountTypeLabel.textContent =
-        isEnglish ? "Log in as:" : "Masuk sebagai:";
-    }
-
-    [
-      "jobseekerFields",
-      "companyFields",
-      "confirmPasswordField"
-    ].forEach(id => {
-      const field = document.getElementById(id);
-      if (field) field.style.display = "none";
-    });
-
-    const submitButton =
-      authForm?.querySelector('button[type="submit"]');
-    if (submitButton) {
-      submitButton.textContent =
-        isEnglish ? "Log In" : "Masuk";
-    }
-
-    const switchAuth =
-      document.getElementById("switchAuth");
-    if (switchAuth) {
-      switchAuth.textContent =
-        isEnglish ? "Sign Up" : "Daftar";
-    }
-
-    if (authForm) {
-      authForm.classList.remove("hidden");
-    }
-
-    document.querySelector(".switch-auth")
-      ?.classList.remove("hidden");
-
-    const forgotPasswordWrapper =
-      document.getElementById("forgotPasswordWrapper");
-    if (forgotPasswordWrapper) {
-      forgotPasswordWrapper.style.display = "block";
-    }
-
-    if (authModal) {
-      authModal.classList.remove("hidden");
-    }
   })();
+
 }
-
-
 
 if (document.readyState === "loading") {
 
