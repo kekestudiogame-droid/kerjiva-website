@@ -86,11 +86,33 @@
 <button type="button" id="menuAbout">ℹ️ Tentang</button>
 <button type="button" id="menuContact">📞 Kontak</button>
 <button type="button" id="menuPayment">💳 Pembayaran</button>
-  <!-- PILIH BAHASA -->
+
+<!-- PILIH BAHASA -->
 <div class="language-switcher">
-  <button type="button" id="langID">🇮🇩 ID</button>
-  <button type="button" id="langEN">🇬🇧 EN</button>
+
+  <button
+    type="button"
+    id="languageToggle"
+    aria-expanded="false"
+    aria-controls="languageDropdown"
+  >
+    🌐 Bahasa ▾
+  </button>
+
+  <div id="languageDropdown" style="display:none; padding-left:18px;">
+
+    <button type="button" id="langID">
+      🇮🇩 Indonesia
+    </button>
+
+    <button type="button" id="langEN">
+      🇬🇧 English
+    </button>
+
+  </div>
+
 </div>
+
 
 <!-- MENU LAINNYA -->
 <button type="button" id="menuCompanies">🏢 Perusahaan & Statistik</button>
