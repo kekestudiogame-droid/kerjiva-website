@@ -2500,6 +2500,34 @@ function setupLanguageButtons() {
 
   }
 
+   
+  // DROPDOWN PILIH BAHASA
+  const languageToggle =
+    document.getElementById("languageToggle");
+
+  const languageDropdown =
+    document.getElementById("languageDropdown");
+
+  if (languageToggle && languageDropdown) {
+
+    languageToggle.addEventListener("click", function () {
+
+      const isOpen =
+        languageDropdown.style.display === "block";
+
+      languageDropdown.style.display =
+        isOpen ? "none" : "block";
+
+      languageToggle.setAttribute(
+        "aria-expanded",
+        String(!isOpen)
+      );
+
+    });
+
+  }
+
+
 
   /* =====================================================
      AUTH MODAL DYNAMIC CONTENT
