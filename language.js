@@ -2508,25 +2508,26 @@ function setupLanguageButtons() {
   const languageDropdown =
     document.getElementById("languageDropdown");
 
-  if (languageToggle && languageDropdown) {
+if (languageToggle && languageDropdown) {
 
-    languageToggle.addEventListener("click", function () {
+  languageToggle.addEventListener("click", function (e) {
 
-      const isOpen =
-        languageDropdown.style.display === "block";
+    e.stopPropagation();
 
-      languageDropdown.style.display =
-        isOpen ? "none" : "block";
+    const isOpen =
+      languageDropdown.style.display === "block";
 
-      languageToggle.setAttribute(
-        "aria-expanded",
-        String(!isOpen)
-      );
+    languageDropdown.style.display =
+      isOpen ? "none" : "block";
 
-    });
+    languageToggle.setAttribute(
+      "aria-expanded",
+      String(!isOpen)
+    );
 
-  }
+  });
 
+}
 
 
   /* =====================================================
