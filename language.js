@@ -2480,20 +2480,21 @@ function setupLanguageButtons() {
       function () {
 
         window.setLanguage("id");
+        closeLanguageDropdown();
 
       }
     );
 
   }
 
-
-  if (langEN) {
+   if (langEN) {
 
     langEN.addEventListener(
       "click",
       function () {
 
         window.setLanguage("en");
+        closeLanguageDropdown();
 
       }
     );
@@ -2502,11 +2503,27 @@ function setupLanguageButtons() {
 
    
   // DROPDOWN PILIH BAHASA
+   
   const languageToggle =
     document.getElementById("languageToggle");
 
   const languageDropdown =
     document.getElementById("languageDropdown");
+   
+     function closeLanguageDropdown() {
+
+    if (languageDropdown) {
+      languageDropdown.style.display = "none";
+    }
+
+    if (languageToggle) {
+      languageToggle.setAttribute(
+        "aria-expanded",
+        "false"
+      );
+    }
+
+  }
 
 if (languageToggle && languageDropdown) {
 
