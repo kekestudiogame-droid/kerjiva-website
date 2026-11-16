@@ -72,20 +72,24 @@ footer{border-top:1px solid var(--line)}
     gap:4px;
   }
 
-  .language-switcher{
-    display:flex;
-    align-items:center;
-    gap:1px;
-    white-space:nowrap;
-  }
+ .language-switcher{
+  display:flex;
+  flex-direction:column;
+  align-items:flex-start;
+  gap:2px;
+  white-space:nowrap;
+}
 
-  .language-switcher button{
-    border:0;
-    background:transparent;
-    padding:5px 3px;
-    font-size:11px;
-    cursor:pointer;
-  }
+.language-switcher button{
+  display:block;
+  width:100%;
+  text-align:left;
+  border:0;
+  background:transparent;
+  padding:5px 3px;
+  font-size:11px;
+  cursor:pointer;
+}
 
   .nav-actions .btn-ghost{
     display:block;
