@@ -1998,8 +1998,10 @@
 "Beri rating untuk Kerjiva (opsional)":
   "Rate Kerjiva (optional)",
 
+"Untuk membuat akun Kerjiva, pilih menu Daftar dan isi formulir pendaftaran. Pendaftaran berhasil dan terverifikasi, silakan masuk ke akun Kerjiva dan lengkapi profil kamu.":
+  "To create a Kerjiva account, select the Register menu and complete the registration form. Your registration is complete and verified. Please log in to your Kerjiva account and complete your profile.",
+
 };
-   
   /* =========================================================
      BUILD EN → ID
      ========================================================= */
