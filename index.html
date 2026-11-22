@@ -89,8 +89,43 @@
 <button type="button" id="menuContact">📞 Kontak</button>
 <button type="button" id="menuPayment">💳 Pembayaran</button>
 
+<!-- PILIH NEGARA -->
+<div class="country-switcher">
+
+  <button
+    type="button"
+    id="countryToggle"
+    aria-expanded="false"
+    aria-controls="countryDropdown"
+  >
+    🌍 Negara ▾
+  </button>
+
+  <div id="countryDropdown" style="display:none; padding-left:18px;">
+
+    <button
+      type="button"
+      id="countryID"
+      onclick="window.location.href='https://kerjiva.com/'"
+    >
+      🇮🇩 Indonesia
+    </button>
+
+    <button
+      type="button"
+      id="countryMY"
+      onclick="window.location.href='https://my.kerjiva.com/'"
+    >
+      🇲🇾 Malaysia
+    </button>
+
+  </div>
+
+</div>
+
 <!-- PILIH BAHASA -->
 <div class="language-switcher">
+
 
   <button
     type="button"
