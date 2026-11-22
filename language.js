@@ -1771,7 +1771,10 @@
    PUSAT INFORMASI KERJIVA
    ARTIKEL 7 — KEUNGGULAN DAN KELEBIHAN KERJIVA
    ===================================================== */
-
+     
+  "7. Keunggulan dan Kelebihan Kerjiva":
+  "7. Kerjiva's Advantages and Benefits",
+     
 "Keunggulan dan Kelebihan Kerjiva | Platform Karier Indonesia":
   "Kerjiva's Advantages and Benefits | Indonesian Career Platform",
 
