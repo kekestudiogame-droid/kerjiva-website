@@ -3773,6 +3773,7 @@ const infoArticle3 = document.querySelector("#infoArticle3");
 const infoArticle4 = document.querySelector("#infoArticle4");
 const infoArticle5 = document.querySelector("#infoArticle5");
 const infoArticle6 = document.querySelector("#infoArticle6");
+const infoArticle7 = document.querySelector("#infoArticle7");
 const menuLogout = document.querySelector("#menuLogout");
 const menuHome = document.querySelector("#menuHome");
 
@@ -3867,6 +3868,11 @@ if (infoArticle5) {
 if (infoArticle6) {
   infoArticle6.onclick = function () {
     window.location.href = "artikel-hindari-penipuan-lowongan.html";
+  };
+}
+if (infoArticle7) {
+  infoArticle7.onclick = function () {
+    window.location.href = "artikel-keunggulan-kerjiva.html";
   };
 }
 
