@@ -13301,13 +13301,67 @@ menuBtn.addEventListener("click", (e) => {
 });
   }
   
-  // Tutup menu setelah salah satu item menu diklik
-  
-   if (mainMenu) {
-      mainMenu.addEventListener("click", () => {
-      mainMenu.style.display = "none";
-     });
-   }
+ // Tutup menu setelah item menu diklik,
+// kecuali ketika pengguna membuka dropdown Negara.
+
+if (mainMenu) {
+  mainMenu.addEventListener("click", (e) => {
+
+    if (
+      e.target.closest &&
+      e.target.closest(".country-switcher")
+    ) {
+      return;
+    }
+
+    mainMenu.style.display = "none";
+
+    const countryDropdown =
+      document.getElementById("countryDropdown");
+
+    const countryToggle =
+      document.getElementById("countryToggle");
+
+    if (countryDropdown) {
+      countryDropdown.style.display = "none";
+    }
+
+    if (countryToggle) {
+      countryToggle.setAttribute("aria-expanded", "false");
+    }
+
+  });
+}
+  // =====================================================
+// DROPDOWN PILIH NEGARA
+// =====================================================
+
+const countryToggle =
+  document.getElementById("countryToggle");
+
+const countryDropdown =
+  document.getElementById("countryDropdown");
+
+if (countryToggle && countryDropdown) {
+
+  countryToggle.addEventListener("click", (e) => {
+
+    e.stopPropagation();
+
+    const isOpen =
+      countryDropdown.style.display !== "none";
+
+    countryDropdown.style.display =
+      isOpen ? "none" : "block";
+
+    countryToggle.setAttribute(
+      "aria-expanded",
+      isOpen ? "false" : "true"
+    );
+
+  });
+
+}
 
 function setupAuthButtons() {
 
