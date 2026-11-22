@@ -1765,7 +1765,190 @@
 
     "Berhati-hati dalam memilih lowongan kerja merupakan langkah penting untuk melindungi diri dari penipuan. Jangan terburu-buru mengambil keputusan dan selalu periksa informasi sebelum melamar pekerjaan.":
       "Being careful when choosing job vacancies is an important step in protecting yourself from scams. Do not rush into making decisions, and always verify information before applying for a job.",
+
      
+/* =====================================================
+   PUSAT INFORMASI KERJIVA
+   ARTIKEL 7 — KEUNGGULAN DAN KELEBIHAN KERJIVA
+   ===================================================== */
+
+"Keunggulan dan Kelebihan Kerjiva | Platform Karier Indonesia":
+  "Kerjiva's Advantages and Benefits | Indonesian Career Platform",
+
+"Kenali keunggulan Kerjiva, platform karier Indonesia yang membantu pencari kerja menemukan peluang pekerjaan dan perusahaan mengelola proses rekrutmen.":
+  "Discover the advantages of Kerjiva, an Indonesian career platform that helps job seekers find job opportunities and companies manage their recruitment processes.",
+
+"TENTANG KERJIVA":
+  "ABOUT KERJIVA",
+
+"Keunggulan dan Kelebihan Kerjiva: Platform Karier untuk Pencari Kerja dan Perusahaan di Indonesia":
+  "Kerjiva's Advantages and Benefits: A Career Platform for Job Seekers and Companies in Indonesia",
+
+"Mengenal Kerjiva, platform karier Indonesia yang membantu pencari kerja menemukan peluang pekerjaan dan perusahaan mengelola proses rekrutmen melalui berbagai fitur dalam satu platform.":
+  "Get to know Kerjiva, an Indonesian career platform that helps job seekers find job opportunities and companies manage recruitment through various features in one platform.",
+
+"Mencari pekerjaan dan menemukan kandidat yang tepat merupakan dua hal penting dalam dunia kerja. Pencari kerja membutuhkan akses terhadap informasi lowongan yang relevan, sementara perusahaan membutuhkan cara yang lebih praktis untuk memperkenalkan peluang kerja dan menjangkau calon karyawan.":
+  "Finding a job and identifying the right candidates are two important aspects of the working world. Job seekers need access to relevant job vacancy information, while companies need a more practical way to present job opportunities and reach potential employees.",
+
+"Kerjiva hadir sebagai platform karier Indonesia yang mempertemukan kebutuhan pencari kerja dan perusahaan dalam satu tempat.":
+  "Kerjiva serves as an Indonesian career platform that brings the needs of job seekers and companies together in one place.",
+
+"Melalui berbagai fitur yang tersedia, Kerjiva berupaya membantu pencari kerja menemukan peluang karier serta membantu perusahaan mengelola informasi lowongan dan proses penerimaan kandidat.":
+  "Through its various features, Kerjiva aims to help job seekers discover career opportunities and assist companies in managing job vacancy information and candidate recruitment processes.",
+
+"Kerjiva dikembangkan dengan tujuan menghadirkan pengalaman mencari kerja dan mengelola rekrutmen yang lebih mudah diakses melalui perangkat komputer maupun ponsel.":
+  "Kerjiva is developed to make job searching and recruitment management more accessible through computers and mobile devices.",
+
+"Keunggulan Kerjiva bagi Pencari Kerja":
+  "Kerjiva's Benefits for Job Seekers",
+
+"Bagi pencari kerja, menemukan pekerjaan yang sesuai bukan hanya tentang melihat daftar lowongan. Pengguna juga membutuhkan tempat untuk mengelola profil, menyiapkan dokumen, mengirim lamaran, dan mengikuti perkembangan proses rekrutmen.":
+  "For job seekers, finding a suitable job involves more than browsing job listings. Users also need a place to manage their profiles, prepare documents, submit applications, and follow the progress of the recruitment process.",
+
+"1. Menemukan Informasi Lowongan Kerja":
+  "1. Finding Job Opportunities",
+
+"Kerjiva menyediakan fitur pencarian lowongan kerja yang membantu pengguna menjelajahi peluang pekerjaan dari perusahaan yang memasang lowongan di platform. Pencari kerja dapat melihat informasi pekerjaan untuk mempertimbangkan kesesuaian posisi dengan minat dan kualifikasi mereka.":
+  "Kerjiva provides a job search feature that allows users to explore job opportunities posted by companies on the platform. Job seekers can review job information and consider whether each position matches their interests and qualifications.",
+
+"2. Mengelola Profil Diri":
+  "2. Managing Personal Profiles",
+
+"Pengguna dapat melengkapi profil diri sebagai bagian dari persiapan melamar pekerjaan. Informasi profil membantu perusahaan mengenal latar belakang dan informasi kandidat yang melamar. Profil yang diperbarui dan diisi dengan benar dapat membantu pencari kerja menyampaikan informasi dirinya secara lebih terstruktur.":
+  "Users can complete their personal profiles as part of their job application preparation. Profile information helps companies learn about applicants' backgrounds and qualifications. An updated and accurately completed profile allows job seekers to present their information in a more organized way.",
+
+"3. Menyimpan dan Mengelola Dokumen":
+  "3. Storing and Managing Documents",
+
+"Kerjiva menyediakan fitur Dokumen Saya untuk membantu pengguna menyimpan dan mengelola dokumen yang diperlukan dalam proses melamar pekerjaan. Dengan pengelolaan dokumen dalam satu tempat, pencari kerja dapat lebih mudah menyiapkan berkas yang dibutuhkan ketika mengajukan lamaran.":
+  "Kerjiva provides the My Documents feature to help users store and manage documents needed for job applications. By keeping documents in one place, job seekers can prepare the required files more easily when applying for positions.",
+
+"4. Mengelola Lamaran Pekerjaan":
+  "4. Managing Job Applications",
+
+"Melalui fitur My Applications, pengguna dapat melihat daftar lamaran pekerjaan yang telah dikirimkan. Fitur ini membantu pencari kerja memantau aktivitas lamaran tanpa harus mengandalkan catatan terpisah.":
+  "Through the My Applications feature, users can view a list of the job applications they have submitted. This feature helps job seekers keep track of their application activities without relying on separate records.",
+
+"5. Mendapatkan Informasi Undangan Wawancara":
+  "5. Receiving Interview Invitations",
+
+"Proses rekrutmen dapat berlanjut ke tahap wawancara. Kerjiva menyediakan fitur Interview Invitations untuk membantu pencari kerja melihat undangan wawancara yang dikirimkan perusahaan. Informasi tersebut membantu pengguna mengetahui jadwal dan detail wawancara yang perlu diperhatikan.":
+  "The recruitment process may continue to the interview stage. Kerjiva provides the Interview Invitations feature, allowing job seekers to view interview invitations sent by companies. This information helps users stay informed about interview schedules and important details.",
+
+"6. Berbagi Pengalaman melalui Community":
+  "6. Sharing Experiences through Community",
+
+"Dunia kerja tidak hanya berkaitan dengan mencari dan mendapatkan pekerjaan. Pengalaman, pengetahuan, dan cerita dari sesama pekerja juga dapat menjadi sumber pembelajaran.":
+  "The world of work is not only about finding and securing a job. Experiences, knowledge, and stories shared by other workers can also be valuable learning resources.",
+
+"Melalui Community, pengguna dapat berbagi pengalaman, cerita, pertanyaan, maupun pendapat seputar dunia kerja. Fitur ini diharapkan dapat menjadi ruang bagi pengguna untuk saling bertukar informasi dan membangun hubungan positif dalam komunitas karier.":
+  "Through Community, users can share experiences, stories, questions, and opinions about the working world. This feature is intended to provide a space where users can exchange information and build positive connections within the career community.",
+
+"Keunggulan Kerjiva bagi Perusahaan":
+  "Kerjiva's Benefits for Companies",
+
+"Selain membantu pencari kerja, Kerjiva juga dikembangkan untuk mendukung perusahaan dalam memperkenalkan peluang pekerjaan dan mengelola aktivitas rekrutmen.":
+  "In addition to supporting job seekers, Kerjiva is also developed to help companies present job opportunities and manage their recruitment activities.",
+
+"1. Memasang Informasi Lowongan Kerja":
+  "1. Posting Job Vacancies",
+
+"Perusahaan dapat menggunakan fitur Post a Job untuk membuat dan mengelola informasi lowongan pekerjaan. Informasi pekerjaan yang disusun dengan jelas dapat membantu calon kandidat memahami posisi, persyaratan, dan kualifikasi yang dibutuhkan.":
+  "Companies can use the Post a Job feature to create and manage job vacancy listings. Clearly presented job information helps potential candidates understand the position, requirements, and qualifications needed.",
+
+"2. Mengelola Lowongan Pekerjaan":
+  "2. Managing Job Vacancies",
+
+"Melalui fitur My Jobs, perusahaan dapat melihat dan mengelola lowongan yang telah dibuat. Pengelolaan lowongan membantu perusahaan memantau informasi pekerjaan yang masih dalam tahap penyusunan maupun yang telah dipublikasikan.":
+  "Through the My Jobs feature, companies can view and manage the vacancies they have created. This allows companies to monitor job listings that are still being prepared as well as those that have already been published.",
+
+"3. Melihat Kandidat yang Melamar":
+  "3. Viewing Job Applicants",
+
+"Kerjiva menyediakan fitur Incoming Applicants untuk membantu perusahaan melihat kandidat yang telah mengajukan lamaran pada lowongan mereka. Dengan informasi lamaran yang tersusun dalam platform, perusahaan dapat meninjau kandidat sesuai kebutuhan proses rekrutmen.":
+  "Kerjiva provides the Incoming Applicants feature, allowing companies to view candidates who have applied for their job vacancies. With application information organized on the platform, companies can review candidates according to their recruitment needs.",
+
+"4. Mengelola Dokumen Lamaran":
+  "4. Managing Application Documents",
+
+"Dokumen yang dilampirkan oleh pencari kerja dapat membantu perusahaan memahami informasi dan kualifikasi kandidat. Kerjiva mendukung pengelolaan dokumen lamaran agar perusahaan dapat meninjau berkas yang berkaitan dengan proses rekrutmen.":
+  "Documents submitted by job seekers can help companies understand candidates' backgrounds and qualifications. Kerjiva supports the management of application documents so companies can review files related to the recruitment process.",
+
+"5. Mengirim Undangan Wawancara":
+  "5. Sending Interview Invitations",
+
+"Ketika perusahaan ingin melanjutkan proses seleksi, tersedia fitur Send Interview Invitation untuk mengirimkan undangan wawancara kepada kandidat. Fitur ini membantu perusahaan menyampaikan informasi jadwal dan detail wawancara melalui platform.":
+  "When a company wants to proceed with the selection process, the Send Interview Invitation feature can be used to invite candidates to interviews. This feature helps companies communicate interview schedules and details through the platform.",
+
+"Kemudahan Akses Kerjiva":
+  "Easy Access to Kerjiva",
+
+"Kerjiva dirancang sebagai platform berbasis web yang dapat diakses melalui perangkat komputer, laptop, tablet, maupun ponsel yang memiliki koneksi internet.":
+  "Kerjiva is designed as a web-based platform that can be accessed using desktop computers, laptops, tablets, and mobile phones with an internet connection.",
+
+"Dengan tampilan yang menyesuaikan ukuran layar, pengguna dapat mengakses berbagai bagian platform sesuai kebutuhan dan perangkat yang digunakan. Kemudahan akses ini diharapkan dapat membantu pencari kerja dan perusahaan menggunakan layanan Kerjiva secara lebih fleksibel.":
+  "With a layout that adapts to different screen sizes, users can access various parts of the platform according to their needs and the devices they use. This accessibility is intended to help job seekers and companies use Kerjiva's services more flexibly.",
+
+"Mengapa Memilih Kerjiva?":
+  "Why Choose Kerjiva?",
+
+"Orang-orang memiliki kebutuhan dan tujuan yang berbeda dalam dunia kerja. Ada yang sedang mencari pekerjaan pertama, ingin mengembangkan karier, atau mencari peluang baru untuk meningkatkan pengalaman profesional. Di sisi lain, perusahaan membutuhkan kandidat yang tepat dan sesuai dengan kebutuhan organisasi.":
+  "People have different needs and goals in the working world. Some are looking for their first job, seeking career development, or exploring new opportunities to gain professional experience. Meanwhile, companies need the right candidates to meet their organizational needs.",
+
+"Kerjiva hadir untuk mendukung kedua kebutuhan tersebut melalui satu platform yang menyediakan berbagai fitur, mulai dari pencarian lowongan kerja, pengelolaan profil dan dokumen, pemantauan lamaran, hingga informasi undangan wawancara. Bagi perusahaan, Kerjiva juga menyediakan sarana untuk memasang lowongan dan mengelola proses rekrutmen.":
+  "Kerjiva aims to support both needs through one platform offering various features, including job searches, profile and document management, application tracking, and interview invitation information. For companies, Kerjiva also provides tools to post job vacancies and manage recruitment processes.",
+
+"Kerjiva terus dikembangkan untuk menghadirkan pengalaman yang lebih mudah, praktis, dan bermanfaat bagi pencari kerja maupun perusahaan di Indonesia.":
+  "Kerjiva continues to be developed to provide a more accessible, practical, and beneficial experience for both job seekers and companies in Indonesia.",
+
+"Komitmen Kerjiva untuk Dunia Kerja Indonesia":
+  "Kerjiva's Commitment to Indonesia's Working World",
+
+"Kerjiva memiliki tujuan untuk menjadi salah satu platform karier yang bermanfaat bagi masyarakat Indonesia.":
+  "Kerjiva aims to become a career platform that provides value to the people of Indonesia.",
+
+"Kami percaya bahwa akses terhadap informasi pekerjaan dan kemudahan dalam proses rekrutmen merupakan bagian penting dalam mendukung perkembangan dunia kerja.":
+  "We believe that access to job information and a more convenient recruitment process are important in supporting the development of the working world.",
+
+"Oleh karena itu, Kerjiva berkomitmen untuk terus mengembangkan layanan, memperbaiki pengalaman pengguna, dan menghadirkan fitur yang relevan dengan kebutuhan pencari kerja maupun perusahaan.":
+  "Therefore, Kerjiva is committed to continuously improving its services, enhancing the user experience, and providing features relevant to the needs of both job seekers and companies.",
+
+"Perjalanan membangun karier dan menemukan kandidat yang tepat membutuhkan proses. Kerjiva ingin menjadi salah satu sarana yang membantu proses tersebut menjadi lebih mudah dijangkau.":
+  "Building a career and finding the right candidates both take time and effort. Kerjiva aims to be one of the platforms that makes these processes easier to access.",
+
+"Mulai Gunakan Kerjiva":
+  "Start Using Kerjiva",
+
+"Apakah Anda sedang mencari pekerjaan atau mewakili perusahaan yang membutuhkan kandidat baru?":
+  "Are you looking for a job or representing a company seeking new candidates?",
+
+"Kerjiva mengundang pencari kerja dan perusahaan di Indonesia untuk mengenal serta memanfaatkan fitur-fitur yang tersedia.":
+  "Kerjiva invites job seekers and companies in Indonesia to explore and make use of the available features.",
+
+"Pencari kerja:":
+  "Job seekers:",
+
+"Jelajahi peluang pekerjaan, lengkapi profil, kelola dokumen, dan pantau lamaran Anda.":
+  "Explore job opportunities, complete your profile, manage documents, and track your applications.",
+
+"Perusahaan:":
+  "Companies:",
+
+"Buat informasi lowongan, kelola kandidat, dan dukung proses rekrutmen melalui Kerjiva.":
+  "Create job listings, manage candidates, and support your recruitment process through Kerjiva.",
+
+"Kunjungi":
+  "Visit",
+
+"kerjiva.com":
+  "kerjiva.com",
+
+"dan kenali lebih jauh platform karier Kerjiva.":
+  "to learn more about the Kerjiva career platform.",
+
+"Kerjiva — Platform Karier Indonesia.":
+  "Kerjiva — Indonesian Career Platform.",
+
  /* =====================================================
    KOMUNITAS KERJIVA
    ===================================================== */
