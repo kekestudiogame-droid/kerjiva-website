@@ -12042,10 +12042,27 @@ async function publishMyJob(jobId, skipConfirmation = false) {
 
     await showMyJobs();
 
+ 
   } catch (error) {
     console.error("Gagal mengirim lowongan:", error);
+
+    const errorMessage = String(error.message || error);
+    const language = localStorage.getItem("siteLanguage") || "id";
+
+    if (errorMessage.includes("KERJIVA_DUPLICATE_PUBLISHED_JOB")) {
+      alert(
+        language === "en"
+          ? "This job with the same position and description has already been published by your company. Please check your existing job listings."
+          : "Lowongan dengan posisi dan deskripsi yang sama sudah pernah diterbitkan oleh perusahaan Anda. Silakan periksa daftar Lowongan Saya."
+      );
+
+      await showMyJobs();
+      return;
+    }
+
     showNotification("jobsFailed");
   }
+
 }
 
 window.publishMyJob = publishMyJob;
